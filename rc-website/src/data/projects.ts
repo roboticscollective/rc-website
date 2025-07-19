@@ -47,7 +47,7 @@ export const projects: Project[] = [
     description:
       "A collaborative effort to build the first fully open-source humanoid robot in Aachen, bringing together academia, industry, and makers to shape the future of robotics as a shared community project.",
     image:
-	    "/bimbot-bare.webp",
+	    "/bimbot-bare2-crop.png",
     tags: ["Humanoid Robotics", "Open Source", "Cross‑Disciplinary"],
     content:
       "What if an entire ecosystem joined forces to create a human‑scale robot anyone could study, remix, and improve?  The Aachen Open Source Humanoid initiative merges mechanical ingenuity, high‑density power systems, advanced sensing, and cutting‑edge AI control into a single, open hardware & software stack.  Companies contribute real‑world expertise, research institutes supply breakthrough science, and students inject fearless creativity—each discipline weaving its module into a shared blueprint ready for the global community.\n\nFrom carbon‑fiber limbs and torque‑controlled joints to vision‑enabled perception and battery‑smart powertrains, every component is transparent, modular, and hackable.  Join us as we turn sketches into silicon and put Aachen on the map as a cradle of open humanoid innovation.",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     status: "ongoing",
     pointOfContactId: 1,
     galleryImages: [
-	    "/bimbot-bare.webp",
+	    "/bimbot-bare2-crop.png",
     ],
     links: {
       github:
