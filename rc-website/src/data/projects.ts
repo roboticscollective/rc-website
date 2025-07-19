@@ -25,7 +25,7 @@ export const projects: Project[] = [
     description:
       "A browser-based collaborative platform enabling interactive exploration, visualization, and real-time simulation of robotics projects.",
     image:
-      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+	    "/orom_title-image.webp",
     tags: ["Browser-based Simulation", "Collaborative Robotics", "Open-source"],
     content:
       "The Open Robotic Metaverse (orom) creates an accessible digital environment for collaboratively visualizing and interacting with robotic simulations in real-time. By leveraging web-based technologies such as React Three Fiber, Three.js, and WebGPU, orom enables seamless exploration and modification of virtual robotic scenarios directly in-browser.\n\nKey features include interactive real-time simulations, support for multiple robotic simulation tools (MuJoCo, ROS, Drake), community-driven contributions, and advanced visual fidelity essential for sim-to-real robotics applications.",
@@ -33,10 +33,7 @@ export const projects: Project[] = [
     status: "ongoing",
     pointOfContactId: 2, // Karim Siala
     galleryImages: [
-      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1535378620166-273708d44e4c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1563206767-5b18f218e8de?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+	    "/orom_title-image.webp",
     ],
     links: {
       github: "https://github.com/openroboticmetaverse/mvp-webapp",
@@ -48,17 +45,17 @@ export const projects: Project[] = [
     slug: "aachen-open-source-humanoid",
     title: "Aachen Open‑Source Humanoid",
     description:
-      "A city‑wide moonshot to build Aachen’s first fully open humanoid robot—where academia, industry, and makers craft the future together.",
+      "A collaborative effort to build the first fully open-source humanoid robot in Aachen, bringing together academia, industry, and makers to shape the future of robotics as a shared community project.",
     image:
-      "https://images.unsplash.com/photo-1654009603731-20b6d7536002?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+	    "/bimbot-bare.webp",
     tags: ["Humanoid Robotics", "Open Source", "Cross‑Disciplinary"],
     content:
       "What if an entire ecosystem joined forces to create a human‑scale robot anyone could study, remix, and improve?  The Aachen Open Source Humanoid initiative merges mechanical ingenuity, high‑density power systems, advanced sensing, and cutting‑edge AI control into a single, open hardware & software stack.  Companies contribute real‑world expertise, research institutes supply breakthrough science, and students inject fearless creativity—each discipline weaving its module into a shared blueprint ready for the global community.\n\nFrom carbon‑fiber limbs and torque‑controlled joints to vision‑enabled perception and battery‑smart powertrains, every component is transparent, modular, and hackable.  Join us as we turn sketches into silicon and put Aachen on the map as a cradle of open humanoid innovation.",
     featured: false,
-    status: "planned",
+    status: "ongoing",
     pointOfContactId: 1,
     galleryImages: [
-      "https://images.unsplash.com/photo-1654009603731-20b6d7536002?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+	    "/bimbot-bare.webp",
     ],
     links: {
       github:
