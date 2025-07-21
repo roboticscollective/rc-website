@@ -60,6 +60,14 @@ export function Footer() {
                   Meetup
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/positions"
+                  className="text-4xl hover:text-white transition-colors"
+                >
+                  Positions
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

@@ -127,7 +127,7 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:block">
-            <Link href="/contact">
+            <Link href="/positions">
               <Button
                 variant="default"
               >
@@ -206,12 +206,13 @@ export function Navbar() {
             >
               Contact
             </Link>
-            <Button
-              variant="default"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Join Us
-            </Button>
+            <Link href="/positions" onClick={() => setMobileMenuOpen(false)}>
+              <Button
+                variant="default"
+              >
+                Join Us
+              </Button>
+            </Link>
           </div>
         </div>
       )}

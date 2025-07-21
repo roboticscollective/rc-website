@@ -33,10 +33,20 @@ const CTASection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
+            <Link href="/positions">
               <Button
                 variant="default"
                 className="px-8 py-6 text-lg rounded-3xl"
+                size="lg"
+              >
+                Join Us <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+
+            <Link href="/contact">
+              <Button
+                variant="outline"
+                className="px-8 py-6 text-lg rounded-3xl border-gray-300 text-gray-300 hover:bg-gray-300/10"
                 size="lg"
               >
                 Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
