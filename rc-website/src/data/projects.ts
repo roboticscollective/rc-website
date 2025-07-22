@@ -41,7 +41,7 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "aoh",
+    id: "aosh",
     slug: "aachen-open-source-humanoid",
     title: "Aachen Open‑Source Humanoid",
     description:
@@ -53,15 +53,36 @@ export const projects: Project[] = [
       "What if an entire ecosystem joined forces to create a human‑scale robot anyone could study, remix, and improve?  The Aachen Open Source Humanoid initiative merges mechanical ingenuity, high‑density power systems, advanced sensing, and cutting‑edge AI control into a single, open hardware & software stack.  Companies contribute real‑world expertise, research institutes supply breakthrough science, and students inject fearless creativity—each discipline weaving its module into a shared blueprint ready for the global community.\n\nFrom carbon‑fiber limbs and torque‑controlled joints to vision‑enabled perception and battery‑smart powertrains, every component is transparent, modular, and hackable.  Join us as we turn sketches into silicon and put Aachen on the map as a cradle of open humanoid innovation.",
     featured: false,
     status: "ongoing",
-    pointOfContactId: 1,
+    pointOfContactId: 5,
     galleryImages: [
 	    "/bimbot-bare2-crop.png",
     ],
     links: {
       github:
-        "https://github.com/robotics-collective/aachen-open-source-humanoid",
+        "https://github.com/roboticscollective/AOSH",
       website:
-        "https://robotics-collective.de/projects/aachen-open-source-humanoid",
+        "https://roboticscollective.org/projects/aachen-open-source-humanoid",
+    },
+  },
+  {
+    id: "bimbot",
+    slug: "3d-printed-robot-arms",
+    title: "Building and training a bimanual robot using imitation learning",
+    description:
+      "Custom-designed robotic arms fabricated through advanced 3D printing techniques, integrated with our open-source LeRobot software library for intuitive control and programming.",
+    image:
+	    "/project-bimbot/bimbot-bare.webp",
+    tags: ["3D Printing", "Open Source", "Control Systems"],
+    content:
+      "The 3D Printed Arms project combines affordable manufacturing techniques with sophisticated control systems. By leveraging modern 3D printing capabilities, we've created customizable robotic arms that can be produced at a fraction of the cost of commercial alternatives.\n\nThese arms are powered by our LeRobot library, an open-source software package that simplifies the programming and control of robotic limbs. The library features inverse kinematics solvers, trajectory planning, and a user-friendly API that makes advanced robotics accessible to programmers of various skill levels.\n\n We will explore the construction of the Robotics Collective’s Aachen Open-Source Humanoid and its machine learning pipeline that enable it to perform precise object manipulation, using state-of-the-art machine learning frameworks for robotics.\n\n Building and deploying AI systems for robotic tasks involves complex engineering, large datasets, and intensive training procedures. This complexity makes it difficult for individual researchers or small teams to experiment with robotics in a meaningful way. The objective of this project is to addresses the high barrier to entry in robotics. We aims to lower these barriers using open source projects like LeRobot and So100 arms. The https://github.com/huggingface/lerobot platform by Hugging Face provides a suite of models, datasets, and tools built on the PyTorch framework for imitation and reinforcement learning. You can read more this project under https://robotics-collective-initiative.notion.site/Building-Affordable-Home-Robots-Training-a-bimanual-robot-using-imitation-learning-1eee42e86b8a80779dbcf4dbbb2078ae", status: "ongoing",
+    pointOfContactId: 5,
+    galleryImages: [
+	    "/project-bimbot/bimbot-bare.webp",
+    ],
+    links: {
+      github: "https://github.com/roboticscollective/AOSH",
+      website: "https://robotics-collective-initiative.notion.site/Building-Affordable-Home-Robots-Training-a-bimanual-robot-using-imitation-learning-1eee42e86b8a80779dbcf4dbbb2078ae",
+      documentation: "https://robotics-collective-initiative.notion.site/Building-Affordable-Home-Robots-Training-a-bimanual-robot-using-imitation-learning-1eee42e86b8a80779dbcf4dbbb2078ae",
     },
   },
 ];
