@@ -151,22 +151,34 @@ export default async function ProjectPage({
             </div>
 
             {/* Gallery Grid */}
-            {project.galleryImages && project.galleryImages.length > 0 && (
-              <div className="mt-12">
-                <h2 className="text-2xl font-bold mb-6">Gallery</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {project.galleryImages.map((image, idx) => (
-                    <div
-                      key={idx}
-                      className="aspect-square rounded-lg overflow-hidden"
-                    >
-                      <img
-                        src={image}
-                        alt={`${project.title} gallery image ${idx + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ))}
+	    {project.galleryImages && project.galleryImages.length > 0 && (
+		    <div className="mt-12">
+		    <h2 className="text-2xl font-bold mb-6">Gallery</h2>
+		    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+		    {project.galleryImages.map((item, idx) => (
+			    <div
+			    key={idx}
+			    className="rounded-lg overflow-hidden"
+			    >
+			    {item.type == 'video' ? (
+				    <video
+				    controls
+				    poster={item.poster}
+				    className="w-full h-full object-cover"
+				    >
+				    <source src={item.src} type="video/mp4" />
+				    Your browser does not support the video tag.
+					    </video>
+
+			    ) : (
+			    <img
+			    src={item.src}
+			    alt={`${project.title} gallery image ${idx + 1}`}
+			    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+			    />
+			    )}
+			    </div>
+		    ))}
                 </div>
               </div>
             )}
