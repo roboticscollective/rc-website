@@ -185,6 +185,75 @@ export default function MeetupPage() {
           </div>
         </section>
 
+        {/* Partners Section */}
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold mb-12 text-center">
+              Our <span className="text-primary">Partners</span>
+            </h2>
+            <div className="overflow-hidden">
+              <div className="flex animate-infinite-scroll">
+                {/* First set of logos */}
+                <div className="flex min-w-full space-x-12 items-center justify-around">
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner1.jpg"
+                    alt="Partner 1"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner2.jpg"
+                    alt="Partner 2"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner3.jpg"
+                    alt="Partner 3"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner4.jpg"
+                    alt="Partner 4"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner5.jpg"
+                    alt="Partner 5"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+                {/* Duplicate set for seamless loop */}
+                <div className="flex min-w-full space-x-12 items-center justify-around">
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner1.jpg"
+                    alt="Partner 1"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner2.jpg"
+                    alt="Partner 2"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner3.jpg"
+                    alt="Partner 3"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner4.jpg"
+                    alt="Partner 4"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner5.jpg"
+                    alt="Partner 5"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Gallery */}
         <section className="py-16 md:py-24 bg-card/50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
