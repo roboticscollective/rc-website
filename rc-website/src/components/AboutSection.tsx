@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const AboutSection = () => {
   return (
@@ -63,6 +65,17 @@ export const AboutSection = () => {
                   Research & Industry Partners
                 </div>
               </div>
+            </div>
+            
+            <div className="text-center mt-8">
+              <Link href="/about">
+                <Button 
+                  variant="outline" 
+                  className="px-6 py-3 border-primary text-primary hover:bg-primary hover:text-background"
+                >
+                  Meet Our Team
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

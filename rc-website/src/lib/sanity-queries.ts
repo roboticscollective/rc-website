@@ -12,7 +12,9 @@ const teamMemberFields = groq`
   image,
   imageUrl,
   isBoard,
+  isActive,
   memberType,
+  slug,
   tags,
   contact,
   legacyId
@@ -44,10 +46,49 @@ export async function getCoreTeamMembers(): Promise<TeamMember[]> {
 
 export async function getCommunityMembers(): Promise<TeamMember[]> {
   return client.fetch(groq`
-    *[_type == "teamMember" && memberType == "community"] | order(name asc) {
+    *[_type == "teamMember" && memberType == "community" && isActive == true] | order(name asc) {
       ${teamMemberFields}
     }
   `)
+}
+
+export async function getLeadershipMembers(): Promise<TeamMember[]> {
+  return client.fetch(groq`
+    *[_type == "teamMember" && memberType == "leadership" && isActive == true] | order(name asc) {
+      ${teamMemberFields}
+    }
+  `)
+}
+
+export async function getAlumniMembers(): Promise<TeamMember[]> {
+  return client.fetch(groq`
+    *[_type == "teamMember" && memberType == "alumni" && isActive == true] | order(name asc) {
+      ${teamMemberFields}
+    }
+  `)
+}
+
+export async function getActiveTeamMembers(): Promise<TeamMember[]> {
+  return client.fetch(groq`
+    *[_type == "teamMember" && isActive == true] | order(memberType asc, name asc) {
+      ${teamMemberFields}
+    }
+  `)
+}
+
+export async function getTeamMemberBySlug(slug: string): Promise<TeamMember | null> {
+  return client.fetch(groq`
+    *[_type == "teamMember" && slug.current == $slug][0] {
+      ${teamMemberFields}
+    }
+  `, { slug })
+}
+
+export async function getAllTeamMemberSlugs(): Promise<string[]> {
+  const members = await client.fetch(groq`
+    *[_type == "teamMember" && isActive == true] { slug }
+  `)
+  return members.map((member: any) => member.slug.current)
 }
 
 // Project Queries

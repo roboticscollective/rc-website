@@ -14,22 +14,58 @@ export const client = createClient({
 
 // Helper function for image URLs (handles both Sanity images and migration URLs)
 export function buildImageUrl(source: any): string {
-  // During migration, images are stored in imageUrl field
+  // Handle direct URL strings (migration URLs or direct links)
+  if (typeof source === 'string') {
+    return source
+  }
+  
+  // Handle imageUrl field during migration
   if (source?.url) {
     return source.url
   }
   
   // Handle Sanity image assets
   if (source?.asset) {
-    // If the image is from Cloudinary (which it should be with the plugin)
+    // Prefer using the asset URL if available (Cloudinary plugin)
     if (source.asset.url) {
       return source.asset.url
     }
     
-    // Fallback for Sanity CDN images
-    return `https://cdn.sanity.io/images/${projectId}/${dataset}/${source.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}`
+    // Extract image reference for Sanity CDN
+    if (source.asset._ref) {
+      const ref = source.asset._ref
+      // Parse the reference format: image-{id}-{dimensions}-{format}
+      const parts = ref.split('-')
+      if (parts.length >= 3) {
+        const id = parts.slice(1, -2).join('-')
+        const dimensions = parts[parts.length - 2]
+        const format = parts[parts.length - 1]
+        return `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}-${dimensions}.${format}`
+      }
+    }
+    
+    // Fallback: try to construct URL from _ref
+    const ref = source.asset._ref.replace('image-', '')
+    const parts = ref.split('-')
+    if (parts.length >= 2) {
+      const format = parts.pop()
+      const assetId = parts.join('-')
+      return `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}.${format}`
+    }
   }
   
+  // Handle legacy asset structure
+  if (source?._ref) {
+    const ref = source._ref.replace('image-', '')
+    const parts = ref.split('-')
+    if (parts.length >= 2) {
+      const format = parts.pop()
+      const assetId = parts.join('-')
+      return `https://cdn.sanity.io/images/${projectId}/${dataset}/${assetId}.${format}`
+    }
+  }
+  
+  // Return empty string if no valid image source found
   return ''
 }
 
@@ -47,7 +83,9 @@ export interface TeamMember {
     alt?: string
   }
   isBoard?: boolean
-  memberType: 'core' | 'community'
+  isActive?: boolean
+  memberType: 'leadership' | 'core' | 'community' | 'alumni'
+  slug: { current: string }
   tags?: string[]
   contact?: {
     email?: string

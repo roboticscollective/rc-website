@@ -68,18 +68,61 @@ const ProjectCard = ({ project }: { project: Project }) => {
           ))}
         </div>
 
-        {pointOfContact && (
-          <div className="flex items-center mb-4">
-            <div className="w-6 h-6 rounded-full overflow-hidden mr-2">
-              <img
-                src={contactImageUrl}
-                alt={pointOfContact.name}
-                className="w-full h-full object-cover"
-              />
+        {(pointOfContact || (project.contributors && project.contributors.length > 0)) && (
+          <div className="mb-4">
+            <div className="flex items-center gap-1">
+              {pointOfContact && (
+                <a
+                  href={pointOfContact.contact?.linkedin || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`${pointOfContact.name} - ${pointOfContact.role} (Lead)`}
+                  className="relative group"
+                >
+                  <div className="w-6 h-6 rounded-full overflow-hidden transition-transform duration-200 group-hover:scale-105">
+                    <img
+                      src={contactImageUrl}
+                      alt={pointOfContact.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full flex items-center justify-center">
+                    <span className="text-xs text-black font-bold">L</span>
+                  </div>
+                </a>
+              )}
+              {project.contributors && project.contributors.length > 0 && (
+                <>
+                  {project.contributors.slice(0, 3).map((contributor) => (
+                    <a
+                      key={contributor._id}
+                      href={contributor.contact?.linkedin || '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`${contributor.name} - ${contributor.role}`}
+                      className="group"
+                    >
+                      <div className="w-5 h-5 rounded-full overflow-hidden border border-gray-600 transition-transform duration-200 group-hover:scale-105">
+                        <img
+                          src={buildImageUrl(contributor.image || contributor.imageUrl)}
+                          alt={contributor.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </a>
+                  ))}
+                  {project.contributors.length > 3 && (
+                    <div 
+                      className="w-5 h-5 rounded-full bg-gray-600 border border-gray-500 flex items-center justify-center"
+                      title={`+${project.contributors.length - 3} more team members`}
+                    >
+                      <span className="text-xs text-gray-300">+{project.contributors.length - 3}</span>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            <span className="text-xs text-gray-300">
-              Lead: {pointOfContact.name}
-            </span>
+            <span className="text-xs text-gray-400">Team</span>
           </div>
         )}
 

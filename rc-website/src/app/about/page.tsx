@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import {
-  CircleUserRound,
   Github,
   Linkedin,
   Mail,
   UserPlus,
-  UserRound,
 } from "lucide-react";
-import { getAllTeamMembers, getAllPartners } from "@/lib/sanity-queries";
+import { getLeadershipMembers, getCoreTeamMembers, getCommunityMembers, getAlumniMembers, getAllPartners } from "@/lib/sanity-queries";
 import { buildImageUrl } from "@/lib/sanity";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -19,22 +17,12 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  // Fetch team data from Sanity at build time (SSG)
-  const teamMembers = await getAllTeamMembers();
+  // Fetch data from Sanity
+  const leadershipTeam = await getLeadershipMembers();
+  const coreTeam = await getCoreTeamMembers();
+  const communityMembers = await getCommunityMembers();
+  const alumniMembers = await getAlumniMembers();
   const partners = await getAllPartners();
-  
-  // Get the leadership team (first two members who are on the board)
-  const leadershipTeam = teamMembers
-    .filter((member) => member.isBoard)
-    .slice(0, 2);
-  // Get the rest of the core team (excluding the leadership team)
-  const coreTeam = teamMembers.filter(
-    (member) => !leadershipTeam.includes(member) && member.memberType === 'core'
-  );
-  // Get community members
-  const communityMembers = teamMembers.filter(
-    (member) => member.memberType === 'community'
-  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -300,21 +288,71 @@ export default async function AboutPage() {
                   key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
-                  <div className="w-24 h-24 mb-3 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300">
-                    <img
-                      src={buildImageUrl(member.imageUrl || member.image)}
-                      alt={member.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <h3 className="text-sm font-medium text-center text-white">
-                    {member.name}
-                  </h3>
+                  <a
+                    href={member.contact?.linkedin || '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative"
+                    aria-label={`${member.name}'s LinkedIn profile`}
+                  >
+                    <div className="w-24 h-24 mb-3 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300">
+                      <img
+                        src={buildImageUrl(member.imageUrl || member.image)}
+                        alt={member.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+                    <h3 className="text-sm font-medium text-center text-white group-hover:text-primary transition-colors">
+                      {member.name}
+                    </h3>
+                  </a>
                 </div>
               ))}
             </div>
           </div>
         </section>
+
+        {/* Alumni Section */}
+        {alumniMembers.length > 0 && (
+          <>
+            <div className="max-w-3xl mx-auto my-12 border-t border-primary/20"></div>
+            <section className="py-8 md:py-16">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
+                  <span className="text-primary">Alumni</span>
+                </h2>
+                
+                <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+                  {alumniMembers.map((member) => (
+                    <div
+                      key={member._id}
+                      className="flex flex-col items-center group transition-all duration-300 hover:scale-110"
+                    >
+                      <a
+                        href={member.contact?.linkedin || '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative"
+                        aria-label={`${member.name}'s LinkedIn profile`}
+                      >
+                        <div className="w-16 h-16 mb-2 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300 shadow-md group-hover:shadow-lg group-hover:shadow-primary/20">
+                          <img
+                            src={buildImageUrl(member.imageUrl || member.image)}
+                            alt={member.name}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                          />
+                        </div>
+                        <p className="text-xs font-medium text-center text-gray-300 group-hover:text-white transition-colors">
+                          {member.name.split(' ')[0]}
+                        </p>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          </>
+        )}
 
         <div className="max-w-3xl mx-auto my-20 border-t border-primary/20"></div>
 

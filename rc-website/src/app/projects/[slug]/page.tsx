@@ -92,8 +92,20 @@ export default async function ProjectPage({
   }
 
   const pointOfContact = project.pointOfContact;
+  const contributors = project.contributors || [];
   const projectImageUrl = buildImageUrl(project.image || project.imageUrl);
-  const contactImageUrl = pointOfContact ? buildImageUrl(pointOfContact.image || pointOfContact.imageUrl) : '';
+  
+  // Combine point of contact and contributors into a unified team
+  const teamMembers = [];
+  if (pointOfContact) {
+    teamMembers.push({ ...pointOfContact, isLead: true });
+  }
+  contributors.forEach(contributor => {
+    // Avoid duplicating the point of contact
+    if (!pointOfContact || contributor._id !== pointOfContact._id) {
+      teamMembers.push({ ...contributor, isLead: false });
+    }
+  });
 
   return (
     <div className="min-h-screen bg-background">
@@ -283,64 +295,51 @@ export default async function ProjectPage({
                   </div>
                 </div>
 
-                {/* Point of Contact */}
-                {pointOfContact && (
+                {/* Team Section */}
+                {teamMembers.length > 0 && (
                   <div>
-                    <h4 className="text-sm text-gray-400 mb-2">
-                      Point of Contact
+                    <h4 className="text-sm text-gray-400 mb-3">
+                      Team
                     </h4>
-                    <div className="flex items-center mb-3">
-                      <div className="w-12 h-12 rounded-full overflow-hidden mr-3">
-                        <img
-                          src={contactImageUrl}
-                          alt={pointOfContact.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium">{pointOfContact.name}</p>
-                        {/* Contact Links */}
-                        <div className="flex items-center space-x-2 mt-2">
-                          {pointOfContact.contact?.email && (
-                            <a
-                              href={`mailto:${pointOfContact.contact.email}`}
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Mail size={16} />
-                            </a>
-                          )}
-                          {pointOfContact.contact?.github && (
-                            <a
-                              href={pointOfContact.contact.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Github size={16} />
-                            </a>
-                          )}
-                          {pointOfContact.contact?.twitter && (
-                            <a
-                              href={pointOfContact.contact.twitter}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Twitter size={16} />
-                            </a>
-                          )}
-                          {pointOfContact.contact?.linkedin && (
-                            <a
-                              href={pointOfContact.contact.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Linkedin size={16} />
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                    <div className="flex flex-wrap gap-2">
+                      {teamMembers.map((member) => {
+                        const memberImageUrl = buildImageUrl(member.image || member.imageUrl);
+                        const linkedinUrl = member.contact?.linkedin;
+                        
+                        const imageElement = (
+                          <div className="relative group">
+                            <div className="w-10 h-10 rounded-full overflow-hidden transition-transform duration-200 group-hover:scale-105">
+                              <img
+                                src={memberImageUrl}
+                                alt={member.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            {member.isLead && (
+                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
+                                <span className="text-xs text-black font-bold">L</span>
+                              </div>
+                            )}
+                          </div>
+                        );
+
+                        return linkedinUrl ? (
+                          <a
+                            key={member._id}
+                            href={linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={`${member.name} - ${member.role}`}
+                            className="transition-opacity duration-200 hover:opacity-80"
+                          >
+                            {imageElement}
+                          </a>
+                        ) : (
+                          <div key={member._id} title={`${member.name} - ${member.role}`}>
+                            {imageElement}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}

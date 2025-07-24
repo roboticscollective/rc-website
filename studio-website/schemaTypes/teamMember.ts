@@ -68,12 +68,32 @@ export default defineType({
       type: 'string',
       options: {
         list: [
+          {title: 'Leadership', value: 'leadership'},
           {title: 'Core Team', value: 'core'},
           {title: 'Community Member', value: 'community'},
+          {title: 'Alumni', value: 'alumni'},
         ],
       },
       initialValue: 'core',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'isActive',
+      title: 'Active Member',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Is this member currently active? (inactive members won\'t be shown on website)',
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+      description: 'URL-friendly version of the name for individual member pages',
     }),
     defineField({
       name: 'tags',
