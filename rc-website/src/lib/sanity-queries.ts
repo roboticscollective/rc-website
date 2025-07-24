@@ -1,0 +1,298 @@
+import { groq } from 'next-sanity'
+import { client, type TeamMember, type Project, type Position, type BlogPost, type Event, type Partner } from './sanity'
+
+// Team Member Queries
+const teamMemberFields = groq`
+  _id,
+  _type,
+  name,
+  role,
+  description,
+  bio,
+  image,
+  imageUrl,
+  isBoard,
+  memberType,
+  tags,
+  contact,
+  legacyId
+`
+
+export async function getAllTeamMembers(): Promise<TeamMember[]> {
+  return client.fetch(groq`
+    *[_type == "teamMember"] | order(memberType asc, name asc) {
+      ${teamMemberFields}
+    }
+  `)
+}
+
+export async function getTeamMemberById(id: string): Promise<TeamMember | null> {
+  return client.fetch(groq`
+    *[_type == "teamMember" && _id == $id][0] {
+      ${teamMemberFields}
+    }
+  `, { id })
+}
+
+export async function getCoreTeamMembers(): Promise<TeamMember[]> {
+  return client.fetch(groq`
+    *[_type == "teamMember" && memberType == "core"] | order(name asc) {
+      ${teamMemberFields}
+    }
+  `)
+}
+
+export async function getCommunityMembers(): Promise<TeamMember[]> {
+  return client.fetch(groq`
+    *[_type == "teamMember" && memberType == "community"] | order(name asc) {
+      ${teamMemberFields}
+    }
+  `)
+}
+
+// Project Queries
+const projectFields = groq`
+  _id,
+  _type,
+  title,
+  slug,
+  description,
+  content,
+  image,
+  imageUrl,
+  galleryImages,
+  galleryImageUrls,
+  status,
+  featured,
+  tags,
+  pointOfContact->{${teamMemberFields}},
+  contributors[]->{${teamMemberFields}},
+  links,
+  legacyId
+`
+
+export async function getAllProjects(): Promise<Project[]> {
+  return client.fetch(groq`
+    *[_type == "project"] | order(featured desc, title asc) {
+      ${projectFields}
+    }
+  `)
+}
+
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  return client.fetch(groq`
+    *[_type == "project" && slug.current == $slug][0] {
+      ${projectFields}
+    }
+  `, { slug })
+}
+
+export async function getAllProjectSlugs(): Promise<string[]> {
+  const projects = await client.fetch(groq`
+    *[_type == "project"] { slug }
+  `)
+  return projects.map((project: any) => project.slug.current)
+}
+
+export async function getFeaturedProjects(): Promise<Project[]> {
+  return client.fetch(groq`
+    *[_type == "project" && featured == true] | order(title asc) {
+      ${projectFields}
+    }
+  `)
+}
+
+// Position Queries
+const positionFields = groq`
+  _id,
+  _type,
+  title,
+  description,
+  responsibilities,
+  deliverables,
+  currentHolder->{${teamMemberFields}},
+  isOpen,
+  timeCommitment,
+  legacyId
+`
+
+export async function getAllPositions(): Promise<Position[]> {
+  return client.fetch(groq`
+    *[_type == "position"] | order(title asc) {
+      ${positionFields}
+    }
+  `)
+}
+
+export async function getOpenPositions(): Promise<Position[]> {
+  return client.fetch(groq`
+    *[_type == "position" && isOpen == true] | order(title asc) {
+      ${positionFields}
+    }
+  `)
+}
+
+// Blog Post Queries
+const blogPostFields = groq`
+  _id,
+  _type,
+  title,
+  slug,
+  excerpt,
+  content,
+  featuredImage,
+  author->{${teamMemberFields}},
+  contributors[]->{${teamMemberFields}},
+  publishedAt,
+  tags,
+  categories,
+  seo
+`
+
+export async function getAllBlogPosts(): Promise<BlogPost[]> {
+  return client.fetch(groq`
+    *[_type == "blogPost"] | order(publishedAt desc) {
+      ${blogPostFields}
+    }
+  `)
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  return client.fetch(groq`
+    *[_type == "blogPost" && slug.current == $slug][0] {
+      ${blogPostFields}
+    }
+  `, { slug })
+}
+
+export async function getAllBlogSlugs(): Promise<string[]> {
+  const posts = await client.fetch(groq`
+    *[_type == "blogPost"] { slug }
+  `)
+  return posts.map((post: any) => post.slug.current)
+}
+
+export async function getBlogPostsByAuthor(authorId: string): Promise<BlogPost[]> {
+  return client.fetch(groq`
+    *[_type == "blogPost" && author._ref == $authorId] | order(publishedAt desc) {
+      ${blogPostFields}
+    }
+  `, { authorId })
+}
+
+// Event Queries
+const eventFields = groq`
+  _id,
+  _type,
+  title,
+  slug,
+  description,
+  featuredImage,
+  eventDate,
+  endDate,
+  location,
+  eventType,
+  status,
+  organizer->{${teamMemberFields}},
+  speakers[]->{${teamMemberFields}},
+  maxAttendees,
+  registrationInfo,
+  gallery,
+  tags
+`
+
+export async function getAllEvents(): Promise<Event[]> {
+  return client.fetch(groq`
+    *[_type == "event"] | order(eventDate desc) {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getUpcomingEvents(): Promise<Event[]> {
+  return client.fetch(groq`
+    *[_type == "event" && status == "upcoming"] | order(eventDate asc) {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getPastEvents(): Promise<Event[]> {
+  return client.fetch(groq`
+    *[_type == "event" && status == "past"] | order(eventDate desc) {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getEventBySlug(slug: string): Promise<Event | null> {
+  return client.fetch(groq`
+    *[_type == "event" && slug.current == $slug][0] {
+      ${eventFields}
+    }
+  `, { slug })
+}
+
+export async function getAllEventSlugs(): Promise<string[]> {
+  const events = await client.fetch(groq`
+    *[_type == "event"] { slug }
+  `)
+  return events.map((event: any) => event.slug.current)
+}
+
+// Partner Queries
+const partnerFields = groq`
+  _id,
+  _type,
+  name,
+  logo,
+  logoUrl,
+  website,
+  description,
+  partnershipType,
+  isActive,
+  partnershipStartDate,
+  contactPerson,
+  legacyId
+`
+
+export async function getAllPartners(): Promise<Partner[]> {
+  return client.fetch(groq`
+    *[_type == "partner"] | order(name asc) {
+      ${partnerFields}
+    }
+  `)
+}
+
+export async function getActivePartners(): Promise<Partner[]> {
+  return client.fetch(groq`
+    *[_type == "partner" && isActive == true] | order(name asc) {
+      ${partnerFields}
+    }
+  `)
+}
+
+export async function getPartnersByType(type: string): Promise<Partner[]> {
+  return client.fetch(groq`
+    *[_type == "partner" && partnershipType == $type && isActive == true] | order(name asc) {
+      ${partnerFields}
+    }
+  `, { type })
+}
+
+// Cross-reference queries
+export async function getProjectsByContributor(contributorId: string): Promise<Project[]> {
+  return client.fetch(groq`
+    *[_type == "project" && (pointOfContact._ref == $contributorId || $contributorId in contributors[]._ref)] | order(title asc) {
+      ${projectFields}
+    }
+  `, { contributorId })
+}
+
+export async function getEventsByOrganizer(organizerId: string): Promise<Event[]> {
+  return client.fetch(groq`
+    *[_type == "event" && organizer._ref == $organizerId] | order(eventDate desc) {
+      ${eventFields}
+    }
+  `, { organizerId })
+}

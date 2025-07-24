@@ -7,12 +7,8 @@ import {
   UserPlus,
   UserRound,
 } from "lucide-react";
-import {
-  teamMembers,
-  communityMembers,
-  partnerOrganizations,
-  getCoreTeamMembers,
-} from "@/data/team";
+import { getAllTeamMembers, getAllPartners } from "@/lib/sanity-queries";
+import { buildImageUrl } from "@/lib/sanity";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -22,14 +18,22 @@ export const metadata: Metadata = {
   keywords: ["about us", "robotics team", "mission", "values", "history"],
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  // Fetch team data from Sanity at build time (SSG)
+  const teamMembers = await getAllTeamMembers();
+  const partners = await getAllPartners();
+  
   // Get the leadership team (first two members who are on the board)
   const leadershipTeam = teamMembers
     .filter((member) => member.isBoard)
     .slice(0, 2);
   // Get the rest of the core team (excluding the leadership team)
   const coreTeam = teamMembers.filter(
-    (member) => !leadershipTeam.includes(member)
+    (member) => !leadershipTeam.includes(member) && member.memberType === 'core'
+  );
+  // Get community members
+  const communityMembers = teamMembers.filter(
+    (member) => member.memberType === 'community'
   );
 
   return (
@@ -101,12 +105,12 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {leadershipTeam.map((member) => (
                 <div
-                  key={member.id}
+                  key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
                   <div className="w-40 h-40 mb-6 overflow-hidden rounded-full border-3 border-yellow-secondary group-hover:border-primary transition-colors duration-300 relative shadow-lg">
                     <img
-                      src={member.image}
+                      src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -188,7 +192,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {coreTeam.map((member) => (
                 <div
-                  key={member.id}
+                  key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
                   <div
@@ -199,7 +203,7 @@ export default function AboutPage() {
                     } group-hover:border-primary transition-colors duration-300 relative`}
                   >
                     <img
-                      src={member.image}
+                      src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -293,12 +297,12 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
               {communityMembers.map((member) => (
                 <div
-                  key={member.id}
+                  key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
                   <div className="w-24 h-24 mb-3 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300">
                     <img
-                      src={member.image}
+                      src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -322,10 +326,10 @@ export default function AboutPage() {
             </h2>
 
             {/* Display partner organizations logos */}
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
-              {partnerOrganizations.map((org) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
+              {partners.map((org) => (
                 <a
-                  key={org.id}
+                  key={org._id}
                   href={org.website}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -333,13 +337,13 @@ export default function AboutPage() {
                   aria-label={org.name}
                 >
                   <img
-                    src={org.logo}
+                    src={buildImageUrl(org.logoUrl || org.logo)}
                     alt={org.name}
                     className="max-h-16 max-w-full"
                   />
                 </a>
               ))}
-            </div> */}
+            </div>
 
             {/* Join as Organization CTA */}
             <div className="mt-16 max-w-3xl mx-auto bg-card/70 p-8 rounded-lg border border-primary/20">

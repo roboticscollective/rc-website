@@ -1,8 +1,9 @@
 // src/app/projects/[slug]/page.tsx
 
 import { Button } from "@/components/ui/button";
-import { getProjectBySlug, getAllProjectSlugs } from "@/data/projects";
-import { getTeamMemberById } from "@/data/team";
+import { getProjectBySlug, getAllProjectSlugs } from "@/lib/sanity-queries";
+import { buildImageUrl } from "@/lib/sanity";
+import { PortableText } from '@portabletext/react';
 import {
   ArrowLeft,
   Github,
@@ -15,7 +16,6 @@ import {
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import ReactMarkDown from 'react-markdown';
 
 // Define Promise-based types for props
 type PageParams = Promise<{ slug: string }>;
@@ -24,7 +24,7 @@ type PageSearchParams = Promise<{
 }>;
 
 export async function generateStaticParams() {
-  const slugs = getAllProjectSlugs();
+  const slugs = await getAllProjectSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
@@ -36,7 +36,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const params = await paramsPromise; // Await the promise
   const { slug } = params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return {
@@ -47,7 +47,7 @@ export async function generateMetadata({
   return {
     title: `${project.title} - Robotics Collective`,
     description: project.description,
-    keywords: [...project.tags, "robotics", "innovation", "project details"],
+    keywords: [...(project.tags || []), "robotics", "innovation", "project details"],
   };
 }
 
@@ -85,13 +85,15 @@ export default async function ProjectPage({
   const params = await paramsPromise; // Await the promise
   const searchParams = await searchParamsPromise; // Await the promise
   const { slug } = params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
-  const pointOfContact = getTeamMemberById(project.pointOfContactId);
+  const pointOfContact = project.pointOfContact;
+  const projectImageUrl = buildImageUrl(project.image || project.imageUrl);
+  const contactImageUrl = pointOfContact ? buildImageUrl(pointOfContact.image || pointOfContact.imageUrl) : '';
 
   return (
     <div className="min-h-screen bg-background">
@@ -99,7 +101,7 @@ export default async function ProjectPage({
       <div className="relative w-full h-[50vh] min-h-[400px] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src={project.image}
+            src={projectImageUrl}
             alt={project.title}
             className="w-full h-full object-cover"
           />
@@ -126,7 +128,7 @@ export default async function ProjectPage({
           </h1>
 
           <div className="flex flex-wrap gap-2 mb-2">
-            {project.tags.map((tag, index) => (
+            {project.tags?.map((tag, index) => (
               <span
                 key={index}
                 className="text-sm bg-secondary/80 backdrop-blur-sm px-3 py-1 rounded-full text-primary"
@@ -143,48 +145,50 @@ export default async function ProjectPage({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Main content column */}
           <div className="md:col-span-2">
-	      <div className="prose prose-invert max-w-none">
-              {project.content?.split("\n\n").map((paragraph, idx) => (
-                <p key={idx} className="mb-6 text-lg text-gray-300">
-                  {paragraph}
-                </p>
-              ))}
+            <div className="prose prose-invert max-w-none">
+              {project.content && project.content.length > 0 ? (
+                <PortableText 
+                  value={project.content}
+                  components={{
+                    block: {
+                      normal: ({ children }) => (
+                        <p className="mb-6 text-lg text-gray-300">{children}</p>
+                      ),
+                    },
+                    marks: {
+                      strong: ({ children }) => (
+                        <strong className="text-primary">{children}</strong>
+                      ),
+                    },
+                  }}
+                />
+              ) : (
+                <p className="mb-6 text-lg text-gray-300">{project.description}</p>
+              )}
             </div>
-	  {/*
-	  <div ClassName="prose prose-invert max-w-none">
-	    <ReactMarkDown>{project.content}</ReactMarkDown>
-	  </div>
-	   */}
 
             {/* Gallery Grid */}
-	    {project.galleryImages && project.galleryImages.length > 0 && (
-		    <div className="mt-12">
-		    <h2 className="text-2xl font-bold mb-6">Gallery</h2>
-		    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-		    {project.galleryImages.map((item, idx) => (
-			    <div
-			    key={idx}
-			    className="rounded-lg overflow-hidden"
-			    >
-			    {item.type == 'video' ? (
-				    <video
-				    controls
-				    poster={item.poster}
-				    className="w-full h-full object-cover"
-				    >
-				    <source src={item.src} type="video/mp4" />
-				    Your browser does not support the video tag.
-					    </video>
-
-			    ) : (
-			    <img
-			    src={item.src}
-			    alt={`${project.title} gallery image ${idx + 1}`}
-			    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-			    />
-			    )}
-			    </div>
-		    ))}
+            {((project.galleryImages && project.galleryImages.length > 0) || 
+              (project.galleryImageUrls && project.galleryImageUrls.length > 0)) && (
+              <div className="mt-12">
+                <h2 className="text-2xl font-bold mb-6">Gallery</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Handle both gallery image types */}
+                  {(project.galleryImages || project.galleryImageUrls || []).map((image, idx) => {
+                    const imageUrl = buildImageUrl(image);
+                    return (
+                      <div
+                        key={idx}
+                        className="aspect-square rounded-lg overflow-hidden"
+                      >
+                        <img
+                          src={imageUrl}
+                          alt={`${project.title} gallery image ${idx + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -268,7 +272,7 @@ export default async function ProjectPage({
                 <div>
                   <h4 className="text-sm text-gray-400 mb-1">Tags</h4>
                   <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, index) => (
+                    {project.tags?.map((tag, index) => (
                       <span
                         key={index}
                         className="text-xs bg-secondary px-2 py-1 rounded-full text-primary"
@@ -288,7 +292,7 @@ export default async function ProjectPage({
                     <div className="flex items-center mb-3">
                       <div className="w-12 h-12 rounded-full overflow-hidden mr-3">
                         <img
-                          src={pointOfContact.image}
+                          src={contactImageUrl}
                           alt={pointOfContact.name}
                           className="w-full h-full object-cover"
                         />

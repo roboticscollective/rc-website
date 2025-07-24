@@ -12,9 +12,10 @@ import {
   Calendar,
   CheckCircle2,
 } from "lucide-react";
-import { positions } from "@/data/positions";
 import Link from "next/link";
 import { CldImage } from 'next-cloudinary';
+import { type Position } from "@/lib/sanity";
+import { buildImageUrl } from "@/lib/sanity";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -37,7 +38,11 @@ const itemVariants = {
   },
 };
 
-export default function PositionsPageContent() {
+interface PositionsPageContentProps {
+  positions: Position[];
+}
+
+export default function PositionsPageContent({ positions }: PositionsPageContentProps) {
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#e6af2e]/12 via-background to-[#C03221]/12">
       {/* Hero Section */}
@@ -249,7 +254,7 @@ export default function PositionsPageContent() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
               {positions.map((position) => (
                 <motion.div
-                  key={position.id}
+                  key={position._id}
                   variants={itemVariants}
                   whileHover={{
                     scale: 1.02,
@@ -263,9 +268,13 @@ export default function PositionsPageContent() {
                         <div className="w-3 h-3 rounded-full bg-primary animate-pulse"></div>
                         <Badge
                           variant="outline"
-                          className="text-xs px-3 py-1 rounded-full border-primary/30 text-primary bg-primary/10"
+                          className={`text-xs px-3 py-1 rounded-full ${
+                            position.isOpen 
+                              ? "border-primary/30 text-primary bg-primary/10" 
+                              : "border-gray-500/30 text-gray-500 bg-gray-500/10"
+                          }`}
                         >
-                          Open
+                          {position.isOpen ? "Open" : "Filled"}
                         </Badge>
                       </div>
                       <CardTitle className="text-2xl mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
