@@ -99,7 +99,7 @@ export default function MeetupPage() {
                 <div className="bg-card p-6 rounded-lg flex items-center justify-center flex-col">
                   <Clock className="text-primary h-8 w-8 mb-3" />
                   <h3 className="text-lg font-semibold mb-1">Time</h3>
-                  <p className="text-gray-300">2:00 PM - 5:30 PM</p>
+                  <p className="text-gray-300">2:00 PM - 9:00 PM</p>
                 </div>
                 <a
                   href="https://maps.google.com/maps?q=Digital+Church,+Aachen,+Germany"
