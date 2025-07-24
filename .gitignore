@@ -1,2 +1,5 @@
 .claude/
+.claude
 CLAUDE.md
+
+*.env
