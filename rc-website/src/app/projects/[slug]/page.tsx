@@ -218,36 +218,6 @@ export default async function ProjectPage({
                 <Link href="/contact">
                   <Button>Contact Us</Button>
                 </Link>
-                {project.links?.github && (
-                  <a
-                    href={project.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button
-                      variant="secondary"
-                      className="flex items-center gap-2"
-                    >
-                      <Github size={16} />
-                      View on GitHub
-                    </Button>
-                  </a>
-                )}
-                {project.links?.website && (
-                  <a
-                    href={project.links.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button
-                      variant="secondary"
-                      className="flex items-center gap-2"
-                    >
-                      <Globe size={16} />
-                      Visit Website
-                    </Button>
-                  </a>
-                )}
                 {project.links?.documentation && (
                   <a
                     href={project.links.documentation}
@@ -308,18 +278,15 @@ export default async function ProjectPage({
                         
                         const imageElement = (
                           <div className="relative group">
-                            <div className="w-10 h-10 rounded-full overflow-hidden transition-transform duration-200 group-hover:scale-105">
+                            <div className={`w-10 h-10 rounded-full overflow-hidden transition-transform duration-200 group-hover:scale-105 ${
+                              member.isLead ? 'border-2 border-yellow-secondary' : ''
+                            }`}>
                               <img
                                 src={memberImageUrl}
                                 alt={member.name}
                                 className="w-full h-full object-cover"
                               />
                             </div>
-                            {member.isLead && (
-                              <div className="absolute -top-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center">
-                                <span className="text-xs text-black font-bold">L</span>
-                              </div>
-                            )}
                           </div>
                         );
 

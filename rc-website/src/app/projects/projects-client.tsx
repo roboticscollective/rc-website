@@ -79,15 +79,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   title={`${pointOfContact.name} - ${pointOfContact.role} (Lead)`}
                   className="relative group"
                 >
-                  <div className="w-6 h-6 rounded-full overflow-hidden transition-transform duration-200 group-hover:scale-105">
+                  <div className="w-6 h-6 rounded-full overflow-hidden border-2 border-yellow-secondary transition-transform duration-200 group-hover:scale-105">
                     <img
                       src={contactImageUrl}
                       alt={pointOfContact.name}
                       className="w-full h-full object-cover"
                     />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-xs text-black font-bold">L</span>
                   </div>
                 </a>
               )}
