@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import ReactMarkDown from 'react-markdown';
 
 // Define Promise-based types for props
 type PageParams = Promise<{ slug: string }>;
@@ -142,13 +143,18 @@ export default async function ProjectPage({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Main content column */}
           <div className="md:col-span-2">
-            <div className="prose prose-invert max-w-none">
+	      <div className="prose prose-invert max-w-none">
               {project.content?.split("\n\n").map((paragraph, idx) => (
                 <p key={idx} className="mb-6 text-lg text-gray-300">
                   {paragraph}
                 </p>
               ))}
             </div>
+	  {/*
+	  <div ClassName="prose prose-invert max-w-none">
+	    <ReactMarkDown>{project.content}</ReactMarkDown>
+	  </div>
+	   */}
 
             {/* Gallery Grid */}
 	    {project.galleryImages && project.galleryImages.length > 0 && (
