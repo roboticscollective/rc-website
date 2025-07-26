@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { getProjectBySlug, getAllProjectSlugs } from "@/lib/sanity-queries";
 import { buildImageUrl } from "@/lib/sanity";
+import OptimizedVideo from "@/components/OptimizedVideo";
 import { PortableText } from '@portabletext/react';
 import {
   ArrowLeft,
@@ -181,26 +182,76 @@ export default async function ProjectPage({
 
             {/* Gallery Grid */}
             {((project.galleryImages && project.galleryImages.length > 0) || 
-              (project.galleryImageUrls && project.galleryImageUrls.length > 0)) && (
+              (project.galleryImageUrls && project.galleryImageUrls.length > 0) ||
+              (project.galleryVideos && project.galleryVideos.length > 0) ||
+              (project.galleryVideoUrls && project.galleryVideoUrls.length > 0)) && (
               <div className="mt-12">
                 <h2 className="text-2xl font-bold mb-6">Gallery</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {/* Handle both gallery image types */}
-                  {(project.galleryImages || project.galleryImageUrls || []).map((image, idx) => {
+                  {/* Handle gallery images */}
+                  {(project.galleryImages || []).map((image, idx) => {
                     const imageUrl = buildImageUrl(image);
                     return (
                       <div
-                        key={idx}
+                        key={`image-${idx}`}
                         className="aspect-square rounded-lg overflow-hidden"
                       >
                         <img
                           src={imageUrl}
-                          alt={`${project.title} gallery image ${idx + 1}`}
+                          alt={image.alt || `${project.title} gallery image ${idx + 1}`}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         />
                       </div>
                     )
                   })}
+                  
+                  {/* Handle gallery image URLs (migration) */}
+                  {(project.galleryImageUrls || []).map((image, idx) => {
+                    return (
+                      <div
+                        key={`image-url-${idx}`}
+                        className="aspect-square rounded-lg overflow-hidden"
+                      >
+                        <img
+                          src={image.url}
+                          alt={image.alt || `${project.title} gallery image ${idx + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )
+                  })}
+
+                  {/* Handle gallery videos */}
+                  {(project.galleryVideos || []).map((video, idx) => (
+                    <div
+                      key={`video-${idx}`}
+                      className="aspect-square rounded-lg overflow-hidden"
+                    >
+                      <OptimizedVideo
+                        video={video}
+                        className="w-full h-full"
+                        muted={true}
+                        controls={true}
+                        autoPlay={false}
+                      />
+                    </div>
+                  ))}
+
+                  {/* Handle gallery video URLs (migration) */}
+                  {(project.galleryVideoUrls || []).map((video, idx) => (
+                    <div
+                      key={`video-url-${idx}`}
+                      className="aspect-square rounded-lg overflow-hidden"
+                    >
+                      <OptimizedVideo
+                        videoUrl={video}
+                        className="w-full h-full"
+                        muted={true}
+                        controls={true}
+                        autoPlay={false}
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

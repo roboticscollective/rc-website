@@ -128,6 +128,90 @@ export default defineType({
       description: 'Temporary field for gallery image migration - replace with actual image uploads',
     }),
     defineField({
+      name: 'galleryVideos',
+      title: 'Gallery Videos',
+      type: 'array',
+      of: [
+        {
+          type: 'file',
+          options: {
+            accept: 'video/*',
+          },
+          fields: [
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+            },
+            {
+              name: 'poster',
+              type: 'image',
+              title: 'Video Poster/Thumbnail',
+              options: {hotspot: true},
+              description: 'Thumbnail image shown before video plays',
+            },
+            {
+              name: 'duration',
+              type: 'number',
+              title: 'Duration (seconds)',
+              description: 'Video duration in seconds (optional)',
+            },
+          ],
+        },
+      ],
+      description: 'Video files for the project gallery',
+    }),
+    defineField({
+      name: 'galleryVideoUrls',
+      title: 'Gallery Video URLs (Migration)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'url',
+              title: 'Video URL',
+              type: 'url',
+              description: 'Direct video file URL or streaming URL',
+            }),
+            defineField({
+              name: 'caption',
+              title: 'Caption',
+              type: 'string',
+            }),
+            defineField({
+              name: 'posterUrl',
+              title: 'Poster Image URL',
+              type: 'url',
+              description: 'Thumbnail image URL shown before video plays',
+            }),
+            defineField({
+              name: 'duration',
+              title: 'Duration (seconds)',
+              type: 'number',
+              description: 'Video duration in seconds (optional)',
+            }),
+            defineField({
+              name: 'mimeType',
+              title: 'MIME Type',
+              type: 'string',
+              options: {
+                list: [
+                  {title: 'MP4', value: 'video/mp4'},
+                  {title: 'WebM', value: 'video/webm'},
+                  {title: 'OGV', value: 'video/ogg'},
+                ],
+              },
+              initialValue: 'video/mp4',
+              description: 'Video format for browser compatibility',
+            }),
+          ],
+        },
+      ],
+      description: 'Temporary field for video migration - replace with actual video uploads',
+    }),
+    defineField({
       name: 'status',
       title: 'Project Status',
       type: 'string',

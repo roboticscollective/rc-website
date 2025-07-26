@@ -69,6 +69,53 @@ export function buildImageUrl(source: any): string {
   return ''
 }
 
+// Helper function for video URLs (handles both Sanity videos and migration URLs)
+export function buildVideoUrl(source: any): string {
+  // Handle direct URL strings (migration URLs or direct links)
+  if (typeof source === 'string') {
+    return source
+  }
+  
+  // Handle videoUrl field during migration
+  if (source?.url) {
+    return source.url
+  }
+  
+  // Handle Sanity file assets (videos)
+  if (source?.asset) {
+    // Prefer using the asset URL if available
+    if (source.asset.url) {
+      return source.asset.url
+    }
+    
+    // Extract file reference for Sanity CDN
+    if (source.asset._ref) {
+      const ref = source.asset._ref
+      // Parse the reference format: file-{id}-{format}
+      const parts = ref.split('-')
+      if (parts.length >= 2) {
+        const id = parts.slice(1, -1).join('-')
+        const format = parts[parts.length - 1]
+        return `https://cdn.sanity.io/files/${projectId}/${dataset}/${id}.${format}`
+      }
+    }
+  }
+  
+  // Handle legacy asset structure
+  if (source?._ref) {
+    const ref = source._ref.replace('file-', '')
+    const parts = ref.split('-')
+    if (parts.length >= 2) {
+      const format = parts.pop()
+      const assetId = parts.join('-')
+      return `https://cdn.sanity.io/files/${projectId}/${dataset}/${assetId}.${format}`
+    }
+  }
+  
+  // Return empty string if no valid video source found
+  return ''
+}
+
 // TypeScript interfaces matching our schemas
 export interface TeamMember {
   _id: string
@@ -112,6 +159,14 @@ export interface Project {
   galleryImageUrls?: Array<{
     url: string
     alt?: string
+  }>
+  galleryVideos?: any[]
+  galleryVideoUrls?: Array<{
+    url: string
+    caption?: string
+    posterUrl?: string
+    duration?: number
+    mimeType?: string
   }>
   status: 'ongoing' | 'finished' | 'planned'
   featured?: boolean

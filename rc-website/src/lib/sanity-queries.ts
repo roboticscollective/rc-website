@@ -103,6 +103,8 @@ const projectFields = groq`
   imageUrl,
   galleryImages,
   galleryImageUrls,
+  galleryVideos,
+  galleryVideoUrls,
   status,
   featured,
   tags,
