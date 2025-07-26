@@ -181,25 +181,51 @@ export default async function ProjectPage({
             </div>
 
             {/* Gallery Grid */}
-            {((project.galleryImages && project.galleryImages.length > 0) || 
+            {(projectImageUrl || 
+              (project.galleryImages && project.galleryImages.length > 0) || 
               (project.galleryImageUrls && project.galleryImageUrls.length > 0) ||
               (project.galleryVideos && project.galleryVideos.length > 0) ||
               (project.galleryVideoUrls && project.galleryVideoUrls.length > 0)) && (
               <div className="mt-12">
                 <h2 className="text-2xl font-bold mb-6">Gallery</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="flex flex-wrap gap-4 justify-center">
+                  {/* Featured project image */}
+                  {projectImageUrl && (
+                    <div className="h-64 md:h-80 w-96 rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center">
+                      <img
+                        src={projectImageUrl}
+                        alt={`${project.title} featured image`}
+                        className="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
+                      />
+                    </div>
+                  )}
+                  
                   {/* Handle gallery images */}
                   {(project.galleryImages || []).map((image, idx) => {
                     const imageUrl = buildImageUrl(image);
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    // Adjust index to account for featured image
+                    const adjustedIdx = projectImageUrl ? idx + 1 : idx;
+                    
                     return (
                       <div
                         key={`image-${idx}`}
-                        className="aspect-square rounded-lg overflow-hidden"
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center`}
                       >
                         <img
                           src={imageUrl}
                           alt={image.alt || `${project.title} gallery image ${idx + 1}`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          className="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
                         />
                       </div>
                     )
@@ -207,51 +233,102 @@ export default async function ProjectPage({
                   
                   {/* Handle gallery image URLs (migration) */}
                   {(project.galleryImageUrls || []).map((image, idx) => {
+                    const galleryImagesCount = (project.galleryImages || []).length;
+                    const featuredOffset = projectImageUrl ? 1 : 0;
+                    const adjustedIdx = idx + galleryImagesCount + featuredOffset;
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    
                     return (
                       <div
                         key={`image-url-${idx}`}
-                        className="aspect-square rounded-lg overflow-hidden"
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center`}
                       >
                         <img
                           src={image.url}
-                          alt={image.alt || `${project.title} gallery image ${idx + 1}`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          alt={image.alt || `${project.title} gallery image ${adjustedIdx + 1}`}
+                          className="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
                         />
                       </div>
                     )
                   })}
 
                   {/* Handle gallery videos */}
-                  {(project.galleryVideos || []).map((video, idx) => (
-                    <div
-                      key={`video-${idx}`}
-                      className="aspect-square rounded-lg overflow-hidden"
-                    >
-                      <OptimizedVideo
-                        video={video}
-                        className="w-full h-full"
-                        muted={true}
-                        controls={true}
-                        autoPlay={false}
-                      />
-                    </div>
-                  ))}
+                  {(project.galleryVideos || []).map((video, idx) => {
+                    const imagesCount = (project.galleryImages || []).length + (project.galleryImageUrls || []).length;
+                    const featuredOffset = projectImageUrl ? 1 : 0;
+                    const adjustedIdx = idx + imagesCount + featuredOffset;
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    
+                    return (
+                      <div
+                        key={`video-${idx}`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center overflow-hidden`}
+                      >
+                        <OptimizedVideo
+                          video={video}
+                          className="max-w-full max-h-full object-contain"
+                          muted={true}
+                          controls={false}
+                          autoPlay={true}
+                        />
+                      </div>
+                    )
+                  })}
 
                   {/* Handle gallery video URLs (migration) */}
-                  {(project.galleryVideoUrls || []).map((video, idx) => (
-                    <div
-                      key={`video-url-${idx}`}
-                      className="aspect-square rounded-lg overflow-hidden"
-                    >
-                      <OptimizedVideo
-                        videoUrl={video}
-                        className="w-full h-full"
-                        muted={true}
-                        controls={true}
-                        autoPlay={false}
-                      />
-                    </div>
-                  ))}
+                  {(project.galleryVideoUrls || []).map((video, idx) => {
+                    const mediaCount = (project.galleryImages || []).length + 
+                                     (project.galleryImageUrls || []).length + 
+                                     (project.galleryVideos || []).length;
+                    const featuredOffset = projectImageUrl ? 1 : 0;
+                    const adjustedIdx = idx + mediaCount + featuredOffset;
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    
+                    return (
+                      <div
+                        key={`video-url-${idx}`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center overflow-hidden`}
+                      >
+                        <OptimizedVideo
+                          videoUrl={video}
+                          className="max-w-full max-h-full object-contain"
+                          muted={true}
+                          controls={false}
+                          autoPlay={true}
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}

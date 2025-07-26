@@ -137,6 +137,7 @@ export default function OptimizedVideo({
         poster={posterSrc}
         muted={isMuted}
         loop={loop}
+        autoPlay={autoPlay}
         playsInline
         preload="metadata"
         onPlay={() => setIsPlaying(true)}
@@ -229,10 +230,13 @@ export default function OptimizedVideo({
         </div>
       )}
 
+      {/* Bottom gradient for caption readability */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none z-10" />
+
       {/* Caption overlay */}
       {videoCaption && (
-        <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/80 to-transparent">
-          <p className="text-white text-sm text-center">{videoCaption}</p>
+        <div className="absolute bottom-0 left-0 right-0 p-2 z-20">
+          <p className="text-white text-sm text-center drop-shadow-lg">{videoCaption}</p>
         </div>
       )}
 
