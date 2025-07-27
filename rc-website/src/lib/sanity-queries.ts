@@ -152,7 +152,6 @@ const positionFields = groq`
   title,
   description,
   responsibilities,
-  deliverables,
   currentHolder->{${teamMemberFields}},
   isOpen,
   timeCommitment,

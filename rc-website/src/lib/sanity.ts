@@ -187,7 +187,6 @@ export interface Position {
   title: string
   description: string
   responsibilities: string[]
-  deliverables: string[]
   currentHolder?: TeamMember
   isOpen?: boolean
   timeCommitment?: string

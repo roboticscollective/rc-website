@@ -27,14 +27,6 @@ export default defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
-      name: 'deliverables',
-      title: 'Key Deliverables',
-      type: 'array',
-      of: [{type: 'text'}],
-      description: 'List of key deliverables expected from this position',
-      validation: (Rule) => Rule.required().min(1),
-    }),
-    defineField({
       name: 'currentHolder',
       title: 'Current Position Holder',
       type: 'reference',

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { getCldVideoUrl } from 'next-cloudinary';
 
 const CTASection = () => {
   return (
@@ -17,7 +18,22 @@ const CTASection = () => {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src="/ctavideo.webm" type="video/webm" />
+          <source
+            src={getCldVideoUrl({
+              src: "ctavideo_galdsa",
+              format: "webm",
+              quality: "auto"
+            })}
+            type="video/webm"
+          />
+          <source
+            src={getCldVideoUrl({
+              src: "ctavideo_galdsa",
+              format: "mp4",
+              quality: "auto"
+            })}
+            type="video/mp4"
+          />
         </video>
       </div>
 

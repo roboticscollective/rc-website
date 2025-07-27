@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { getCldVideoUrl } from "next-cloudinary";
 
 export const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -101,8 +102,20 @@ export const HeroSection = () => {
           className="absolute w-full h-full object-cover z-0 transform -translate-y-8"
         >
           <source
-            src="https://res.cloudinary.com/dilan3qfq/video/upload/v1745159975/h9s9mcjx0okpvll66gmg.webm"
+            src={getCldVideoUrl({
+              src: "hero_bg_video_vyk4sj",
+              format: "webm",
+              quality: "auto"
+            })}
             type="video/webm"
+          />
+          <source
+            src={getCldVideoUrl({
+              src: "hero_bg_video_vyk4sj",
+              format: "mp4",
+              quality: "auto"
+            })}
+            type="video/mp4"
           />
         </video>
         <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-primary/20 rounded-full filter blur-3xl animate-pulse-slow z-20"></div>

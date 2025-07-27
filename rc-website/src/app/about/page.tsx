@@ -364,20 +364,20 @@ export default async function AboutPage() {
             </h2>
 
             {/* Display partner organizations logos */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
+            <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto mb-16">
               {partners.map((org) => (
                 <a
                   key={org._id}
                   href={org.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center p-6 bg-card/30 rounded-lg border border-primary/10 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5"
+                  className="flex items-center justify-center p-6 bg-card/30 rounded-lg border border-primary/10 w-full sm:w-64 lg:w-56"
                   aria-label={org.name}
                 >
                   <img
                     src={buildImageUrl(org.logoUrl || org.logo)}
                     alt={org.name}
-                    className="max-h-16 max-w-full"
+                    className="w-full h-full object-contain"
                   />
                 </a>
               ))}

@@ -169,3 +169,142 @@
 .animate-float {
   animation: floatAnimation 3s ease-in-out infinite;
 }
+
+/* Event Notification Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(71, 168, 189, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 15px rgba(71, 168, 189, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.5s ease-out;
+}
+
+.banner-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-sweep::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(71, 168, 189, 0.1), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.event-hover-glow:hover {
+  box-shadow: 0 0 20px rgba(71, 168, 189, 0.3);
+}
+
+.event-notification-focusable:focus {
+  outline: 2px solid rgba(71, 168, 189, 0.5);
+  outline-offset: 2px;
+}
+
+.event-notification-badge {
+  position: relative;
+}
+
+/* Recruiting Toast Styles */
+.recruiting-toast-glow {
+  position: relative;
+  transform: translateY(0);
+  animation: slideInFromTop 0.5s ease-out;
+}
+
+.recruiting-toast-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(71, 168, 189, 0.15), rgba(192, 50, 33, 0.1), transparent);
+  animation: shimmer 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.recruiting-toast-glow:hover {
+  box-shadow: 0 0 25px rgba(71, 168, 189, 0.4), 0 0 50px rgba(71, 168, 189, 0.1);
+  transform: translateY(-1px);
+  transition: all 0.3s ease;
+}
+
+/* Slide in animation for recruiting toast */
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Enhanced animations for recruiting toast elements */
+.recruiting-toast-glow .lucide-sparkles {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.recruiting-toast-glow .lucide-users {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+/* Mobile responsiveness for toast */
+@media (max-width: 640px) {
+  .recruiting-toast-glow {
+    margin: 0 8px;
+    max-width: calc(100vw - 16px);
+  }
+}

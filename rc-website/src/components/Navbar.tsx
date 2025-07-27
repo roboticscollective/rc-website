@@ -6,12 +6,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { EventNotification } from "@/components/EventNotification";
+import type { EventData } from "@/components/EventNotification";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isMobile = useIsMobile();
+
+  // Sample event data - this could be fetched from your CMS
+  const nextEvent: EventData = {
+    id: "meetup-2025-04-23",
+    title: "Robotics Community Meetup",
+    date: new Date("2025-08-23T18:30:00"),
+    time: {
+      start: "6:30 PM",
+      end: "9:00 PM",
+    },
+    location: {
+      name: "Digital Church",
+      city: "Aachen",
+      country: "Germany",
+      mapUrl: "https://maps.google.com/maps?q=Digital+Church,+Aachen,+Germany",
+    },
+    registrationUrl: "https://lu.ma/e61lkaj1",
+    description:
+      "Join us for an evening of robotics presentations, networking, and collaboration.",
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,11 +63,11 @@ export function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isMobile 
-          ? "backdrop-blur-md" 
+        isMobile
+          ? "backdrop-blur-md"
           : isScrolled
-            ? "backdrop-blur-md"
-            : "bg-transparent"
+          ? "backdrop-blur-md"
+          : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,16 +126,23 @@ export function Navbar() {
             >
               Projects
             </Link>
-            <Link
-              href="/meetup"
-              className={`transition-colors ${
-                isActivePath("/meetup")
-                  ? "text-white font-medium glow"
-                  : "text-gray-300 hover:text-white"
-              }`}
-            >
-              Meetup
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/meetup"
+                className={`transition-colors ${
+                  isActivePath("/meetup")
+                    ? "text-white font-medium glow"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                Meetup
+              </Link>
+              <EventNotification
+                event={nextEvent}
+                variant="badge"
+                showDaysThreshold={30}
+              />
+            </div>
             <Link
               href="/contact"
               className={`transition-colors ${
@@ -128,11 +157,7 @@ export function Navbar() {
 
           <div className="hidden md:block">
             <Link href="/positions">
-              <Button
-                variant="default"
-              >
-                Join Us
-              </Button>
+              <Button variant="default">Join Us</Button>
             </Link>
           </div>
 
@@ -184,17 +209,24 @@ export function Navbar() {
             >
               Projects
             </Link>
-            <Link
-              href="/meetup"
-              className={`block py-2 transition-colors ${
-                isActivePath("/meetup")
-                  ? "text-white font-medium glow"
-                  : "text-gray-300 hover:text-white"
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Meetup
-            </Link>
+            <div className="flex items-center justify-between py-2">
+              <Link
+                href="/meetup"
+                className={`transition-colors ${
+                  isActivePath("/meetup")
+                    ? "text-white font-medium glow"
+                    : "text-gray-300 hover:text-white"
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Meetup
+              </Link>
+              <EventNotification
+                event={nextEvent}
+                variant="badge"
+                showDaysThreshold={30}
+              />
+            </div>
             <Link
               href="/contact"
               className={`block py-2 transition-colors ${
@@ -207,15 +239,18 @@ export function Navbar() {
               Contact
             </Link>
             <Link href="/positions" onClick={() => setMobileMenuOpen(false)}>
-              <Button
-                variant="default"
-              >
-                Join Us
-              </Button>
+              <Button variant="default">Join Us</Button>
             </Link>
           </div>
         </div>
       )}
+
+      {/* Event Banner integrated into navbar */}
+      <EventNotification 
+        event={nextEvent}
+        variant="banner"
+        showDaysThreshold={365}
+      />
     </nav>
   );
 }
