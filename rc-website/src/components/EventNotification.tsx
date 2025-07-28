@@ -109,7 +109,7 @@ const EventBadge: React.FC<EventNotificationProps> = ({ event, onDismiss }) => {
             hover:from-primary/30 hover:to-accent/30
             border border-primary/30 text-white
             transition-all duration-300 ease-in-out
-            animate-pulse-glow event-notification-badge
+            event-notification-badge
           `}
           role="status"
           aria-live="polite"
@@ -123,15 +123,6 @@ const EventBadge: React.FC<EventNotificationProps> = ({ event, onDismiss }) => {
             <span className="sm:hidden">{timeUntil.days}d</span>
           </span>
         </Badge>
-
-        {/* Pulsing notification dot */}
-        <div
-          className="relative flex items-center justify-center w-2 h-2"
-          aria-hidden="true"
-        >
-          <div className="w-2 h-2 rounded-full bg-primary animate-ping absolute" />
-          <div className="w-2 h-2 rounded-full bg-primary relative z-10" />
-        </div>
       </div>
 
       {/* Hover tooltip - Hidden on mobile, shown on desktop */}
@@ -187,7 +178,7 @@ const EventBanner: React.FC<EventNotificationProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 min-w-0 flex-1">
               <div
-                className="w-2 h-2 bg-primary rounded-full animate-pulse flex-shrink-0"
+                className="w-2 h-2 bg-primary rounded-full flex-shrink-0"
                 aria-hidden="true"
               />
               <span className="text-xs font-medium text-white truncate">
@@ -239,7 +230,7 @@ const EventBanner: React.FC<EventNotificationProps> = ({
           <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-shrink-0">
               <div
-                className="w-2 h-2 bg-primary rounded-full animate-pulse"
+                className="w-2 h-2 bg-primary rounded-full"
                 aria-hidden="true"
               />
               <span className="text-xs sm:text-sm font-medium text-white">

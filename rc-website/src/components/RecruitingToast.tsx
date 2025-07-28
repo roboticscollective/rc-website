@@ -85,7 +85,6 @@ export const RecruitingToast: React.FC<RecruitingToastProps> = ({
                   <h3 className="text-sm font-semibold text-white">
                     We're Recruiting!
                   </h3>
-                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 </div>
                 <p className="text-xs text-gray-300 mb-3 leading-relaxed">
                   Join us and help shape the future of robotics!
