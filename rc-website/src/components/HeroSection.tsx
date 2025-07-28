@@ -5,10 +5,14 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { getCldVideoUrl } from "next-cloudinary";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const isMobile = useIsMobile();
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const [sectionBounds, setSectionBounds] = useState({
     left: 0,
     top: 0,
@@ -93,27 +97,56 @@ export const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         {/* Gradient overlay that fades from 70% to 100% opacity of the background color */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 to-background backdrop-blur-[1px] z-10"></div>
+        {/* Image placeholder */}
+        <div 
+          className={`absolute w-full h-full object-cover z-0 transform -translate-y-8 transition-opacity duration-500 ${
+            videoLoaded ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{
+            backgroundImage: `url(${getCldVideoUrl({
+              src: "hero_bg_video_vyk4sj",
+              format: "jpg",
+              quality: "auto",
+              width: isMobile ? 800 : 1200,
+              height: isMobile ? 600 : 800,
+            })})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        
+        {/* Optimized video */}
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
-          className="absolute w-full h-full object-cover z-0 transform -translate-y-8"
+          preload="metadata"
+          className={`absolute w-full h-full object-cover z-0 transform -translate-y-8 transition-opacity duration-500 ${
+            videoLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+          onLoadedData={() => setVideoLoaded(true)}
+          onCanPlay={() => setVideoLoaded(true)}
+          onError={() => setVideoLoaded(false)}
         >
           <source
             src={getCldVideoUrl({
               src: "hero_bg_video_vyk4sj",
               format: "webm",
-              quality: "auto"
+              quality: isMobile ? "70" : "auto",
+              width: isMobile ? 1280 : 1920,
+              height: isMobile ? 720 : 1080,
             })}
             type="video/webm"
           />
           <source
             src={getCldVideoUrl({
               src: "hero_bg_video_vyk4sj",
-              format: "mp4",
-              quality: "auto"
+              format: "mp4", 
+              quality: isMobile ? "70" : "auto",
+              width: isMobile ? 1280 : 1920,
+              height: isMobile ? 720 : 1080,
             })}
             type="video/mp4"
           />

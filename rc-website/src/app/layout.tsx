@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -9,7 +10,12 @@ import { Providers } from "./providers";
 import { TooltipProvider } from "./tooltip-provider";
 import { EventNotification } from "@/components/EventNotification";
 import { RecruitingToast } from "@/components/RecruitingToast";
+import { ConsentProvider } from "@/contexts/ConsentContext";
+import { CookieConsentBanner } from "@/components/CookieConsentBanner";
+import { PageViewTracker } from "@/components/PageViewTracker";
+import { ScrollTracker } from "@/components/ScrollTracker";
 import type { EventData } from "@/components/EventNotification";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -59,17 +65,31 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={spaceGrotesk.variable}>
+      <head>
+        {/* Google Analytics - Only load script, initialization handled by consent */}
+        {GA_MEASUREMENT_ID && (
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+        )}
+      </head>
       <body className="font-spaceGrotesk">
-        <Providers>
-          <TooltipProvider>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-            <RecruitingToast />
-            <Toaster />
-            <Sonner />
-          </TooltipProvider>
-        </Providers>
+        <ConsentProvider>
+          <Providers>
+            <TooltipProvider>
+              <PageViewTracker />
+              <ScrollTracker />
+              <Navbar />
+              <main>{children}</main>
+              <Footer />
+              <RecruitingToast />
+              <CookieConsentBanner />
+              <Toaster />
+              <Sonner />
+            </TooltipProvider>
+          </Providers>
+        </ConsentProvider>
       </body>
     </html>
   );

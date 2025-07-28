@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getFeaturedProjects } from '@/lib/sanity-queries';
 import type { Project } from '@/lib/sanity';
+import { trackEngagement, ENGAGEMENT_EVENTS } from '@/lib/analytics';
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const imageUrl = buildImageUrl(project.image || project.imageUrl);
@@ -25,7 +26,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <p className="text-gray-300 mb-4 flex-grow">{project.description}</p>
         <div className="mt-auto">
           <Link href={`/projects/${project.slug.current}`}>
-            <Button variant="ghost" className="text-primary p-0 group hover:bg-transparent hover:no-underline">
+            <Button 
+              variant="ghost" 
+              className="text-primary p-0 group hover:bg-transparent hover:no-underline"
+              onClick={() => trackEngagement(ENGAGEMENT_EVENTS.PROJECT_VIEW, {
+                project_title: project.title,
+                project_slug: project.slug.current,
+                source: 'homepage_featured'
+              })}
+            >
               Learn More <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </Button>
           </Link>
@@ -126,6 +135,11 @@ const ProjectsSection = ({ projects: propProjects }: ProjectsSectionProps = {}) 
                 variant="default" 
                 className="px-8 py-6 text-lg rounded-3xl"
                 size="lg"
+                onClick={() => trackEngagement(ENGAGEMENT_EVENTS.CTA_BUTTON_CLICK, {
+                  button_text: 'View All Projects',
+                  destination: '/projects',
+                  section: 'homepage_projects'
+                })}
               >
                 View All Projects<ArrowRight className="ml-2 h-4 w-5 transition-transform group-hover:translate-x-1" />
               </Button>

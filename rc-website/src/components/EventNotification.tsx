@@ -5,6 +5,7 @@ import { Calendar, Clock, MapPin, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 // Types
 export interface EventData {
@@ -74,12 +75,6 @@ export const shouldShowNotification = (
   const now = new Date();
   const timeDiff = eventDate.getTime() - now.getTime();
   const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-  console.log("Event date:", eventDate);
-  console.log("Current date:", now);
-  console.log("Days diff:", daysDiff);
-  console.log("Threshold days:", thresholdDays);
-  console.log("Should show:", daysDiff > 0 && daysDiff <= thresholdDays);
 
   // Show for events up to the threshold days away
   return daysDiff > 0 && daysDiff <= thresholdDays;
@@ -376,10 +371,16 @@ export const EventNotification: React.FC<EventNotificationProps> = ({
   onDismiss,
 }) => {
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Don't show event notification on meetup page to avoid redundancy
+  if (pathname === "/meetup") {
+    return null;
+  }
 
   if (!mounted || !shouldShowNotification(event.date, showDaysThreshold)) {
     return null;

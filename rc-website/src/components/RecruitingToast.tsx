@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useConsent } from "@/contexts/ConsentContext";
 
 interface RecruitingToastProps {
   autoShow?: boolean;
@@ -19,10 +20,12 @@ export const RecruitingToast: React.FC<RecruitingToastProps> = ({
   onDismiss,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [forceHidden, setForceHidden] = useState(false);
   const pathname = usePathname();
+  const { showConsentBanner } = useConsent();
 
-  // Don't show on positions page
-  const shouldShow = pathname !== "/positions";
+  // Don't show on positions page or when cookie banner is visible
+  const shouldShow = pathname !== "/positions" && !showConsentBanner && !forceHidden;
 
   useEffect(() => {
     if (autoShow && shouldShow) {
@@ -31,8 +34,21 @@ export const RecruitingToast: React.FC<RecruitingToastProps> = ({
       }, delay);
 
       return () => clearTimeout(timer);
+    } else {
+      setIsVisible(false);
     }
   }, [autoShow, delay, shouldShow]);
+
+  // Listen for hide recruiting toast event
+  useEffect(() => {
+    const handleHideEvent = () => {
+      setForceHidden(true);
+      setIsVisible(false);
+    };
+
+    document.addEventListener('hideRecruitingToast', handleHideEvent);
+    return () => document.removeEventListener('hideRecruitingToast', handleHideEvent);
+  }, []);
 
   const handleDismiss = () => {
     setIsVisible(false);
@@ -40,7 +56,9 @@ export const RecruitingToast: React.FC<RecruitingToastProps> = ({
   };
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 sm:right-4 sm:left-auto z-[60] max-w-sm sm:w-auto">
+    <div 
+      className="fixed left-4 right-4 sm:right-4 sm:left-auto z-[60] max-w-sm sm:w-auto bottom-4"
+    >
       <AnimatePresence>
         {isVisible && shouldShow && (
           <motion.div

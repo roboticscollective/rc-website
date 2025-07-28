@@ -2,6 +2,8 @@ import { Calendar, MapPin, Users, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import CTASection from "@/components/CTASection";
+import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
+import { CONVERSION_EVENTS } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Meetup | Robotics Collective",
@@ -114,11 +116,20 @@ export default function MeetupPage() {
                 </a>
               </div>
 
-              <a
+              <AnalyticsWrapper
                 href="https://lu.ma/e61lkaj1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block"
+                trackEvent={{
+                  type: 'conversion',
+                  eventName: CONVERSION_EVENTS.MEETUP_REGISTRATION_CLICK,
+                  parameters: {
+                    event_date: '2025-08-15T18:30:00',
+                    location: 'Digital Church, Aachen',
+                    platform: 'luma'
+                  }
+                }}
               >
                 <Button
                   variant="default"
@@ -127,7 +138,7 @@ export default function MeetupPage() {
                 >
                   Register Now
                 </Button>
-              </a>
+              </AnalyticsWrapper>
             </div>
           </div>
         </section>

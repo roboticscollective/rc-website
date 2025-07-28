@@ -11,6 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Mail, MapPin, Send, Bot, Wrench } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
+import { trackFormSubmission, trackExternalLink, CONVERSION_EVENTS } from "@/lib/analytics";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -69,6 +71,9 @@ export default function ContactPageContent() {
       });
 
       if (response.ok) {
+        // Track successful form submission
+        trackFormSubmission('contact', true);
+        
         toast({
           title: "Message Sent",
           description: "We'll get back to you as soon as possible.",
@@ -79,6 +84,9 @@ export default function ContactPageContent() {
         throw new Error('Form submission failed');
       }
     } catch (error) {
+      // Track failed form submission
+      trackFormSubmission('contact', false, error instanceof Error ? error.message : 'Unknown error');
+      
       toast({
         title: "Error",
         description: "There was a problem sending your message. Please try again.",
@@ -107,6 +115,7 @@ export default function ContactPageContent() {
                 <a
                   href="mailto:info@roboticscollective.org"
                   className="block bg-card p-6 rounded-lg hover:bg-card/80 transition-colors"
+                  onClick={() => trackExternalLink('mailto:info@roboticscollective.org', 'Email Contact')}
                 >
                   <Mail className="h-6 w-6 text-primary mb-4" />
                   <h3 className="text-lg font-medium mb-1">Email Us</h3>

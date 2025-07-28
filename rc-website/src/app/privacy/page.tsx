@@ -79,13 +79,50 @@ export default function PrivacyPage() {
                 periods.
               </p>
 
-              <h2 className="mt-12">Google Analytics</h2>
+              <h2 className="mt-12">Google Analytics and Website Analytics</h2>
               <p>
-                We use Google Analytics to analyze user behavior on our website.
-                Your IP address is anonymized before storage. Data processing
-                takes place on the basis of your consent (Art. 6 Para. 1 lit. a
+                We use Google Analytics 4 (GA4) to analyze user behavior on our website
+                and understand how visitors interact with our content. This helps us
+                improve our website and provide better services to our community.
+              </p>
+              <p>
+                <strong>Data collected:</strong>
+              </p>
+              <ul>
+                <li>Page views and navigation patterns</li>
+                <li>Time spent on pages and sections</li>
+                <li>Device and browser information (anonymized)</li>
+                <li>General geographic location (country/city level)</li>
+                <li>Interaction with buttons, forms, and links</li>
+                <li>Scroll depth and content engagement</li>
+              </ul>
+              <p>
+                <strong>Privacy safeguards:</strong>
+              </p>
+              <ul>
+                <li>IP addresses are anonymized before processing</li>
+                <li>No personally identifiable information is stored</li>
+                <li>Google signals and remarketing are disabled</li>
+                <li>Data is only collected with your explicit consent</li>
+                <li>You can withdraw consent at any time via our cookie settings</li>
+              </ul>
+              <p>
+                Data processing takes place on the basis of your consent (Art. 6 Para. 1 lit. a
                 GDPR). You can revoke your consent at any time with effect for
-                the future.
+                the future by clicking the cookie settings in our consent banner or
+                by contacting us directly. Analytics data is retained for 26 months
+                as per Google's default settings.
+              </p>
+              <p>
+                For more information about Google Analytics and privacy, visit:{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  className="text-primary hover:text-primary/80"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Privacy Policy
+                </a>
               </p>
 
               <h2 className="mt-12">Cloudinary</h2>
@@ -218,13 +255,51 @@ export default function PrivacyPage() {
                 Aufbewahrungsfristen dies vorschreiben.
               </p>
 
-              <h3 className="mt-8">Google Analytics</h3>
+              <h3 className="mt-8">Google Analytics und Website-Analyse</h3>
               <p>
-                Wir nutzen Google Analytics, um das Nutzerverhalten auf unserer
-                Website zu analysieren. Ihre IP-Adresse wird vor der Speicherung
-                anonymisiert. Die Datenverarbeitung erfolgt auf Grundlage Ihrer
-                Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie können Ihre
-                Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.
+                Wir nutzen Google Analytics 4 (GA4), um das Nutzerverhalten auf unserer
+                Website zu analysieren und zu verstehen, wie Besucher mit unseren Inhalten
+                interagieren. Dies hilft uns, unsere Website zu verbessern und bessere
+                Dienstleistungen für unsere Community anzubieten.
+              </p>
+              <p>
+                <strong>Erhobene Daten:</strong>
+              </p>
+              <ul>
+                <li>Seitenaufrufe und Navigationsmuster</li>
+                <li>Verweildauer auf Seiten und Bereichen</li>
+                <li>Geräte- und Browserinformationen (anonymisiert)</li>
+                <li>Allgemeine geografische Lage (Land-/Stadtebene)</li>
+                <li>Interaktionen mit Buttons, Formularen und Links</li>
+                <li>Scroll-Tiefe und Content-Engagement</li>
+              </ul>
+              <p>
+                <strong>Datenschutzmaßnahmen:</strong>
+              </p>
+              <ul>
+                <li>IP-Adressen werden vor der Verarbeitung anonymisiert</li>
+                <li>Keine personenbezogenen Informationen werden gespeichert</li>
+                <li>Google-Signale und Remarketing sind deaktiviert</li>
+                <li>Daten werden nur mit Ihrer ausdrücklichen Zustimmung erfasst</li>
+                <li>Sie können die Zustimmung jederzeit über unsere Cookie-Einstellungen widerrufen</li>
+              </ul>
+              <p>
+                Die Datenverarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a
+                DSGVO). Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft
+                widerrufen, indem Sie die Cookie-Einstellungen in unserem Zustimmungsbanner
+                anklicken oder uns direkt kontaktieren. Analytics-Daten werden gemäß
+                Google-Standardeinstellungen 26 Monate lang aufbewahrt.
+              </p>
+              <p>
+                Weitere Informationen zu Google Analytics und Datenschutz finden Sie unter:{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  className="text-primary hover:text-primary/80"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Google Datenschutzerklärung
+                </a>
               </p>
 
               <h3 className="mt-8">Cloudinary</h3>
