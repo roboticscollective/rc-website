@@ -1,8 +1,7 @@
-// app/manifest.ts
-import type { MetadataRoute } from "next";
+import { NextResponse } from 'next/server';
 
-export default function manifest(): MetadataRoute.Manifest {
-  return {
+export async function GET() {
+  const manifest = {
     id: "/",
     scope: "/",
     name: "Robotics Collective",
@@ -26,4 +25,10 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
     categories: ["robotics", "simulation", "community"],
   };
+
+  return NextResponse.json(manifest, {
+    headers: {
+      'Content-Type': 'application/manifest+json',
+    },
+  });
 }

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,16 +12,33 @@ import { useToast } from "@/components/ui/use-toast";
 import { Mail, MapPin, Send, Bot, Wrench } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
+const contactFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
+
 export default function ContactPageContent() {
   const searchParams = useSearchParams();
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showErrorPageMessage, setShowErrorPageMessage] = useState(false);
+  
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
 
   // Check if user came from error page
   useEffect(() => {
@@ -28,43 +48,43 @@ export default function ContactPageContent() {
     if (source === "404" && action === "join") {
       setShowErrorPageMessage(true);
 
-      // Optional: Pre-fill the message for users coming from the error page
-      setFormData((prev) => ({
-        ...prev,
-        message:
-          "I'd like to help improve the robotics collective website and projects.",
-      }));
+      // Pre-fill the message for users coming from the error page
+      setValue("message", "I'd like to help improve the robotics collective website and projects.");
     }
-  }, [searchParams]);
+  }, [searchParams, setValue]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      // Netlify Forms submission
+      const submitData = new FormData();
+      submitData.append('form-name', 'contact');
+      submitData.append('name', data.name);
+      submitData.append('email', data.email);
+      submitData.append('message', data.message);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+      const response = await fetch('/contact-form.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(submitData as any).toString(),
+      });
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+      if (response.ok) {
+        toast({
+          title: "Message Sent",
+          description: "We'll get back to you as soon as possible.",
+        });
+        reset();
+        setShowErrorPageMessage(false);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
       toast({
-        title: "Message Sent",
-        description: "We'll get back to you as soon as possible.",
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
       });
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
-      setShowErrorPageMessage(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -139,7 +159,7 @@ export default function ContactPageContent() {
                   <h2 className="text-2xl font-semibold mb-6">
                     Send us a message
                   </h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label htmlFor="name" className="text-sm font-medium">
@@ -147,13 +167,13 @@ export default function ContactPageContent() {
                         </label>
                         <Input
                           id="name"
-                          name="name"
                           placeholder="Your name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          required
+                          {...register("name")}
                           className="bg-card border-primary/20 focus:border-primary"
                         />
+                        {errors.name && (
+                          <p className="text-sm text-red-400">{errors.name.message}</p>
+                        )}
                       </div>
                       <div className="space-y-2">
                         <label htmlFor="email" className="text-sm font-medium">
@@ -161,14 +181,14 @@ export default function ContactPageContent() {
                         </label>
                         <Input
                           id="email"
-                          name="email"
                           type="email"
                           placeholder="Your email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
+                          {...register("email")}
                           className="bg-card border-primary/20 focus:border-primary"
                         />
+                        {errors.email && (
+                          <p className="text-sm text-red-400">{errors.email.message}</p>
+                        )}
                       </div>
                     </div>
 
@@ -178,14 +198,14 @@ export default function ContactPageContent() {
                       </label>
                       <Textarea
                         id="message"
-                        name="message"
                         placeholder="Your message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
+                        {...register("message")}
                         rows={5}
                         className="bg-card border-primary/20 focus:border-primary resize-none"
                       />
+                      {errors.message && (
+                        <p className="text-sm text-red-400">{errors.message.message}</p>
+                      )}
                     </div>
 
                     <Button
