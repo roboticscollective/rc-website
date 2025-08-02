@@ -86,38 +86,18 @@ const EventBadge: React.FC<EventNotificationProps> = ({ event, onDismiss }) => {
 
   if (!timeUntil) return null;
 
-  // Show hours only in the last 15 days, otherwise just days
-  const showHours = timeUntil.days <= 15;
-
   return (
     <Link
       href="/meetup"
       className="relative group event-notification-focusable"
-      aria-label={`Upcoming event: ${event.title} in ${timeUntil.days} days and ${timeUntil.hours} hours`}
+      aria-label={`Upcoming event: ${event.title} in ${timeUntil.days} days`}
     >
-      <div className="flex items-center gap-2">
-        <Badge
-          variant="secondary"
-          className={`
-            relative overflow-hidden px-2 py-1 sm:px-3 sm:py-1.5 text-xs font-medium
-            bg-gradient-to-r from-primary/20 to-accent/20 
-            hover:from-primary/30 hover:to-accent/30
-            border border-primary/30 text-white
-            transition-all duration-300 ease-in-out
-            event-notification-badge
-          `}
-          role="status"
-          aria-live="polite"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent animate-shimmer" />
-          <Calendar className="w-3 h-3 mr-1 flex-shrink-0" aria-hidden="true" />
-          <span className="relative z-10 whitespace-nowrap">
-            <span className="hidden sm:inline">
-              {timeUntil.days}d{showHours ? ` ${timeUntil.hours}h` : ""}
-            </span>
-            <span className="sm:hidden">{timeUntil.days}d</span>
-          </span>
-        </Badge>
+      <div
+        className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-xs font-bold text-black relative -ml-4 -translate-y-1"
+        role="status"
+        aria-live="polite"
+      >
+        {timeUntil.days}
       </div>
 
       {/* Hover tooltip - Hidden on mobile, shown on desktop */}
@@ -159,7 +139,7 @@ const EventBanner: React.FC<EventNotificationProps> = ({
   return (
     <div
       className="
-        w-full
+        fixed top-0 left-0 right-0 z-50 w-full
         bg-gradient-to-r from-primary/15 via-accent/10 to-primary/15
         backdrop-blur-md border-b border-primary/20
         banner-sweep
@@ -167,7 +147,7 @@ const EventBanner: React.FC<EventNotificationProps> = ({
       role="banner"
       aria-label="Event notification"
     >
-      <div className="container mx-auto px-4 py-2 sm:py-3 relative z-10">
+      <div className="container mx-auto px-4 py-1.5 sm:py-2 relative z-10">
         {/* Mobile Layout - Stacked */}
         <div className="flex flex-col gap-2 sm:hidden">
           <div className="flex items-center justify-between">
@@ -207,15 +187,12 @@ const EventBanner: React.FC<EventNotificationProps> = ({
               </div>
             </div>
             
-            <Link href="/meetup">
-              <Button
-                size="sm"
-                variant="default"
-                className="border-primary bg-primary/20 text-primary hover:bg-primary/90 hover:text-white px-3 py-1 rounded-2xl text-xs flex-shrink-0"
-                aria-label={`Register for ${event.title}`}
-              >
-                Register
-              </Button>
+            <Link 
+              href="/meetup"
+              className="text-xs text-primary hover:text-white transition-colors underline decoration-primary/50 hover:decoration-white flex-shrink-0"
+              aria-label={`Register for ${event.title}`}
+            >
+              Register
             </Link>
           </div>
         </div>
@@ -266,15 +243,13 @@ const EventBanner: React.FC<EventNotificationProps> = ({
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            <Link href="/meetup">
-              <Button
-                variant="default"
-                className="border-primary bg-primary/20 text-primary hover:bg-primary/90 hover:text-white px-4 py-2 rounded-3xl"
-                aria-label={`Register for ${event.title}`}
-              >
-                <span className="hidden md:inline">Register Now</span>
-                <span className="md:hidden">Register</span>
-              </Button>
+            <Link 
+              href="/meetup"
+              className="text-sm text-primary hover:text-white transition-colors underline decoration-primary/50 hover:decoration-white"
+              aria-label={`Register for ${event.title}`}
+            >
+              <span className="hidden md:inline">Register Now</span>
+              <span className="md:hidden">Register</span>
             </Link>
 
             <button

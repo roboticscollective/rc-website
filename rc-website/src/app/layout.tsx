@@ -80,6 +80,12 @@ export default function RootLayout({
             <TooltipProvider>
               <PageViewTracker />
               <ScrollTracker />
+              {/* Event Banner - positioned above navbar */}
+              <EventNotification 
+                event={nextEvent}
+                variant="banner"
+                showDaysThreshold={365}
+              />
               <Navbar />
               <main>{children}</main>
               <Footer />

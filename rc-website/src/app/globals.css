@@ -69,6 +69,11 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Account for event banner + navbar height */
+  .page-with-banner {
+    padding-top: 7rem; /* ~112px - accounts for banner (~48px) + navbar (~64px) */
+  }
 }
 
 @layer utilities {

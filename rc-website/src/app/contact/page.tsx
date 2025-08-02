@@ -37,7 +37,7 @@ export default function ContactPage() {
     <>
       <Suspense
         fallback={
-          <div className="min-h-screen bg-background pt-24 flex items-center justify-center">
+          <div className="min-h-screen bg-background page-with-banner flex items-center justify-center">
             Loading...
           </div>
         }

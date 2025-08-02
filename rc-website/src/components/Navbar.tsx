@@ -62,7 +62,9 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+        isScrolled ? 'top-0' : 'top-12'
+      } ${
         isMobile
           ? "backdrop-blur-md"
           : isScrolled
@@ -129,7 +131,7 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 href="/meetup"
-                className={`transition-colors ${
+                className={`transition-colors relative z-10 ${
                   isActivePath("/meetup")
                     ? "text-white font-medium glow"
                     : "text-gray-300 hover:text-white"
@@ -212,7 +214,7 @@ export function Navbar() {
             <div className="flex items-center justify-between py-2">
               <Link
                 href="/meetup"
-                className={`transition-colors ${
+                className={`transition-colors relative z-10 ${
                   isActivePath("/meetup")
                     ? "text-white font-medium glow"
                     : "text-gray-300 hover:text-white"
@@ -245,12 +247,6 @@ export function Navbar() {
         </div>
       )}
 
-      {/* Event Banner integrated into navbar */}
-      <EventNotification 
-        event={nextEvent}
-        variant="banner"
-        showDaysThreshold={365}
-      />
     </nav>
   );
 }
