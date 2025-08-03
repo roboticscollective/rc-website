@@ -6,14 +6,15 @@ import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
 import { CONVERSION_EVENTS } from "@/lib/analytics";
 
 export const metadata: Metadata = {
-  title: "Meetup | Robotics Collective",
-  description: "Join our robotics meetups and events in your area",
+  title: "Conference | Robotics Collective",
+  description: "Join our robotics conference featuring keynotes, pitches, and networking",
   keywords: [
-    "robotics meetups",
-    "events",
-    "workshops",
+    "robotics conference",
+    "keynotes",
+    "pitches",
     "networking",
-    "community",
+    "professional exchange",
+    "collaboration",
   ],
 };
 
@@ -82,26 +83,25 @@ export default function MeetupPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Robotics Community <span className="text-primary">Meetup</span>
+                Robotics <span className="text-primary">Conference</span> Aachen
               </h1>
               <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                Our Robotics Community Meetups are designed to foster
-                collaboration, knowledge exchange, and networking within the
-                local robotics community. Join us to connect with like-minded
-                enthusiasts, share ideas, and stay at the forefront of robotics
-                innovation.
+                A conference dedicated to professional exchange, advanced
+                collaboration, and unparalleled networking in robotics. Connect
+                with industry professionals, researchers, and students to bridge
+                research and practical applications.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                 <div className="bg-card p-6 rounded-lg flex items-center justify-center flex-col">
                   <Calendar className="text-primary h-8 w-8 mb-3" />
                   <h3 className="text-lg font-semibold mb-1">Date</h3>
-                  <p className="text-gray-300">April 23, 2025</p>
+                  <p className="text-gray-300">October 16, 2025</p>
                 </div>
                 <div className="bg-card p-6 rounded-lg flex items-center justify-center flex-col">
                   <Clock className="text-primary h-8 w-8 mb-3" />
                   <h3 className="text-lg font-semibold mb-1">Time</h3>
-                  <p className="text-gray-300">6:30 PM - 9:00 PM</p>
+                  <p className="text-gray-300">2:00 PM - 9:00 PM</p>
                 </div>
                 <a
                   href="https://maps.google.com/maps?q=Digital+Church,+Aachen,+Germany"
@@ -117,7 +117,7 @@ export default function MeetupPage() {
               </div>
 
               <AnalyticsWrapper
-                href="https://lu.ma/e61lkaj1"
+                href="https://lu.ma/dh0z4i3g"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block"
@@ -148,50 +148,118 @@ export default function MeetupPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold mb-8 text-center">
-                What to <span className="text-primary">Expect</span>
+                Conference <span className="text-primary">Highlights</span>
               </h2>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <li className="bg-card p-6 rounded-md">
-                  <span className="text-primary font-medium">Networking</span>{" "}
-                  opportunities with students and professionals
+                  <span className="text-primary font-medium">Keynote Presentations</span>{" "}
+                  from industry leaders and researchers
                 </li>
                 <li className="bg-card p-6 rounded-md">
                   <span className="text-primary font-medium">
-                    Short Pitches
+                    Project Pitches
                   </span>{" "}
-                  and interactive sessions showcasing latest robotic projects
+                  showcasing innovative robotics solutions
                 </li>
                 <li className="bg-card p-6 rounded-md">
                   <span className="text-primary font-medium">
-                    Engaging Discussions
+                    Interactive Booths
                   </span>{" "}
-                  on cutting-edge robotics topics
+                  demonstrating cutting-edge technologies
                 </li>
                 <li className="bg-card p-6 rounded-md">
                   <span className="text-primary font-medium">
-                    Collaborative Workshops
+                    Professional Networking
                   </span>{" "}
-                  for problem-solving and innovation
+                  connecting industry, academia, and students
                 </li>
                 <li className="bg-card p-6 rounded-md col-span-1 md:col-span-2">
-                  Free{" "}
                   <span className="text-primary font-medium">
-                    Food & Drinks
+                    Reception with Pizza & Drinks
                   </span>{" "}
-                  in a lively atmosphere
+                  in a collaborative atmosphere
                 </li>
               </ul>
 
               <div className="mt-12 bg-card/50 p-8 rounded-lg">
                 <h3 className="text-2xl font-semibold mb-6 text-center">
-                  Join Our Next <span className="text-primary">Meetup</span>
+                  Join Our <span className="text-primary">Conference</span>
                 </h3>
                 <p className="text-lg text-gray-300">
-                  Don't miss this chance to connect with experts, gain insights
-                  into the latest advancements, and grow your professional
-                  network. Our meetups are a melting pot of ideas, innovation,
-                  and inspiration.
+                  Don't miss this opportunity for professional exchange and
+                  unparalleled networking. Connect with industry professionals,
+                  researchers, and students to bridge research and practical
+                  applications in robotics.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Partners Section */}
+        <section className="py-16 md:py-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold mb-12 text-center">
+              Our <span className="text-primary">Partners</span>
+            </h2>
+            <div className="overflow-hidden">
+              <div className="flex animate-infinite-scroll">
+                {/* First set of logos */}
+                <div className="flex min-w-full space-x-12 items-center justify-around">
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner1.jpg"
+                    alt="Partner 1"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner2.jpg"
+                    alt="Partner 2"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner3.jpg"
+                    alt="Partner 3"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner4.jpg"
+                    alt="Partner 4"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner5.jpg"
+                    alt="Partner 5"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+                {/* Duplicate set for seamless loop */}
+                <div className="flex min-w-full space-x-12 items-center justify-around">
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner1.jpg"
+                    alt="Partner 1"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner2.jpg"
+                    alt="Partner 2"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner3.jpg"
+                    alt="Partner 3"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner4.jpg"
+                    alt="Partner 4"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/partners/partner5.jpg"
+                    alt="Partner 5"
+                    className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
+                  />
+                </div>
               </div>
             </div>
           </div>

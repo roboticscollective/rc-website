@@ -137,7 +137,7 @@ export function Navbar() {
                     : "text-gray-300 hover:text-white"
                 }`}
               >
-                Meetup
+                Conference
               </Link>
               <EventNotification
                 event={nextEvent}
@@ -221,7 +221,7 @@ export function Navbar() {
                 }`}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Meetup
+                Conference
               </Link>
               <EventNotification
                 event={nextEvent}

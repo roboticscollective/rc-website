@@ -84,7 +84,7 @@ export function Footer() {
                   href="/meetup"
                   className="text-4xl hover:text-white transition-colors"
                 >
-                  Meetup
+                  Conference
                 </Link>
               </li>
               <li>
