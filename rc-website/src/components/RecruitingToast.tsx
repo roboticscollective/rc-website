@@ -7,14 +7,17 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useConsent } from "@/contexts/ConsentContext";
+import type { WebsiteSettings } from "@/lib/sanity";
 
 interface RecruitingToastProps {
+  settings: WebsiteSettings | null;
   autoShow?: boolean;
   delay?: number;
   onDismiss?: () => void;
 }
 
 export const RecruitingToast: React.FC<RecruitingToastProps> = ({
+  settings,
   autoShow = true,
   delay = 3000,
   onDismiss,
@@ -23,6 +26,11 @@ export const RecruitingToast: React.FC<RecruitingToastProps> = ({
   const [forceHidden, setForceHidden] = useState(false);
   const pathname = usePathname();
   const { showConsentBanner } = useConsent();
+
+  // Check global settings first
+  if (!settings?.recruitingControls?.showRecruitingToast) {
+    return null;
+  }
 
   // Don't show on positions page or when cookie banner is visible
   const shouldShow = pathname !== "/positions" && !showConsentBanner && !forceHidden;

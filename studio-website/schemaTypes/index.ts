@@ -4,6 +4,7 @@ import position from './position'
 import blogPost from './blogPost'
 import event from './event'
 import partner from './partner'
+import websiteSettings from './websiteSettings'
 
 export const schemaTypes = [
   teamMember,
@@ -12,4 +13,5 @@ export const schemaTypes = [
   blogPost,
   event,
   partner,
+  websiteSettings,
 ]

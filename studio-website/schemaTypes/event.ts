@@ -222,6 +222,72 @@ export default defineType({
       description: 'Photos from the event (usually added after the event)',
     }),
     defineField({
+      name: 'highlights',
+      title: 'Event Highlights',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Highlight Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'description',
+            },
+          },
+        },
+      ],
+      description: 'Key highlights/bullet points for the event (e.g., "Keynote Presentations from industry leaders")',
+    }),
+    defineField({
+      name: 'eventPartners',
+      title: 'Event Partners',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'partner'}],
+        },
+      ],
+      description: 'Select specific partners for this event (if none selected, will show all active partners)',
+    }),
+    defineField({
+      name: 'customRegistrationText',
+      title: 'Registration Button Text',
+      type: 'string',
+      initialValue: 'Register Now',
+      description: 'Custom text for the registration button',
+    }),
+    defineField({
+      name: 'showInBanner',
+      title: 'Show in Website Banner',
+      type: 'boolean',
+      initialValue: true,
+      description: 'Should this event appear in the website banner and navigation notifications?',
+    }),
+    defineField({
+      name: 'bannerPriority',
+      title: 'Banner Priority',
+      type: 'number',
+      initialValue: 1,
+      description: 'Higher numbers appear first in banner (if multiple events are eligible)',
+      validation: (Rule) => Rule.min(1).max(10),
+      hidden: ({parent}) => !parent?.showInBanner,
+    }),
+    defineField({
       name: 'tags',
       title: 'Tags',
       type: 'array',

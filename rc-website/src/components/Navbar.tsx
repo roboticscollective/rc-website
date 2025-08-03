@@ -9,36 +9,26 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { EventNotification, shouldShowNotification } from "@/components/EventNotification";
 import type { EventData } from "@/components/EventNotification";
 import { useBanner } from "@/contexts/BannerContext";
+import type { WebsiteSettings } from "@/lib/sanity";
 
-export function Navbar() {
+interface NavbarProps {
+  nextEvent: EventData | null;
+  settings: WebsiteSettings | null;
+}
+
+export function Navbar({ nextEvent, settings }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { bannerDismissed } = useBanner();
   const pathname = usePathname();
   const isMobile = useIsMobile();
-
-  // Sample event data - this could be fetched from your CMS
-  const nextEvent: EventData = {
-    id: "meetup-2025-04-23",
-    title: "Robotics Community Meetup",
-    date: new Date("2025-08-23T18:30:00"),
-    time: {
-      start: "6:30 PM",
-      end: "9:00 PM",
-    },
-    location: {
-      name: "Digital Church",
-      city: "Aachen",
-      country: "Germany",
-      mapUrl: "https://maps.google.com/maps?q=Digital+Church,+Aachen,+Germany",
-    },
-    registrationUrl: "https://lu.ma/e61lkaj1",
-    description:
-      "Join us for an evening of robotics presentations, networking, and collaboration.",
-  };
   
-  // Check if banner should be visible (same logic as EventNotification)
-  const shouldShowBanner = !bannerDismissed && pathname !== "/meetup" && shouldShowNotification(nextEvent.date, 30);
+  // Check if banner should be visible
+  const shouldShowBanner = !bannerDismissed && 
+    pathname !== "/meetup" && 
+    settings?.eventControls?.showEventBanner && 
+    nextEvent &&
+    shouldShowNotification(nextEvent.date, settings?.eventControls?.bannerShowDaysThreshold || 30);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -144,11 +134,13 @@ export function Navbar() {
               >
                 Conference
               </Link>
-              <EventNotification
-                event={nextEvent}
-                variant="badge"
-                showDaysThreshold={30}
-              />
+              {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
+                <EventNotification
+                  event={nextEvent}
+                  variant="badge"
+                  showDaysThreshold={30}
+                />
+              )}
             </div>
             <Link
               href="/contact"
@@ -228,11 +220,13 @@ export function Navbar() {
               >
                 Conference
               </Link>
-              <EventNotification
-                event={nextEvent}
-                variant="badge"
-                showDaysThreshold={30}
-              />
+              {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
+                <EventNotification
+                  event={nextEvent}
+                  variant="badge"
+                  showDaysThreshold={30}
+                />
+              )}
             </div>
             <Link
               href="/contact"

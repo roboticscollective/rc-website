@@ -240,6 +240,14 @@ export interface Event {
   }
   gallery?: any[]
   tags?: string[]
+  highlights?: Array<{
+    title: string
+    description: string
+  }>
+  eventPartners?: Partner[]
+  customRegistrationText?: string
+  showInBanner?: boolean
+  bannerPriority?: number
 }
 
 export interface Partner {
@@ -262,4 +270,36 @@ export interface Partner {
     role?: string
   }
   legacyId?: number
+}
+
+export interface WebsiteSettings {
+  _id: string
+  _type: 'websiteSettings'
+  eventControls?: {
+    showEventBanner?: boolean
+    showEventNotificationBadge?: boolean
+    bannerShowDaysThreshold?: number
+  }
+  recruitingControls?: {
+    showRecruitingToast?: boolean
+    recruitingToastDelay?: number
+  }
+  globalAnnouncement?: {
+    isActive?: boolean
+    message?: string
+    link?: string
+    type?: 'info' | 'warning' | 'success' | 'error'
+  }
+  socialLinks?: {
+    github?: string
+    linkedin?: string
+    twitter?: string
+    discord?: string
+    youtube?: string
+  }
+  contactInfo?: {
+    email?: string
+    phone?: string
+    address?: string
+  }
 }

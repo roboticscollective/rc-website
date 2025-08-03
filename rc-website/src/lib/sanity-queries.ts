@@ -1,5 +1,5 @@
 import { groq } from 'next-sanity'
-import { client, type TeamMember, type Project, type Position, type BlogPost, type Event, type Partner } from './sanity'
+import { client, type TeamMember, type Project, type Position, type BlogPost, type Event, type Partner, type WebsiteSettings } from './sanity'
 
 // Team Member Queries
 const teamMemberFields = groq`
@@ -222,6 +222,22 @@ export async function getBlogPostsByAuthor(authorId: string): Promise<BlogPost[]
   `, { authorId })
 }
 
+// Partner Queries (defined early because used in eventFields)
+const partnerFields = groq`
+  _id,
+  _type,
+  name,
+  logo,
+  logoUrl,
+  website,
+  description,
+  partnershipType,
+  isActive,
+  partnershipStartDate,
+  contactPerson,
+  legacyId
+`
+
 // Event Queries
 const eventFields = groq`
   _id,
@@ -240,7 +256,12 @@ const eventFields = groq`
   maxAttendees,
   registrationInfo,
   gallery,
-  tags
+  tags,
+  highlights,
+  eventPartners[]->{${partnerFields}},
+  customRegistrationText,
+  showInBanner,
+  bannerPriority
 `
 
 export async function getAllEvents(): Promise<Event[]> {
@@ -283,21 +304,6 @@ export async function getAllEventSlugs(): Promise<string[]> {
 }
 
 // Partner Queries
-const partnerFields = groq`
-  _id,
-  _type,
-  name,
-  logo,
-  logoUrl,
-  website,
-  description,
-  partnershipType,
-  isActive,
-  partnershipStartDate,
-  contactPerson,
-  legacyId
-`
-
 export async function getAllPartners(): Promise<Partner[]> {
   return client.fetch(groq`
     *[_type == "partner"] | order(name asc) {
@@ -337,4 +343,60 @@ export async function getEventsByOrganizer(organizerId: string): Promise<Event[]
       ${eventFields}
     }
   `, { organizerId })
+}
+
+// Website Settings Queries
+const websiteSettingsFields = groq`
+  _id,
+  _type,
+  eventControls,
+  recruitingControls,
+  globalAnnouncement,
+  socialLinks,
+  contactInfo
+`
+
+export async function getWebsiteSettings(): Promise<WebsiteSettings | null> {
+  return client.fetch(groq`
+    *[_type == "websiteSettings"][0] {
+      ${websiteSettingsFields}
+    }
+  `)
+}
+
+// Enhanced Event Queries for Banner/Conference
+export async function getNextUpcomingEvent(): Promise<Event | null> {
+  return client.fetch(groq`
+    *[_type == "event" && status == "upcoming" && showInBanner == true && eventDate > now()] 
+    | order(bannerPriority desc, eventDate asc)[0] {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getEventForConferencePage(): Promise<Event | null> {
+  return client.fetch(groq`
+    *[_type == "event" && eventType == "conference" && status == "upcoming" && eventDate > now()] 
+    | order(eventDate asc)[0] {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getPastEventsWithGallery(): Promise<Event[]> {
+  return client.fetch(groq`
+    *[_type == "event" && status == "past" && defined(gallery) && length(gallery) > 0] 
+    | order(eventDate desc)[0...6] {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getUpcomingEventsForBanner(): Promise<Event[]> {
+  return client.fetch(groq`
+    *[_type == "event" && status == "upcoming" && showInBanner == true && eventDate > now()] 
+    | order(bannerPriority desc, eventDate asc) {
+      ${eventFields}
+    }
+  `)
 }
