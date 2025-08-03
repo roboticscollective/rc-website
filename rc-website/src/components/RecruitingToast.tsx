@@ -27,11 +27,6 @@ export const RecruitingToast: React.FC<RecruitingToastProps> = ({
   const pathname = usePathname();
   const { showConsentBanner } = useConsent();
 
-  // Check global settings first
-  if (!settings?.recruitingControls?.showRecruitingToast) {
-    return null;
-  }
-
   // Don't show on positions page or when cookie banner is visible
   const shouldShow = pathname !== "/positions" && !showConsentBanner && !forceHidden;
 
@@ -62,6 +57,11 @@ export const RecruitingToast: React.FC<RecruitingToastProps> = ({
     setIsVisible(false);
     onDismiss?.();
   };
+
+  // Check global settings first (after all hooks)
+  if (!settings?.recruitingControls?.showRecruitingToast) {
+    return null;
+  }
 
   return (
     <div 
