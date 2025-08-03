@@ -6,12 +6,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { EventNotification } from "@/components/EventNotification";
+import { EventNotification, shouldShowNotification } from "@/components/EventNotification";
 import type { EventData } from "@/components/EventNotification";
+import { useBanner } from "@/contexts/BannerContext";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { bannerDismissed } = useBanner();
   const pathname = usePathname();
   const isMobile = useIsMobile();
 
@@ -34,6 +36,9 @@ export function Navbar() {
     description:
       "Join us for an evening of robotics presentations, networking, and collaboration.",
   };
+  
+  // Check if banner should be visible (same logic as EventNotification)
+  const shouldShowBanner = !bannerDismissed && pathname !== "/meetup" && shouldShowNotification(nextEvent.date, 30);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +68,7 @@ export function Navbar() {
   return (
     <nav
       className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? 'top-0' : 'top-12'
+        isScrolled ? 'top-0' : shouldShowBanner ? 'top-12' : 'top-0'
       } ${
         isMobile
           ? "backdrop-blur-md"

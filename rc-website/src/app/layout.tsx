@@ -8,10 +8,11 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Providers } from "./providers";
 import { TooltipProvider } from "./tooltip-provider";
-import { EventNotification } from "@/components/EventNotification";
+import { BannerWrapper } from "@/components/BannerWrapper";
 import { RecruitingToast } from "@/components/RecruitingToast";
 import { ConsentProvider } from "@/contexts/ConsentContext";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
+import { BannerProvider } from "@/contexts/BannerContext";
 import { PageViewTracker } from "@/components/PageViewTracker";
 import { ScrollTracker } from "@/components/ScrollTracker";
 import type { EventData } from "@/components/EventNotification";
@@ -77,23 +78,24 @@ export default function RootLayout({
       <body className="font-spaceGrotesk">
         <ConsentProvider>
           <Providers>
-            <TooltipProvider>
-              <PageViewTracker />
-              <ScrollTracker />
-              {/* Event Banner - positioned above navbar */}
-              <EventNotification 
-                event={nextEvent}
-                variant="banner"
-                showDaysThreshold={365}
-              />
-              <Navbar />
+            <BannerProvider>
+              <TooltipProvider>
+                <PageViewTracker />
+                <ScrollTracker />
+                {/* Event Banner - positioned above navbar */}
+                <BannerWrapper 
+                  event={nextEvent}
+                  showDaysThreshold={365}
+                />
+                <Navbar />
               <main>{children}</main>
               <Footer />
               <RecruitingToast />
               <CookieConsentBanner />
               <Toaster />
               <Sonner />
-            </TooltipProvider>
+              </TooltipProvider>
+            </BannerProvider>
           </Providers>
         </ConsentProvider>
       </body>
