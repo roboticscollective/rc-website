@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { getProjectBySlug, getAllProjectSlugs } from "@/lib/sanity-queries";
 import { buildImageUrl } from "@/lib/sanity";
 import OptimizedVideo from "@/components/OptimizedVideo";
+import Image from "next/image";
 import { PortableText } from '@portabletext/react';
 import {
   ArrowLeft,
@@ -113,10 +114,12 @@ export default async function ProjectPage({
       {/* Hero section with full-width image */}
       <div className="relative w-full h-[50vh] min-h-[400px] overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img
+          <Image
             src={projectImageUrl}
             alt={project.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-background" />
         </div>
@@ -191,11 +194,12 @@ export default async function ProjectPage({
                 <div className="flex flex-wrap gap-4 justify-center">
                   {/* Featured project image */}
                   {projectImageUrl && (
-                    <div className="h-64 md:h-80 w-96 rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center">
-                      <img
+                    <div className="h-64 md:h-80 w-96 rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative">
+                      <Image
                         src={projectImageUrl}
                         alt={`${project.title} featured image`}
-                        className="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
+                        fill
+                        className="object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
                       />
                     </div>
                   )}
@@ -220,12 +224,13 @@ export default async function ProjectPage({
                     return (
                       <div
                         key={`image-${idx}`}
-                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative`}
                       >
-                        <img
+                        <Image
                           src={imageUrl}
                           alt={image.alt || `${project.title} gallery image ${idx + 1}`}
-                          className="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
+                          fill
+                          className="object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
                         />
                       </div>
                     )
@@ -251,12 +256,13 @@ export default async function ProjectPage({
                     return (
                       <div
                         key={`image-url-${idx}`}
-                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative`}
                       >
-                        <img
+                        <Image
                           src={image.url}
                           alt={image.alt || `${project.title} gallery image ${adjustedIdx + 1}`}
-                          className="max-w-full max-h-full object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
+                          fill
+                          className="object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
                         />
                       </div>
                     )
@@ -409,9 +415,11 @@ export default async function ProjectPage({
                             <div className={`w-10 h-10 rounded-full overflow-hidden transition-transform duration-200 group-hover:scale-105 ${
                               member.isLead ? 'border-2 border-yellow-secondary' : ''
                             }`}>
-                              <img
+                              <Image
                                 src={memberImageUrl}
                                 alt={member.name}
+                                width={48}
+                                height={48}
                                 className="w-full h-full object-cover"
                               />
                             </div>

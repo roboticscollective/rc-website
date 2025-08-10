@@ -4,12 +4,19 @@ import { Button } from "@/components/ui/button";
 import CTASection from "@/components/CTASection";
 import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
 import { CONVERSION_EVENTS } from "@/lib/analytics";
-import { getEventForConferencePage, getPastEventsWithGallery, getActivePartners } from "@/lib/sanity-queries";
+import {
+  getEventForConferencePage,
+  getPastEventsWithGallery,
+  getActivePartners,
+} from "@/lib/sanity-queries";
 import { buildImageUrl } from "@/lib/sanity";
+import Image from "next/image";
+import { LogoCarousel } from "@/components/LogoCarousel";
 
 export const metadata: Metadata = {
   title: "Conference | Robotics Collective",
-  description: "Join our robotics conference featuring keynotes, pitches, and networking",
+  description:
+    "Join our robotics conference featuring keynotes, pitches, and networking",
   keywords: [
     "robotics conference",
     "keynotes",
@@ -72,13 +79,17 @@ export default async function ConferencePage() {
   const [event, pastEvents, allPartners] = await Promise.all([
     getEventForConferencePage(),
     getPastEventsWithGallery(),
-    getActivePartners()
+    getActivePartners(),
   ]);
 
   // Use event partners if specified, otherwise use all active partners
-  const displayPartners = event?.eventPartners && event.eventPartners.length > 0 
-    ? event.eventPartners 
-    : allPartners;
+  const displayPartners =
+    event?.eventPartners && event.eventPartners.length > 0
+      ? event.eventPartners
+      : allPartners;
+
+  // helper
+  const isSvg = (url: string) => url?.toLowerCase().endsWith(".svg");
 
   // Fallback content when no event is found
   if (!event) {
@@ -105,7 +116,9 @@ export default async function ConferencePage() {
   // Format event date and time
   const eventDate = new Date(event.eventDate);
   const endDate = event.endDate ? new Date(event.endDate) : null;
-  const eventImage = event.featuredImage ? buildImageUrl(event.featuredImage) : galleryImages[0].src;
+  const eventImage = event.featuredImage
+    ? buildImageUrl(event.featuredImage)
+    : galleryImages[0].src;
 
   return (
     <div className="min-h-screen bg-background">
@@ -114,10 +127,12 @@ export default async function ConferencePage() {
         <section className="relative py-16 md:py-24">
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-b from-background/70 to-background backdrop-blur-[1px] z-10"></div>
-            <img
+            <Image
               src={eventImage}
               alt={`${event.title} banner`}
-              className="w-full h-full object-cover opacity-80 z-0"
+              fill
+              className="object-cover opacity-80 z-0"
+              priority
             />
           </div>
 
@@ -138,10 +153,10 @@ export default async function ConferencePage() {
                   <Calendar className="text-primary h-8 w-8 mb-3" />
                   <h3 className="text-lg font-semibold mb-1">Date</h3>
                   <p className="text-gray-300">
-                    {eventDate.toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
+                    {eventDate.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </p>
                 </div>
@@ -149,20 +164,26 @@ export default async function ConferencePage() {
                   <Clock className="text-primary h-8 w-8 mb-3" />
                   <h3 className="text-lg font-semibold mb-1">Time</h3>
                   <p className="text-gray-300">
-                    {eventDate.toLocaleTimeString('en-US', {
-                      hour: 'numeric',
-                      minute: '2-digit'
+                    {eventDate.toLocaleTimeString("en-US", {
+                      hour: "numeric",
+                      minute: "2-digit",
                     })}
-                    {endDate && ` - ${endDate.toLocaleTimeString('en-US', {
-                      hour: 'numeric',
-                      minute: '2-digit'
-                    })}`}
+                    {endDate &&
+                      ` - ${endDate.toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })}`}
                   </p>
                 </div>
                 <a
-                  href={event.location?.venue ? 
-                    `https://maps.google.com/maps?q=${encodeURIComponent(event.location.venue + ', ' + (event.location.city || 'Aachen'))}` : 
-                    undefined
+                  href={
+                    event.location?.venue
+                      ? `https://maps.google.com/maps?q=${encodeURIComponent(
+                          event.location.venue +
+                            ", " +
+                            (event.location.city || "Aachen")
+                        )}`
+                      : undefined
                   }
                   target="_blank"
                   rel="noopener noreferrer"
@@ -170,8 +191,12 @@ export default async function ConferencePage() {
                 >
                   <MapPin className="text-primary h-8 w-8 mb-3" />
                   <h3 className="text-lg font-semibold mb-1">Location</h3>
-                  <p className="text-gray-300">{event.location?.venue || "TBA"}</p>
-                  <p className="text-gray-300">{event.location?.city || "Aachen"}, Germany</p>
+                  <p className="text-gray-300">
+                    {event.location?.venue || "TBA"}
+                  </p>
+                  <p className="text-gray-300">
+                    {event.location?.city || "Aachen"}, Germany
+                  </p>
                 </a>
               </div>
 
@@ -181,13 +206,15 @@ export default async function ConferencePage() {
                 rel="noopener noreferrer"
                 className="inline-block"
                 trackEvent={{
-                  type: 'conversion',
+                  type: "conversion",
                   eventName: CONVERSION_EVENTS.MEETUP_REGISTRATION_CLICK,
                   parameters: {
                     event_date: event.eventDate,
-                    location: `${event.location?.venue || 'TBA'}, ${event.location?.city || 'Aachen'}`,
-                    platform: 'luma'
-                  }
+                    location: `${event.location?.venue || "TBA"}, ${
+                      event.location?.city || "Aachen"
+                    }`,
+                    platform: "luma",
+                  },
                 }}
               >
                 <Button
@@ -209,19 +236,22 @@ export default async function ConferencePage() {
               <h2 className="text-3xl font-bold mb-8 text-center">
                 Conference <span className="text-primary">Highlights</span>
               </h2>
-              
+
               {event.highlights && event.highlights.length > 0 ? (
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {event.highlights.map((highlight, index) => (
-                    <li 
-                      key={index} 
+                    <li
+                      key={index}
                       className={`bg-card p-6 rounded-md ${
-                        index === event.highlights!.length - 1 && event.highlights!.length % 2 === 1 
-                          ? 'col-span-1 md:col-span-2' 
-                          : ''
+                        index === event.highlights!.length - 1 &&
+                        event.highlights!.length % 2 === 1
+                          ? "col-span-1 md:col-span-2"
+                          : ""
                       }`}
                     >
-                      <span className="text-primary font-medium">{highlight.title}</span>{" "}
+                      <span className="text-primary font-medium">
+                        {highlight.title}
+                      </span>{" "}
                       {highlight.description}
                     </li>
                   ))}
@@ -230,19 +260,27 @@ export default async function ConferencePage() {
                 // Fallback highlights when none are defined in Sanity
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">Keynote Presentations</span>{" "}
+                    <span className="text-primary font-medium">
+                      Keynote Presentations
+                    </span>{" "}
                     from industry leaders and researchers
                   </li>
                   <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">Project Pitches</span>{" "}
+                    <span className="text-primary font-medium">
+                      Project Pitches
+                    </span>{" "}
                     showcasing innovative robotics solutions
                   </li>
                   <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">Interactive Booths</span>{" "}
+                    <span className="text-primary font-medium">
+                      Interactive Booths
+                    </span>{" "}
                     demonstrating cutting-edge technologies
                   </li>
                   <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">Professional Networking</span>{" "}
+                    <span className="text-primary font-medium">
+                      Professional Networking
+                    </span>{" "}
                     connecting industry, academia, and students
                   </li>
                 </ul>
@@ -263,67 +301,7 @@ export default async function ConferencePage() {
           </div>
         </section>
 
-        {/* Partners Section - Dynamic */}
-        {displayPartners && displayPartners.length > 0 && (
-          <section className="py-16 md:py-24">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl font-bold mb-12 text-center">
-                Our <span className="text-primary">Partners</span>
-              </h2>
-              <div className="overflow-hidden">
-                <div className="flex animate-infinite-scroll">
-                  {/* First set of logos */}
-                  <div className="flex min-w-full space-x-12 items-center justify-around">
-                    {displayPartners.map((partner, index) => {
-                      const logoUrl = partner.logo ? buildImageUrl(partner.logo) : partner.logoUrl?.url;
-                      if (!logoUrl) return null;
-                      
-                      return (
-                        <a
-                          key={`first-${partner._id}`}
-                          href={partner.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-shrink-0"
-                        >
-                          <img
-                            src={logoUrl}
-                            alt={partner.logoUrl?.alt || partner.name}
-                            className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
-                          />
-                        </a>
-                      );
-                    })}
-                  </div>
-                  {/* Duplicate set for seamless loop */}
-                  <div className="flex min-w-full space-x-12 items-center justify-around">
-                    {displayPartners.map((partner, index) => {
-                      const logoUrl = partner.logo ? buildImageUrl(partner.logo) : partner.logoUrl?.url;
-                      if (!logoUrl) return null;
-                      
-                      return (
-                        <a
-                          key={`second-${partner._id}`}
-                          href={partner.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-shrink-0"
-                        >
-                          <img
-                            src={logoUrl}
-                            alt={partner.logoUrl?.alt || partner.name}
-                            className="h-16 md:h-20 object-contain opacity-70 hover:opacity-100 transition-opacity"
-                          />
-                        </a>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-
+        <LogoCarousel partners={displayPartners} title="Our Partners" />
         {/* Past Events Gallery - Dynamic */}
         {pastEvents && pastEvents.length > 0 && (
           <section className="py-16 md:py-24 bg-card/50">
@@ -333,10 +311,13 @@ export default async function ConferencePage() {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {pastEvents.map((pastEvent, index) => {
-                  const eventImage = pastEvent.featuredImage ? buildImageUrl(pastEvent.featuredImage) : 
-                    (pastEvent.gallery && pastEvent.gallery.length > 0 ? buildImageUrl(pastEvent.gallery[0]) : null);
+                  const eventImage = pastEvent.featuredImage
+                    ? buildImageUrl(pastEvent.featuredImage)
+                    : pastEvent.gallery && pastEvent.gallery.length > 0
+                    ? buildImageUrl(pastEvent.gallery[0])
+                    : null;
                   const eventDate = new Date(pastEvent.eventDate);
-                  
+
                   return (
                     <div
                       key={pastEvent._id}
@@ -344,10 +325,11 @@ export default async function ConferencePage() {
                     >
                       {eventImage && (
                         <div className="relative h-48 overflow-hidden">
-                          <img
+                          <Image
                             src={eventImage}
                             alt={pastEvent.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
                           <div className="absolute bottom-4 left-4 right-4">
@@ -363,16 +345,17 @@ export default async function ConferencePage() {
                         </h3>
                         <div className="flex items-center text-sm text-gray-400 mb-2">
                           <Calendar className="w-4 h-4 mr-2" />
-                          {eventDate.toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
+                          {eventDate.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
                           })}
                         </div>
                         {pastEvent.location?.venue && (
                           <div className="flex items-center text-sm text-gray-400">
                             <MapPin className="w-4 h-4 mr-2" />
-                            {pastEvent.location.venue}, {pastEvent.location.city || 'Aachen'}
+                            {pastEvent.location.venue},{" "}
+                            {pastEvent.location.city || "Aachen"}
                           </div>
                         )}
                       </div>

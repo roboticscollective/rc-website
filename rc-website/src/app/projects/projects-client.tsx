@@ -5,6 +5,7 @@ import { ArrowRight, Github, Globe } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { buildImageUrl, type Project } from "@/lib/sanity";
+import Image from "next/image";
 
 type ProjectStatus = "all" | "ongoing" | "finished" | "planned";
 
@@ -40,10 +41,11 @@ const ProjectCard = ({ project }: { project: Project }) => {
     <div className="bg-card rounded-3xl overflow-hidden group transition-all duration-300 hover:translate-y-[-4px] hover:shadow-lg flex flex-col h-full">
       <Link href={`/projects/${project.slug.current}`}>
         <div className="h-48 overflow-hidden relative">
-          <img
+          <Image
             src={imageUrl}
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
           <div className="absolute top-3 right-3">
             <StatusBadge status={project.status} />
@@ -80,9 +82,11 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   className="relative group"
                 >
                   <div className="w-6 h-6 rounded-full overflow-hidden border-2 border-yellow-secondary transition-transform duration-200 group-hover:scale-105">
-                    <img
+                    <Image
                       src={contactImageUrl}
                       alt={pointOfContact.name}
+                      width={24}
+                      height={24}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -100,9 +104,11 @@ const ProjectCard = ({ project }: { project: Project }) => {
                       className="group"
                     >
                       <div className="w-5 h-5 rounded-full overflow-hidden border border-gray-600 transition-transform duration-200 group-hover:scale-105">
-                        <img
+                        <Image
                           src={buildImageUrl(contributor.image || contributor.imageUrl)}
                           alt={contributor.name}
+                          width={20}
+                          height={20}
                           className="w-full h-full object-cover"
                         />
                       </div>

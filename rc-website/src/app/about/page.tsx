@@ -8,7 +8,9 @@ import {
 import { getLeadershipMembers, getCoreTeamMembers, getCommunityMembers, getAlumniMembers, getAllPartners } from "@/lib/sanity-queries";
 import { buildImageUrl } from "@/lib/sanity";
 import { Button } from "@/components/ui/button";
+import { LogoCarousel } from "@/components/LogoCarousel";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About | Robotics Collective",
@@ -97,9 +99,11 @@ export default async function AboutPage() {
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
                   <div className="w-40 h-40 mb-6 overflow-hidden rounded-full border-3 border-yellow-secondary group-hover:border-primary transition-colors duration-300 relative shadow-lg">
-                    <img
+                    <Image
                       src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
+                      width={160}
+                      height={160}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   </div>
@@ -190,9 +194,11 @@ export default async function AboutPage() {
                         : "border-primary/30"
                     } group-hover:border-primary transition-colors duration-300 relative`}
                   >
-                    <img
+                    <Image
                       src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {member.isBoard && (
@@ -296,9 +302,11 @@ export default async function AboutPage() {
                     aria-label={`${member.name}'s LinkedIn profile`}
                   >
                     <div className="w-24 h-24 mb-3 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300">
-                      <img
+                      <Image
                         src={buildImageUrl(member.imageUrl || member.image)}
                         alt={member.name}
+                        width={96}
+                        height={96}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     </div>
@@ -336,9 +344,11 @@ export default async function AboutPage() {
                         aria-label={`${member.name}'s LinkedIn profile`}
                       >
                         <div className="w-16 h-16 mb-2 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300 shadow-md group-hover:shadow-lg group-hover:shadow-primary/20">
-                          <img
+                          <Image
                             src={buildImageUrl(member.imageUrl || member.image)}
                             alt={member.name}
+                            width={64}
+                            height={64}
                             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                           />
                         </div>
@@ -357,34 +367,16 @@ export default async function AboutPage() {
         <div className="max-w-3xl mx-auto my-20 border-t border-primary/20"></div>
 
         {/* Partner Organizations Section */}
-        <section className="py-16 md:py-24">
+        <LogoCarousel 
+          partners={partners}
+          title="Partner Organizations"
+          showOnlyActive={true}
+        />
+
+        {/* Join as Organization CTA */}
+        <section className="py-8 md:py-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-              <span className="text-primary">Partner</span> Organizations
-            </h2>
-
-            {/* Display partner organizations logos */}
-            <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto mb-16">
-              {partners.map((org) => (
-                <a
-                  key={org._id}
-                  href={org.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center p-6 bg-card/30 rounded-lg border border-primary/10 w-full sm:w-64 lg:w-56"
-                  aria-label={org.name}
-                >
-                  <img
-                    src={buildImageUrl(org.logoUrl || org.logo)}
-                    alt={org.name}
-                    className="w-full h-full object-contain"
-                  />
-                </a>
-              ))}
-            </div>
-
-            {/* Join as Organization CTA */}
-            <div className="mt-16 max-w-3xl mx-auto bg-card/70 p-8 rounded-lg border border-primary/20">
+            <div className="max-w-3xl mx-auto bg-card/70 p-8 rounded-lg border border-primary/20">
               <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-3">
                   Become a Partner Organization

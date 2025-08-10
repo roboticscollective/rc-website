@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { buildImageUrl } from '@/lib/sanity';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getFeaturedProjects } from '@/lib/sanity-queries';
 import type { Project } from '@/lib/sanity';
@@ -14,11 +15,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
   
   return (
     <div className="bg-card rounded-3xl overflow-hidden group transition-all duration-300 hover:translate-y-[-1px] hover:shadow-lg flex flex-col h-full">
-      <div className="h-48 overflow-hidden">
-        <img 
+      <div className="h-48 overflow-hidden relative">
+        <Image 
           src={imageUrl} 
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       <div className="p-6 flex flex-col flex-grow">
