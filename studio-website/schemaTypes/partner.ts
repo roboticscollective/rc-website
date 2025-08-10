@@ -4,6 +4,7 @@ export default defineType({
   name: 'partner',
   title: 'Partner Organization',
   type: 'document',
+  icon: () => '🤝',
   fields: [
     defineField({
       name: 'name',

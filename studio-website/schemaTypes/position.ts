@@ -4,6 +4,7 @@ export default defineType({
   name: 'position',
   title: 'Position',
   type: 'document',
+  icon: () => '💼',
   fields: [
     defineField({
       name: 'title',

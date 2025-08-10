@@ -230,9 +230,6 @@ export interface Event {
   }
   eventType: 'workshop' | 'meetup' | 'conference' | 'hackathon' | 'social' | 'training' | 'demo'
   status: 'upcoming' | 'ongoing' | 'past' | 'cancelled'
-  organizer: TeamMember
-  speakers?: TeamMember[]
-  maxAttendees?: number
   registrationInfo?: {
     isRequired?: boolean
     registrationLink?: string

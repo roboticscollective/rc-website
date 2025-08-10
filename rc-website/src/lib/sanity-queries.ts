@@ -251,9 +251,6 @@ const eventFields = groq`
   location,
   eventType,
   status,
-  organizer->{${teamMemberFields}},
-  speakers[]->{${teamMemberFields}},
-  maxAttendees,
   registrationInfo,
   gallery,
   tags,
@@ -337,13 +334,6 @@ export async function getProjectsByContributor(contributorId: string): Promise<P
   `, { contributorId })
 }
 
-export async function getEventsByOrganizer(organizerId: string): Promise<Event[]> {
-  return client.fetch(groq`
-    *[_type == "event" && organizer._ref == $organizerId] | order(eventDate desc) {
-      ${eventFields}
-    }
-  `, { organizerId })
-}
 
 // Website Settings Queries
 const websiteSettingsFields = groq`

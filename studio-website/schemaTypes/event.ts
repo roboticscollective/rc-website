@@ -4,6 +4,7 @@ export default defineType({
   name: 'event',
   title: 'Event',
   type: 'document',
+  icon: () => '📅',
   fields: [
     defineField({
       name: 'title',
@@ -143,32 +144,6 @@ export default defineType({
       initialValue: 'upcoming',
     }),
     defineField({
-      name: 'organizer',
-      title: 'Event Organizer',
-      type: 'reference',
-      to: [{type: 'teamMember'}],
-      description: 'Primary organizer of this event',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'speakers',
-      title: 'Speakers',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{type: 'teamMember'}],
-        },
-      ],
-      description: 'Speakers or presenters at this event',
-    }),
-    defineField({
-      name: 'maxAttendees',
-      title: 'Maximum Attendees',
-      type: 'number',
-      description: 'Maximum number of attendees (optional)',
-    }),
-    defineField({
       name: 'registrationInfo',
       title: 'Registration Information',
       type: 'object',
@@ -301,14 +276,13 @@ export default defineType({
     select: {
       title: 'title',
       eventDate: 'eventDate',
-      organizer: 'organizer.name',
       media: 'featuredImage',
     },
-    prepare({title, eventDate, organizer, media}) {
+    prepare({title, eventDate, media}) {
       const date = eventDate ? new Date(eventDate).toLocaleDateString() : 'No date'
       return {
         title,
-        subtitle: `${date} - Organized by ${organizer}`,
+        subtitle: date,
         media,
       }
     },

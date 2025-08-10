@@ -4,6 +4,7 @@ export default defineType({
   name: 'teamMember',
   title: 'Team Member',
   type: 'document',
+  icon: () => '👥',
   fields: [
     defineField({
       name: 'name',

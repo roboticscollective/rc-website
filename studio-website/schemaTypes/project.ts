@@ -4,6 +4,7 @@ export default defineType({
   name: 'project',
   title: 'Project',
   type: 'document',
+  icon: () => '🚀',
   fields: [
     defineField({
       name: 'title',

@@ -4,6 +4,7 @@ export default defineType({
   name: 'blogPost',
   title: 'Blog Post',
   type: 'document',
+  icon: () => '📝',
   fields: [
     defineField({
       name: 'title',
