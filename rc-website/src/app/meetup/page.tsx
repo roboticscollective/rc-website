@@ -9,9 +9,10 @@ import {
   getPastEventsWithGallery,
   getActivePartners,
 } from "@/lib/sanity-queries";
-import { buildImageUrl } from "@/lib/sanity";
+import { buildImageUrl, renderRichTextWithAccents } from "@/lib/sanity";
 import Image from "next/image";
 import { LogoCarousel } from "@/components/LogoCarousel";
+import { PortableText } from "@portabletext/react";
 
 export const metadata: Metadata = {
   title: "Conference | Robotics Collective",
@@ -141,12 +142,32 @@ export default async function ConferencePage() {
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
                 {event.title}
               </h1>
-              <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                A conference dedicated to professional exchange, advanced
-                collaboration, and unparalleled networking in robotics. Connect
-                with industry professionals, researchers, and students to bridge
-                research and practical applications.
-              </p>
+              {event.description && event.description.length > 0 ? (
+                <div className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto prose prose-invert prose-xl">
+                  <PortableText
+                    value={event.description}
+                    components={{
+                      block: {
+                        normal: ({ children }) => (
+                          <p className="text-xl text-gray-300">{children}</p>
+                        ),
+                      },
+                      marks: {
+                        strong: ({ children }) => (
+                          <strong className="text-primary">{children}</strong>
+                        ),
+                      },
+                    }}
+                  />
+                </div>
+              ) : (
+                <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                  A conference dedicated to professional exchange, advanced
+                  collaboration, and unparalleled networking in robotics.
+                  Connect with industry professionals, researchers, and students
+                  to bridge research and practical applications.
+                </p>
+              )}
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                 <div className="bg-card p-6 rounded-lg flex items-center justify-center flex-col">
@@ -249,10 +270,7 @@ export default async function ConferencePage() {
                           : ""
                       }`}
                     >
-                      <span className="text-primary font-medium">
-                        {highlight.title}
-                      </span>{" "}
-                      {highlight.description}
+                      {renderRichTextWithAccents(highlight)}
                     </li>
                   ))}
                 </ul>
@@ -301,7 +319,54 @@ export default async function ConferencePage() {
           </div>
         </section>
 
-        <LogoCarousel partners={displayPartners} title="Our Partners" />
+        {/* Event Gallery - Dynamic */}
+        {event.gallery && event.gallery.length > 0 && (
+          <section className="py-16 md:py-24">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl font-bold mb-8 text-center">
+                Event <span className="text-primary">Gallery</span>
+              </h2>
+              <div className="flex flex-wrap gap-4 justify-center">
+                {event.gallery.map((image, idx) => {
+                  const imageUrl = buildImageUrl(image);
+                  const getWidthClass = (index: number) => {
+                    const patterns = [
+                      "w-[28rem]", // Extra wide
+                      "w-96", // Wide
+                      "w-[22rem]", // Medium-wide
+                      "w-80", // Medium
+                      "w-[26rem]", // Wide
+                      "w-72", // Medium
+                    ];
+                    return patterns[index % patterns.length];
+                  };
+
+                  return (
+                    <div
+                      key={`gallery-${idx}`}
+                      className={`h-80 md:h-96 ${getWidthClass(
+                        idx
+                      )} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative overflow-hidden`}
+                    >
+                      <Image
+                        src={imageUrl}
+                        alt={
+                          image.alt ||
+                          image.caption ||
+                          `${event.title} gallery image ${idx + 1}`
+                        }
+                        fill
+                        className="object-cover transition-transform duration-500 hover:scale-105 rounded-lg"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <LogoCarousel partners={displayPartners} title="Our Past Partners" />
         {/* Past Events Gallery - Dynamic */}
         {pastEvents && pastEvents.length > 0 && (
           <section className="py-16 md:py-24 bg-card/50">

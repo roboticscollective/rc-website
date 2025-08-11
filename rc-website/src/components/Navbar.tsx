@@ -58,7 +58,7 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
   return (
     <nav
       className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? 'top-0' : shouldShowBanner ? 'top-12' : 'top-0'
+        isScrolled ? 'top-0' : shouldShowBanner ? 'top-16 sm:top-12' : 'top-0'
       } ${
         isMobile
           ? "backdrop-blur-md"

@@ -1,4 +1,5 @@
 import { createClient } from 'next-sanity'
+import React from 'react'
 
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
 export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'cg2zend1'
@@ -11,6 +12,29 @@ export const client = createClient({
   useCdn,
   apiVersion: '2024-01-01', // Use current date
 })
+
+// Helper function to render rich text with accent highlighting
+export function renderRichTextWithAccents(block: {
+  _type: 'block'
+  style?: 'normal'
+  children: Array<{
+    _type: 'span'
+    text: string
+    marks?: string[]
+  }>
+}): React.ReactNode {
+  return block.children.map((child, index) => {
+    const hasAccent = child.marks?.includes('accent')
+    return React.createElement(
+      'span',
+      {
+        key: index,
+        className: hasAccent ? 'text-primary font-medium' : ''
+      },
+      child.text
+    )
+  })
+}
 
 // Helper function for image URLs (handles both Sanity images and migration URLs)
 export function buildImageUrl(source: any): string {
@@ -238,8 +262,13 @@ export interface Event {
   gallery?: any[]
   tags?: string[]
   highlights?: Array<{
-    title: string
-    description: string
+    _type: 'block'
+    style?: 'normal'
+    children: Array<{
+      _type: 'span'
+      text: string
+      marks?: string[]
+    }>
   }>
   eventPartners?: Partner[]
   customRegistrationText?: string

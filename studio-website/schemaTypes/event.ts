@@ -202,30 +202,20 @@ export default defineType({
       type: 'array',
       of: [
         {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Highlight Title',
-              type: 'string',
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'description',
-              title: 'Description',
-              type: 'text',
-              validation: (Rule) => Rule.required(),
-            }),
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
           ],
-          preview: {
-            select: {
-              title: 'title',
-              subtitle: 'description',
-            },
+          lists: [],
+          marks: {
+            decorators: [
+              {title: 'Accent', value: 'accent'},
+            ],
+            annotations: [],
           },
         },
       ],
-      description: 'Key highlights/bullet points for the event (e.g., "Keynote Presentations from industry leaders")',
+      description: 'Key highlights as sentences with accent-colored parts. Use the "Accent" decorator to highlight important words.',
     }),
     defineField({
       name: 'eventPartners',

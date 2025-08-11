@@ -4,13 +4,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Users,
-  TrendingUp,
-  Award,
-  Mail,
-  CheckCircle2,
-} from "lucide-react";
+import { Users, TrendingUp, Award, Mail, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { type Position } from "@/lib/sanity";
@@ -40,7 +34,6 @@ interface PositionsPageContentProps {
   positions: Position[];
 }
 
-
 export default function PositionsPageContent({
   positions,
 }: PositionsPageContentProps) {
@@ -66,28 +59,19 @@ export default function PositionsPageContent({
       </section>
 
       {/* Creative Team Section */}
-      <section className="py-20 relative overflow-hidden bg-gradient-to-r from-primary/15 via-accent/10 to-primary/15">
-        {/* Top fade to dark */}
-        <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-background to-transparent z-10"></div>
-        {/* Bottom fade to dark */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent z-10"></div>
-
+      <section className="py-20 relative overflow-hidden ">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             {/* Text Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
+            <div>
               <h2 className="text-3xl md:text-4xl font-bold">
-                This Could Be <span className="text-primary">Your Story</span>
+                This Could Be <span className="text-primary">You</span>
               </h2>
 
               <p className="text-lg text-gray-300 leading-relaxed">
-                This is where we started and you could take it further.
+                This is where we began, now it's your turn to take it further,
+                shape its future, and leave your mark on the Robotics
+                Collective.
               </p>
 
               <div className="flex items-center gap-4 text-sm text-gray-400">
@@ -95,12 +79,8 @@ export default function PositionsPageContent({
                   <Users className="h-4 w-4" />
                   <span>20+ Active Members</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Award className="h-4 w-4" />
-                  <span>Real Impact</span>
-                </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Simplified Image Layout */}
             <motion.div
@@ -145,7 +125,7 @@ export default function PositionsPageContent({
               Future
             </motion.h2>
 
-            <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-1 md:grid-cols-3 lg:gap-12">
+            <div className="mx-auto grid max-w-6xl items-stretch gap-8 sm:grid-cols-1 md:grid-cols-3 lg:gap-12">
               <motion.div variants={itemVariants}>
                 <Card className="h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[320px] border-t-4 border-t-[#e6af2e]">
                   <CardHeader className="flex flex-col items-center gap-4 pb-4">
@@ -158,9 +138,9 @@ export default function PositionsPageContent({
                   </CardHeader>
                   <CardContent className="pt-0 flex-grow flex items-center justify-center text-center px-6">
                     <ul className="text-base text-muted-foreground space-y-2 text-left">
-                      <li>• Manage real budgets and partnerships</li>
-                      <li>• Impact 50+ active members daily</li>
-                      <li>• Portfolio projects that stand out</li>
+                      <li>• Manage real projects and partnerships</li>
+                      <li>• Impact 20+ active members daily</li>
+                      <li>• Build portfolio projects that stand out</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -226,7 +206,7 @@ export default function PositionsPageContent({
               Open <span className="text-primary">Volunteer</span> Positions
             </motion.h2>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {positions.map((position) => (
                 <motion.div key={position._id} variants={itemVariants}>
                   <Card className="h-full border-yellow-secondary/20 hover:border-yellow-secondary/35 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group relative overflow-hidden hover:bg-gradient-to-r hover:from-yellow-secondary/15 hover:via-yellow-secondary/10 hover:to-yellow-secondary/15">
@@ -290,7 +270,7 @@ export default function PositionsPageContent({
               variants={itemVariants}
               className="text-3xl md:text-4xl font-bold text-center mb-16"
             >
-              Our <span className="text-primary">3-Week</span> Trial Process
+              The <span className="text-primary">3-Week</span> Trial Process
             </motion.h2>
 
             <div className="space-y-8">
@@ -401,10 +381,10 @@ export default function PositionsPageContent({
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-4">
-              <Link href="mailto:apply@roboticscollective.org">
+              <Link href="mailto:info@roboticscollective.org">
                 <Button size="lg" className="text-lg px-8 py-6 rounded-full">
                   <Mail className="mr-2 h-5 w-5" />
-                  apply@roboticscollective.org
+                  info@roboticscollective.org
                 </Button>
               </Link>
 

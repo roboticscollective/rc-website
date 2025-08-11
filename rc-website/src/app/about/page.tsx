@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { Github, Linkedin, Mail, UserPlus } from "lucide-react";
 import {
-  Github,
-  Linkedin,
-  Mail,
-  UserPlus,
-} from "lucide-react";
-import { getLeadershipMembers, getCoreTeamMembers, getCommunityMembers, getAlumniMembers, getAllPartners } from "@/lib/sanity-queries";
+  getLeadershipMembers,
+  getCoreTeamMembers,
+  getCommunityMembers,
+  getAlumniMembers,
+  getAllPartners,
+} from "@/lib/sanity-queries";
 import { buildImageUrl } from "@/lib/sanity";
 import { Button } from "@/components/ui/button";
 import { LogoCarousel } from "@/components/LogoCarousel";
@@ -41,9 +42,9 @@ export default async function AboutPage() {
                 Our <span className="text-primary">Mission</span>
               </h2>
               <p className="text-lg text-gray-300 mb-12">
-                At the Robotics Collective, our mission is to
-                accelerate robotics adoption and the development of intelligent
-                robotic systems that harmoniously interact with humans and their
+                At the Robotics Collective, our mission is to accelerate
+                robotics adoption and the development of intelligent robotic
+                systems that harmoniously interact with humans and their
                 environment. We believe in the power of collaborative innovation
                 and open-source technologies to democratize robotics and create
                 a future where advanced automation enhances human potential
@@ -273,7 +274,7 @@ export default async function AboutPage() {
                       Become part of our core team and help shape the future of
                       robotics.
                     </p>
-                    <Link href="/contact">
+                    <Link href="/positions">
                       <Button variant="default">Apply Now</Button>
                     </Link>
                   </div>
@@ -295,7 +296,7 @@ export default async function AboutPage() {
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
                   <a
-                    href={member.contact?.linkedin || '#'}
+                    href={member.contact?.linkedin || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative"
@@ -329,7 +330,7 @@ export default async function AboutPage() {
                 <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
                   <span className="text-primary">Alumni</span>
                 </h2>
-                
+
                 <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
                   {alumniMembers.map((member) => (
                     <div
@@ -337,7 +338,7 @@ export default async function AboutPage() {
                       className="flex flex-col items-center group transition-all duration-300 hover:scale-110"
                     >
                       <a
-                        href={member.contact?.linkedin || '#'}
+                        href={member.contact?.linkedin || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="relative"
@@ -353,7 +354,7 @@ export default async function AboutPage() {
                           />
                         </div>
                         <p className="text-xs font-medium text-center text-gray-300 group-hover:text-white transition-colors">
-                          {member.name.split(' ')[0]}
+                          {member.name.split(" ")[0]}
                         </p>
                       </a>
                     </div>
@@ -367,7 +368,7 @@ export default async function AboutPage() {
         <div className="max-w-3xl mx-auto my-20 border-t border-primary/20"></div>
 
         {/* Partner Organizations Section */}
-        <LogoCarousel 
+        <LogoCarousel
           partners={partners}
           title="Partner Organizations"
           showOnlyActive={true}

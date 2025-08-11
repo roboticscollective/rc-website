@@ -121,7 +121,7 @@ export function Footer() {
               <Instagram className="h-5 w-5" />
             </a>
             <a
-              href="https://github.com/openroboticmetaverse"
+              href="https://github.com/roboticscollective"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-colors p-1.5 hover:bg-gray-800 rounded-full"
