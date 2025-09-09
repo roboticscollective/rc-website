@@ -55,6 +55,10 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
     return false;
   };
 
+  const isEventActive = () => {
+    return pathname.startsWith("/meetup") || pathname.startsWith("/hackathon") || pathname.startsWith("/conference");
+  };
+
   return (
     <nav
       className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
@@ -123,17 +127,52 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             >
               Projects
             </Link>
-            <div className="flex items-center gap-2">
-              <Link
-                href="/meetup"
-                className={`transition-colors relative z-10 ${
-                  isActivePath("/meetup")
-                    ? "text-white font-medium glow"
-                    : "text-gray-300 hover:text-white"
-                }`}
-              >
-                Conference
-              </Link>
+            <div className="flex items-center gap-2 relative group">
+              {/* Main Events Link */}
+              <div className="relative">
+                <button
+                  className={`transition-colors relative z-10 flex items-center gap-1 ${
+                    isEventActive()
+                      ? "text-white font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  Events
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                <div className="absolute top-full left-0 mt-2 w-36 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
+                  <div className="bg-card/95 backdrop-blur-md border border-primary/20 rounded-lg shadow-lg overflow-hidden">
+                    {/* Meetup Option */}
+                    <Link
+                      href="/meetup"
+                      className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200 border-b border-gray-800/50"
+                    >
+                      <span className="font-medium">Meetup</span>
+                    </Link>
+                    
+                    {/* Hackathon Option */}
+                    <Link
+                      href="/hackathon"
+                      className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200 border-b border-gray-800/50"
+                    >
+                      <span className="font-medium">Hackathon</span>
+                    </Link>
+                    
+                    {/* Conference Option */}
+                    <Link
+                      href="/conference"
+                      className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200"
+                    >
+                      <span className="font-medium">Conference</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              
               {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
                 <EventNotification
                   event={nextEvent}
@@ -208,24 +247,52 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             >
               Projects
             </Link>
-            <div className="flex items-center justify-between py-2">
-              <Link
-                href="/meetup"
-                className={`transition-colors relative z-10 ${
-                  isActivePath("/meetup")
-                    ? "text-white font-medium glow"
-                    : "text-gray-300 hover:text-white"
-                }`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Conference
-              </Link>
+            {/* Events Section for Mobile */}
+            <div className="py-2">
+              <div className="text-white font-medium mb-2">Events</div>
+              <div className="pl-4 space-y-2">
+                <Link
+                  href="/meetup"
+                  className={`block py-2 transition-colors ${
+                    isActivePath("/meetup")
+                      ? "text-primary font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Meetup
+                </Link>
+                <Link
+                  href="/hackathon"
+                  className={`block py-2 transition-colors ${
+                    isActivePath("/hackathon")
+                      ? "text-primary font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Hackathon
+                </Link>
+                <Link
+                  href="/conference"
+                  className={`block py-2 transition-colors ${
+                    isActivePath("/conference")
+                      ? "text-primary font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Conference
+                </Link>
+              </div>
               {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
-                <EventNotification
-                  event={nextEvent}
-                  variant="badge"
-                  showDaysThreshold={30}
-                />
+                <div className="mt-2 pl-4">
+                  <EventNotification
+                    event={nextEvent}
+                    variant="badge"
+                    showDaysThreshold={30}
+                  />
+                </div>
               )}
             </div>
             <Link

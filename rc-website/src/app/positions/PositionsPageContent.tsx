@@ -190,8 +190,223 @@ export default function PositionsPageContent({
         </div>
       </section>
 
+      {/* Membership Options Section */}
+      <section className="py-20 bg-gradient-to-b from-background to-card/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+            className="max-w-6xl mx-auto"
+          >
+            <motion.div variants={itemVariants} className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Choose Your <span className="text-primary">Membership</span> Level
+              </h2>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+                Whether you want to lead, contribute actively, or stay connected to the robotics community, 
+                we have the perfect membership level for you.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+              {/* Management Level */}
+              <motion.div variants={itemVariants}>
+                <Card className="h-full border-2 border-yellow-secondary/20 hover:border-yellow-secondary/50 transition-all duration-300 group relative overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-secondary to-yellow-secondary/70"></div>
+                  <CardHeader className="text-center pb-4">
+                    <div className="mx-auto mb-4 p-4 bg-yellow-secondary/10 rounded-full w-fit">
+                      <Award className="w-8 h-8 text-yellow-secondary" />
+                    </div>
+                    <CardTitle className="text-2xl font-bold text-yellow-secondary">
+                      Management
+                    </CardTitle>
+                    <p className="text-gray-400 text-sm">
+                      Lead the collective and shape its future
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Strategic decision making</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Partner relationship management</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Team leadership & mentoring</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Event planning & execution</span>
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-gray-700">
+                      <p className="text-xs text-gray-400 italic">
+                        High commitment, high impact leadership roles
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Active Members */}
+              <motion.div variants={itemVariants}>
+                <Card className="h-full border-2 border-primary/20 hover:border-primary/50 transition-all duration-300 group relative overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/70"></div>
+                  <CardHeader className="text-center pb-4">
+                    <div className="mx-auto mb-4 p-4 bg-primary/10 rounded-full w-fit">
+                      <Users className="w-8 h-8 text-primary" />
+                    </div>
+                    <CardTitle className="text-2xl font-bold text-primary">
+                      Active Members
+                    </CardTitle>
+                    <p className="text-gray-400 text-sm">
+                      Volunteers driving day-to-day operations
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Hands-on project work</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Skill development & mentoring</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Direct impact on initiatives</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Portfolio building opportunities</span>
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-gray-700">
+                      <p className="text-xs text-gray-400 italic">
+                        Perfect for building experience and making real impact
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Community Members */}
+              <motion.div variants={itemVariants}>
+                <Card className="h-full border-2 border-red-accent/20 hover:border-red-accent/50 transition-all duration-300 group relative overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-accent to-red-accent/70"></div>
+                  <CardHeader className="text-center pb-4">
+                    <div className="mx-auto mb-4 p-4 bg-red-accent/10 rounded-full w-fit">
+                      <TrendingUp className="w-8 h-8 text-red-accent" />
+                    </div>
+                    <CardTitle className="text-2xl font-bold text-red-accent">
+                      Community Members
+                    </CardTitle>
+                    <p className="text-gray-400 text-sm">
+                      Stay connected & benefit from the network
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {/* Individual Membership Tab */}
+                    <div className="bg-card/30 rounded-lg p-4 border border-gray-700/50">
+                      <h4 className="font-semibold text-red-accent mb-3 flex items-center gap-2">
+                        <Users className="w-4 h-4" />
+                        For Individuals
+                      </h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="w-4 h-4 text-red-accent flex-shrink-0" />
+                          <span className="text-xs">Priority event registration</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="w-4 h-4 text-red-accent flex-shrink-0" />
+                          <span className="text-xs">Robotics news & updates</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="w-4 h-4 text-red-accent flex-shrink-0" />
+                          <span className="text-xs">Community networking access</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Company Membership Tab */}
+                    <div className="bg-card/30 rounded-lg p-4 border border-gray-700/50">
+                      <h4 className="font-semibold text-red-accent mb-3 flex items-center gap-2">
+                        <Award className="w-4 h-4" />
+                        For Companies
+                      </h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="w-4 h-4 text-red-accent flex-shrink-0" />
+                          <span className="text-xs">Access to top talent</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="w-4 h-4 text-red-accent flex-shrink-0" />
+                          <span className="text-xs">Research institute partnerships</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle2 className="w-4 h-4 text-red-accent flex-shrink-0" />
+                          <span className="text-xs">Exclusive network access</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+
+            {/* CTA Row */}
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <h3 className="font-semibold text-yellow-secondary mb-2">Ready to Lead?</h3>
+                <p className="text-sm text-gray-400 mb-4">Apply for management positions below</p>
+                <Link href="/contact">
+                  <Button 
+                    variant="outline" 
+                    className="border-yellow-secondary text-yellow-secondary hover:bg-yellow-secondary hover:text-black"
+                  >
+                    Contact Us
+                  </Button>
+                </Link>
+              </div>
+              
+              <div className="text-center">
+                <h3 className="font-semibold text-primary mb-2">Want to Contribute?</h3>
+                <p className="text-sm text-gray-400 mb-4">Join our active volunteer team</p>
+                <Button 
+                  variant="outline" 
+                  className="border-primary text-primary hover:bg-primary hover:text-black"
+                  onClick={() => document.querySelector('#volunteer-positions')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  See Volunteer Positions
+                </Button>
+              </div>
+              
+              <div className="text-center">
+                <h3 className="font-semibold text-red-accent mb-2">Stay Connected?</h3>
+                <p className="text-sm text-gray-400 mb-4">Join our community network</p>
+                <Link href="/contact">
+                  <Button 
+                    variant="outline" 
+                    className="border-red-accent text-red-accent hover:bg-red-accent hover:text-white"
+                  >
+                    Contact Us
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Open Positions Section */}
-      <section className="py-20">
+      <section className="py-20" id="volunteer-positions">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
