@@ -140,8 +140,9 @@ const EventBanner: React.FC<EventNotificationProps> = ({
     <div
       className="
         fixed top-0 left-0 right-0 z-50 w-full
-        bg-gradient-to-r from-primary/15 via-accent/10 to-primary/15
-        backdrop-blur-md border-b border-primary/20
+        bg-gradient-to-r from-yellow-secondary/20 via-yellow-secondary/15 to-yellow-secondary/20
+        backdrop-blur-md border-b-2 border-yellow-secondary/30
+        shadow-lg shadow-yellow-secondary/10
         banner-sweep
       "
       role="banner"
@@ -153,10 +154,10 @@ const EventBanner: React.FC<EventNotificationProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 min-w-0 flex-1">
               <div
-                className="w-2 h-2 bg-primary rounded-full flex-shrink-0"
+                className="w-2 h-2 bg-yellow-secondary rounded-full flex-shrink-0 animate-pulse"
                 aria-hidden="true"
               />
-              <span className="text-xs font-medium text-white truncate">
+              <span className="text-xs font-semibold text-yellow-secondary truncate">
                 Upcoming: {event.title}
               </span>
             </div>
@@ -189,7 +190,7 @@ const EventBanner: React.FC<EventNotificationProps> = ({
             
             <Link 
               href="/meetup"
-              className="text-xs text-primary hover:text-white transition-colors underline decoration-primary/50 hover:decoration-white flex-shrink-0"
+              className="text-xs bg-yellow-secondary text-black px-2 py-1 rounded-full font-semibold hover:bg-yellow-secondary/90 transition-colors flex-shrink-0"
               aria-label={`Register for ${event.title}`}
             >
               Register
@@ -202,10 +203,10 @@ const EventBanner: React.FC<EventNotificationProps> = ({
           <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-shrink-0">
               <div
-                className="w-2 h-2 bg-primary rounded-full"
+                className="w-2 h-2 bg-yellow-secondary rounded-full animate-pulse"
                 aria-hidden="true"
               />
-              <span className="text-xs sm:text-sm font-medium text-white">
+              <span className="text-xs sm:text-sm font-bold text-yellow-secondary">
                 Upcoming: {event.title}
               </span>
             </div>
@@ -245,7 +246,7 @@ const EventBanner: React.FC<EventNotificationProps> = ({
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <Link 
               href="/meetup"
-              className="text-sm text-primary hover:text-white transition-colors underline decoration-primary/50 hover:decoration-white"
+              className="text-sm bg-yellow-secondary text-black px-3 py-1.5 rounded-full font-semibold hover:bg-yellow-secondary/90 transition-colors shadow-md hover:shadow-lg"
               aria-label={`Register for ${event.title}`}
             >
               <span className="hidden md:inline">Register Now</span>

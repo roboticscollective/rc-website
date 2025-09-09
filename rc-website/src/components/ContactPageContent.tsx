@@ -130,7 +130,7 @@ export default function ContactPageContent() {
                 >
                   <MapPin className="h-6 w-6 text-primary mb-4" />
                   <h3 className="text-lg font-medium mb-1">Location</h3>
-                  <p className="text-gray-400">Robotics Collective e.V.</p>
+                  <p className="text-gray-400">Robotics Collective c/o open robotic metaverse e.V.</p>
                   <p className="text-gray-400">Jülicher Str. 209q-s</p>
                   <p className="text-gray-400">52070 Aachen, Germany</p>
                 </a>
