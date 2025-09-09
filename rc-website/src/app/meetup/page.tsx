@@ -446,11 +446,15 @@ export default async function MeetupPage() {
                   <div className="text-center">
                     <div className="text-2xl font-bold text-yellow-secondary mb-1">€450</div>
                     <p className="text-xs text-gray-400 mb-4">Negotiable based on company size</p>
-                    <Link href="/contact">
+                    <a 
+                      href="https://luma.com/58e3ws9x"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <Button className="w-full mb-3 bg-yellow-secondary text-black hover:bg-yellow-secondary/90">
                         Become an Exhibitor
                       </Button>
-                    </Link>
+                    </a>
                     <div className="border-t border-gray-700/50 pt-4">
                       <p className="text-sm text-gray-300 mb-3 leading-relaxed">
                         We believe innovation thrives through open collaboration and knowledge sharing. 
@@ -461,11 +465,15 @@ export default async function MeetupPage() {
                       <p className="text-xs text-yellow-secondary font-medium mb-2">
                         Supporting Innovation & Knowledge Transfer
                       </p>
-                      <Link href="/contact">
+                      <a 
+                        href="https://luma.com/58e3ws9x"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Button variant="ghost" size="sm" className="text-xs text-gray-400 hover:text-yellow-secondary">
                           Apply for Free Spot (Limited Capacity)
                         </Button>
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>
