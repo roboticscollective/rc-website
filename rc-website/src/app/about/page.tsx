@@ -93,36 +93,36 @@ export default async function AboutPage() {
               <span className="text-primary">Leadership</span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
               {leadershipTeam.map((member) => (
                 <div
                   key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
-                  <div className="w-40 h-40 mb-6 overflow-hidden rounded-full border-3 border-yellow-secondary group-hover:border-primary transition-colors duration-300 relative shadow-lg">
+                  <div className="w-32 h-32 mb-4 overflow-hidden rounded-full border-3 border-yellow-secondary group-hover:border-primary transition-colors duration-300 relative shadow-lg">
                     <Image
                       src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
-                      width={160}
-                      height={160}
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold mb-2 text-white">
+                  <h3 className="text-lg font-bold mb-1 text-white text-center">
                     {member.name}
                   </h3>
-                  <p className="text-primary text-lg mb-4">{member.role}</p>
-                  <p className="text-gray-300 text-center max-w-sm mb-4">
+                  <p className="text-primary text-sm mb-2 text-center">{member.role}</p>
+                  <p className="text-gray-300 text-center text-xs mb-3 leading-tight">
                     {member.description}
                   </p>
-                  <div className="flex mt-3 space-x-4">
+                  <div className="flex justify-center mt-2 space-x-2">
                     {member.contact?.email && (
                       <a
                         href={`mailto:${member.contact.email}`}
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`Email ${member.name}`}
                       >
-                        <Mail className="w-6 h-6" />
+                        <Mail className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.linkedin && (
@@ -133,7 +133,7 @@ export default async function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s LinkedIn profile`}
                       >
-                        <Linkedin className="w-6 h-6" />
+                        <Linkedin className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.github && (
@@ -144,7 +144,7 @@ export default async function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s GitHub profile`}
                       >
-                        <Github className="w-6 h-6" />
+                        <Github className="w-4 h-4" />
                       </a>
                     )}
                   </div>
@@ -182,14 +182,14 @@ export default async function AboutPage() {
               <span className="text-primary">Core</span> Team
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6 max-w-7xl mx-auto">
               {coreTeam.map((member) => (
                 <div
                   key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
                   <div
-                    className={`w-32 h-32 mb-4 overflow-hidden rounded-full border-2 ${
+                    className={`w-24 h-24 mb-3 overflow-hidden rounded-full border-2 ${
                       member.isBoard
                         ? "border-yellow-secondary"
                         : "border-primary/30"
@@ -198,8 +198,8 @@ export default async function AboutPage() {
                     <Image
                       src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
-                      width={128}
-                      height={128}
+                      width={96}
+                      height={96}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {member.isBoard && (
@@ -222,18 +222,18 @@ export default async function AboutPage() {
                       </div>
                     )}
                   </div>
-                  <h3 className="text-xl font-bold mb-1 text-white">
+                  <h3 className="text-sm font-bold mb-1 text-white text-center">
                     {member.name}
                   </h3>
-                  <p className="text-primary">{member.role}</p>
-                  <div className="flex mt-3 space-x-4">
+                  <p className="text-primary text-xs text-center mb-2">{member.role}</p>
+                  <div className="flex justify-center mt-2 space-x-2">
                     {member.contact?.email && (
                       <a
                         href={`mailto:${member.contact.email}`}
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`Email ${member.name}`}
                       >
-                        <Mail className="w-5 h-5" />
+                        <Mail className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.linkedin && (
@@ -244,7 +244,7 @@ export default async function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s LinkedIn profile`}
                       >
-                        <Linkedin className="w-5 h-5" />
+                        <Linkedin className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.github && (
@@ -255,7 +255,7 @@ export default async function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s GitHub profile`}
                       >
-                        <Github className="w-5 h-5" />
+                        <Github className="w-4 h-4" />
                       </a>
                     )}
                   </div>
