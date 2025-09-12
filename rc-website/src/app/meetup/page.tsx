@@ -270,57 +270,84 @@ export default async function MeetupPage() {
         </section>
 
         {/* Meetup Highlights - Dynamic */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 bg-gradient-to-b from-background to-card/20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8 text-center">
-                Meetup <span className="text-primary">Highlights</span>
-              </h2>
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  What Makes Our <span className="text-yellow-secondary">Meetup</span> Special
+                </h2>
+                <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                  Experience the perfect blend of innovation, networking, and hands-on robotics exploration
+                </p>
+              </div>
 
               {event.highlights && event.highlights.length > 0 ? (
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {event.highlights.map((highlight, index) => (
-                    <li
+                    <div
                       key={index}
-                      className={`bg-card p-6 rounded-md ${
+                      className={`bg-gradient-to-br from-card/50 to-card/30 border border-primary/20 hover:border-primary/40 p-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 ${
                         index === event.highlights!.length - 1 &&
                         event.highlights!.length % 2 === 1
                           ? "col-span-1 md:col-span-2"
                           : ""
                       }`}
                     >
-                      {renderRichTextWithAccents(highlight)}
-                    </li>
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                          <CheckCircle2 className="w-6 h-6 text-primary" />
+                        </div>
+                        <div className="prose prose-invert prose-lg max-w-none">
+                          {renderRichTextWithAccents(highlight)}
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </ul>
+                </div>
               ) : (
-                // Fallback highlights when none are defined in Sanity
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">
-                      Project Showcases
-                    </span>{" "}
-                    from community members and local teams
-                  </li>
-                  <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">
-                      Hands-on Demos
-                    </span>{" "}
-                    try out robots and interact with creators
-                  </li>
-                  <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">
-                      Knowledge Sharing
-                    </span>{" "}
-                    learn from experts in informal settings
-                  </li>
-                  <li className="bg-card p-6 rounded-md">
-                    <span className="text-primary font-medium">
-                      Community Networking
-                    </span>{" "}
-                    connect with local robotics enthusiasts
-                  </li>
-                </ul>
+                // Enhanced fallback highlights when none are defined in Sanity
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="bg-gradient-to-br from-yellow-secondary/10 to-card/50 border border-yellow-secondary/20 hover:border-yellow-secondary/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-yellow-secondary/10 group">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-yellow-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <Building className="w-8 h-8 text-yellow-secondary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-yellow-secondary mb-2">Live Project Showcases</h3>
+                      <p className="text-sm text-gray-300">See cutting-edge robots and innovations from local teams and industry leaders</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-primary/10 to-card/50 border border-primary/20 hover:border-primary/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <Users className="w-8 h-8 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-primary mb-2">Hands-on Experience</h3>
+                      <p className="text-sm text-gray-300">Touch, test, and interact directly with robots and automation systems</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-red-accent/10 to-card/50 border border-red-accent/20 hover:border-red-accent/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-red-accent/10 group">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-red-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <CheckCircle2 className="w-8 h-8 text-red-accent" />
+                      </div>
+                      <h3 className="text-lg font-bold text-red-accent mb-2">Expert Knowledge</h3>
+                      <p className="text-sm text-gray-300">Learn from industry professionals and researchers in intimate settings</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-primary/10 to-card/50 border border-primary/20 hover:border-primary/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <MapPin className="w-8 h-8 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-bold text-primary mb-2">Premium Networking</h3>
+                      <p className="text-sm text-gray-300">Connect with 300+ robotics professionals, researchers, and innovators</p>
+                    </div>
+                  </div>
+                </div>
               )}
 
               {/* Join Our Meetup */}
