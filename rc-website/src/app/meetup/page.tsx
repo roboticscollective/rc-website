@@ -126,144 +126,205 @@ export default async function MeetupPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="">
-        {/* Hero Section - Dynamic */}
-        <section className="relative py-16 md:py-24">
+        {/* Hero Section - Redesigned for Maximum Impact */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          {/* Enhanced Background with Multiple Layers */}
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-background/70 to-background backdrop-blur-[1px] z-10"></div>
+            {/* Primary background image */}
             <Image
               src={eventImage}
               alt={`${event.title} banner`}
               fill
-              className="object-cover opacity-80 z-0"
+              className="object-cover opacity-40 z-0"
               priority
             />
+            {/* Gradient overlays for better text contrast */}
+            <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/80 to-background/95 z-10"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-yellow-secondary/10 via-transparent to-primary/10 z-15"></div>
+            
+            {/* Dynamic glow effects */}
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-secondary/20 rounded-full filter blur-3xl animate-pulse-slow z-20"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-[28rem] h-[28rem] bg-primary/15 rounded-full filter blur-3xl animate-pulse-slow z-20"></div>
           </div>
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-0">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                {event.title}
-              </h1>
-              {event.description && event.description.length > 0 ? (
-                <div className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto prose prose-invert prose-xl">
-                  <PortableText
-                    value={event.description}
-                    components={{
-                      block: {
-                        normal: ({ children }) => (
-                          <p className="text-xl text-gray-300">{children}</p>
-                        ),
-                      },
-                      marks: {
-                        strong: ({ children }) => (
-                          <strong className="text-primary">{children}</strong>
-                        ),
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+              
+              {/* Left Side - Compelling Copy */}
+              <div className="text-center lg:text-left">
+                {/* Eye-catching badge */}
+                <div className="inline-flex items-center gap-2 bg-yellow-secondary/20 border border-yellow-secondary/30 rounded-full px-4 py-2 mb-6">
+                  <div className="w-2 h-2 bg-yellow-secondary rounded-full animate-pulse"></div>
+                  <span className="text-yellow-secondary font-semibold text-sm">AACHEN'S #1 ROBOTICS EVENT</span>
+                </div>
+
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                  <span className="block">Join the</span>
+                  <span className="block text-yellow-secondary">Robotics</span>
+                  <span className="block">Community</span>
+                </h1>
+
+                <p className="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed">
+                  Connect with researchers, professionals, students, and curious minds. Experience live robot demos and be part of the region's most welcoming robotics community.
+                </p>
+
+                {/* Social proof stats */}
+                <div className="flex flex-wrap justify-center lg:justify-start gap-6 mb-10">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-yellow-secondary">300+</div>
+                    <div className="text-sm text-gray-400">Total Attendees</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-primary">70%</div>
+                    <div className="text-sm text-gray-400">Roboticists</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-yellow-secondary">20+</div>
+                    <div className="text-sm text-gray-400">Projects & Demos</div>
+                  </div>
+                </div>
+
+                {/* Prominent CTAs */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <AnalyticsWrapper
+                    href={event.registrationInfo?.registrationLink || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                    trackEvent={{
+                      type: "conversion",
+                      eventName: CONVERSION_EVENTS.MEETUP_REGISTRATION_CLICK,
+                      parameters: {
+                        event_date: event.eventDate,
+                        location: `${event.location?.venue || "TBA"}, ${
+                          event.location?.city || "Aachen"
+                        }`,
+                        platform: "luma",
                       },
                     }}
-                  />
+                  >
+                    <Button
+                      variant="default"
+                      className="w-full sm:w-auto px-8 py-4 text-lg rounded-full bg-gradient-to-r from-yellow-secondary to-yellow-secondary/90 text-black font-bold hover:from-yellow-secondary/90 hover:to-yellow-secondary border-2 border-yellow-secondary/30 shadow-lg hover:shadow-yellow-secondary/20 transition-all duration-300"
+                      size="lg"
+                    >
+                      {event.customRegistrationText || "Reserve Your Spot - FREE"}
+                    </Button>
+                  </AnalyticsWrapper>
+                  
+                  <a 
+                    href="https://luma.com/58e3ws9x"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block"
+                  >
+                    <Button
+                      variant="outline"
+                      className="w-full sm:w-auto px-8 py-4 text-lg rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-black transition-all duration-300"
+                      size="lg"
+                    >
+                      Exhibit Your Innovation
+                    </Button>
+                  </a>
                 </div>
-              ) : (
-                <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                  A community meetup for robotics enthusiasts, researchers, and 
-                  professionals to share knowledge, showcase projects, and build 
-                  connections. Perfect for learning, networking, and exploring 
-                  the latest trends in robotics.
-                </p>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-                <div className="bg-card p-6 rounded-lg flex items-center justify-center flex-col">
-                  <Calendar className="text-primary h-8 w-8 mb-3" />
-                  <h3 className="text-lg font-semibold mb-1">Date</h3>
-                  <p className="text-gray-300">
-                    {eventDate.toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                </div>
-                <div className="bg-card p-6 rounded-lg flex items-center justify-center flex-col">
-                  <Clock className="text-primary h-8 w-8 mb-3" />
-                  <h3 className="text-lg font-semibold mb-1">Time</h3>
-                  <p className="text-gray-300">
-                    {eventDate.toLocaleTimeString("en-US", {
-                      hour: "numeric",
-                      minute: "2-digit",
-                    })}
-                    {endDate &&
-                      ` - ${endDate.toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}`}
-                  </p>
-                </div>
-                <a
-                  href={
-                    event.location?.venue
-                      ? `https://maps.google.com/maps?q=${encodeURIComponent(
-                          event.location.venue +
-                            ", " +
-                            (event.location.city || "Aachen")
-                        )}`
-                      : undefined
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-card p-6 rounded-lg flex items-center justify-center flex-col hover:bg-card/80 transition-colors"
-                >
-                  <MapPin className="text-primary h-8 w-8 mb-3" />
-                  <h3 className="text-lg font-semibold mb-1">Location</h3>
-                  <p className="text-gray-300">
-                    {event.location?.venue || "TBA"}
-                  </p>
-                  <p className="text-gray-300">
-                    {event.location?.city || "Aachen"}, Germany
-                  </p>
-                </a>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
-                <AnalyticsWrapper
-                  href={event.registrationInfo?.registrationLink || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block"
-                  trackEvent={{
-                    type: "conversion",
-                    eventName: CONVERSION_EVENTS.MEETUP_REGISTRATION_CLICK,
-                    parameters: {
-                      event_date: event.eventDate,
-                      location: `${event.location?.venue || "TBA"}, ${
-                        event.location?.city || "Aachen"
-                      }`,
-                      platform: "luma",
-                    },
-                  }}
-                >
-                  <Button
-                    variant="default"
-                    className="px-8 py-6 text-lg rounded-3xl"
-                    size="lg"
-                  >
-                    {event.customRegistrationText || "Register Now"}
-                  </Button>
-                </AnalyticsWrapper>
-                
-                <a 
-                  href="https://luma.com/58e3ws9x"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block"
-                >
-                  <Button
-                    variant="outline"
-                    className="px-8 py-6 text-lg rounded-3xl border-yellow-secondary text-yellow-secondary hover:bg-yellow-secondary hover:text-black"
-                    size="lg"
-                  >
-                    Become an Exhibitor
-                  </Button>
-                </a>
+              {/* Right Side - Event Details Card */}
+              <div className="relative">
+                <div className="bg-gradient-to-br from-card/80 to-card/60 backdrop-blur-lg border border-primary/20 rounded-2xl p-8 shadow-2xl">
+                  {/* Event title */}
+                  <h2 className="text-2xl font-bold mb-6 text-center text-primary">{event.title}</h2>
+                  
+                  {/* Event info grid */}
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-yellow-secondary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Calendar className="text-yellow-secondary h-6 w-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-white">Date</h3>
+                        <p className="text-gray-300">
+                          {eventDate.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Clock className="text-primary h-6 w-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-white">Time</h3>
+                        <p className="text-gray-300">
+                          {eventDate.toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                          })}
+                          {endDate &&
+                            ` - ${endDate.toLocaleTimeString("en-US", {
+                              hour: "numeric",
+                              minute: "2-digit",
+                            })}`}
+                        </p>
+                      </div>
+                    </div>
+
+                    <a
+                      href={
+                        event.location?.venue
+                          ? `https://maps.google.com/maps?q=${encodeURIComponent(
+                              event.location.venue +
+                                ", " +
+                                (event.location.city || "Aachen")
+                            )}`
+                          : undefined
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 hover:bg-card/30 p-2 -m-2 rounded-lg transition-colors"
+                    >
+                      <div className="w-12 h-12 bg-yellow-secondary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <MapPin className="text-yellow-secondary h-6 w-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-white">Location</h3>
+                        <p className="text-gray-300">
+                          {event.location?.venue || "TBA"}
+                        </p>
+                        <p className="text-gray-300 text-sm">
+                          {event.location?.city || "Aachen"}, Germany
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+
+                  {/* Quick highlights */}
+                  <div className="mt-8 pt-6 border-t border-primary/20">
+                    <h3 className="font-semibold mb-4 text-center">What to Expect</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-yellow-secondary" />
+                        <span>Diverse Robotics Projects</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <span>Expert Talks and Discussions</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-yellow-secondary" />
+                        <span>Welcoming Networking Atmosphere</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <span>High-Energy Robotics Community</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -343,8 +404,8 @@ export default async function MeetupPage() {
                       <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                         <MapPin className="w-8 h-8 text-primary" />
                       </div>
-                      <h3 className="text-lg font-bold text-primary mb-2">Premium Networking</h3>
-                      <p className="text-sm text-gray-300">Connect with 300+ robotics professionals, researchers, and innovators</p>
+                      <h3 className="text-lg font-bold text-primary mb-2">Welcoming Networking Atmosphere</h3>
+                      <p className="text-sm text-gray-300">Connect with researchers, professionals, students, and curious minds from our growing robotics community</p>
                     </div>
                   </div>
                 </div>
@@ -418,19 +479,19 @@ export default async function MeetupPage() {
               
               <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
                 The Aachen Robotics Community Meetup has become the leading robotics gathering in the region. 
-                Our last editions welcomed <span className="text-yellow-secondary font-bold">300+ participants</span>, with more than 
-                <span className="text-yellow-secondary font-bold"> 70%</span> already working in robotics or completing their master's degree in the field.
+                Our events consistently bring together <span className="text-yellow-secondary font-bold">150+ passionate participants</span> from 
+                <span className="text-yellow-secondary font-bold"> diverse backgrounds</span> - from industry professionals to curious students and hobbyists.
               </p>
 
               {/* Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
-                  <div className="text-3xl font-bold text-yellow-secondary mb-2">300+</div>
-                  <div className="text-sm text-gray-300">Participants</div>
+                  <div className="text-3xl font-bold text-yellow-secondary mb-2">150+</div>
+                  <div className="text-sm text-gray-300">Participants per Event</div>
                 </div>
                 <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
-                  <div className="text-3xl font-bold text-yellow-secondary mb-2">70%</div>
-                  <div className="text-sm text-gray-300">Robotics Professionals & Students</div>
+                  <div className="text-3xl font-bold text-yellow-secondary mb-2">ALL</div>
+                  <div className="text-sm text-gray-300">Levels Welcome</div>
                 </div>
                 <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
                   <div className="text-3xl font-bold text-yellow-secondary mb-2">#1</div>
@@ -439,7 +500,7 @@ export default async function MeetupPage() {
               </div>
 
               <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                This is your chance to connect with <span className="text-primary font-semibold">researchers, professionals, startups, and passionate roboticists</span> who are shaping the future of robotics.
+                This is your chance to connect with <span className="text-primary font-semibold">researchers, professionals, students, hobbyists, and curious minds</span> who are exploring and shaping the future of robotics together.
               </p>
             </div>
           </div>
