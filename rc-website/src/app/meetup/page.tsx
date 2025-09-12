@@ -381,6 +381,43 @@ export default async function MeetupPage() {
           </div>
         </section>
 
+        {/* Success Stats Section */}
+        <section className="py-16 md:py-24 bg-gradient-to-b from-background to-card/20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                The Leading <span className="text-yellow-secondary">Robotics Gathering</span> in the Region
+              </h2>
+              
+              <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+                The Aachen Robotics Community Meetup has become the leading robotics gathering in the region. 
+                Our last editions welcomed <span className="text-yellow-secondary font-bold">300+ participants</span>, with more than 
+                <span className="text-yellow-secondary font-bold"> 70%</span> already working in robotics or completing their master's degree in the field.
+              </p>
+
+              {/* Stats Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
+                  <div className="text-3xl font-bold text-yellow-secondary mb-2">300+</div>
+                  <div className="text-sm text-gray-300">Participants</div>
+                </div>
+                <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
+                  <div className="text-3xl font-bold text-yellow-secondary mb-2">70%</div>
+                  <div className="text-sm text-gray-300">Robotics Professionals & Students</div>
+                </div>
+                <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
+                  <div className="text-3xl font-bold text-yellow-secondary mb-2">#1</div>
+                  <div className="text-sm text-gray-300">Regional Robotics Event</div>
+                </div>
+              </div>
+
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                This is your chance to connect with <span className="text-primary font-semibold">researchers, professionals, startups, and passionate roboticists</span> who are shaping the future of robotics.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Be in the center of our next Event */}
         <section className="py-16 md:py-24 bg-card/10">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -389,91 +426,135 @@ export default async function MeetupPage() {
                 Be in the center of our next <span className="text-primary">Event</span>
               </h2>
               
-              <div className="max-w-2xl mx-auto">
-                <p className="text-center text-gray-300 mb-8">
-                  We facilitate knowledge transfer between research and industry. Whether you're looking to 
-                  showcase innovation, recruit top talent, or simply connect with the robotics community, 
-                  become part of the center of our next event.
-                </p>
-                
-                {/* Premium Exhibitor */}
-                <div className="bg-gradient-to-b from-yellow-secondary/10 to-card/50 border border-yellow-secondary/30 rounded-lg p-8 hover:border-yellow-secondary/50 transition-all duration-300 relative overflow-hidden">
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-secondary to-yellow-secondary/70"></div>
+              <div className="max-w-5xl mx-auto">
+                {/* Introduction */}
+                <div className="text-center mb-12">
+                  <p className="text-lg text-gray-300 mb-6 max-w-3xl mx-auto">
+                    We believe innovation thrives through open collaboration and knowledge sharing. Whether you're working on a weekend hobby project, launching a startup, or representing an established company, we genuinely welcome your participation. Our community values diverse perspectives and fresh ideas that drive robotics forward.
+                  </p>
                   
-                  <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-yellow-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Building className="w-8 h-8 text-yellow-secondary" />
-                    </div>
-                    <h4 className="text-xl font-bold text-yellow-secondary mb-2">Premium Exhibitor</h4>
-                    <p className="text-sm text-gray-400">Exclusive access + exhibition space</p>
-                  </div>
-                  
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm font-medium">Private pre-networking session at 15:00</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm">Dedicated exhibition space</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm">Access to high-density robotics and automation engineers talent pool</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm">Exclusive keynote presentation spot</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm">Direct access to partnerships, collaborations & new customers</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm">Showcase yourself as regional automation leader</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm">Be a proud contributor to the Robotics Community</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
-                      <span className="text-sm">All standard participation benefits</span>
+                  <div className="bg-card/30 border border-primary/20 rounded-lg p-6 max-w-4xl mx-auto">
+                    <h3 className="text-xl font-semibold text-primary mb-4">Exhibitor Contribution</h3>
+                    <p className="text-gray-300 mb-4">
+                      To make this event possible, we kindly ask exhibitors for a contribution of <span className="font-bold text-yellow-secondary">€450 or more</span>. But you are free to choose the amount that works for you.
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div className="bg-yellow-secondary/10 border border-yellow-secondary/20 rounded p-4">
+                        <p><span className="font-bold text-yellow-secondary">Premium Exhibitors (from €200 upwards)</span> will be featured as official sponsors in all communication channels and can take part in the keynote session.</p>
+                      </div>
+                      <div className="bg-primary/10 border border-primary/20 rounded p-4">
+                        <p><span className="font-bold text-primary">Community Exhibitors</span> are equally welcome. If the standard contribution is too high, simply suggest an amount that works for you. Please note that spaces are limited, and Premium Exhibitors will be given priority.</p>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-yellow-secondary mb-1">€450</div>
-                    <p className="text-xs text-gray-400 mb-4">Negotiable based on company size</p>
-                    <a 
-                      href="https://luma.com/58e3ws9x"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button className="w-full mb-3 bg-yellow-secondary text-black hover:bg-yellow-secondary/90">
-                        Become an Exhibitor
-                      </Button>
-                    </a>
-                    <div className="border-t border-gray-700/50 pt-4">
-                      <p className="text-sm text-gray-300 mb-3 leading-relaxed">
-                        We believe innovation thrives through open collaboration and knowledge sharing. 
-                        Whether you're working on a weekend hobby project, launching a startup, or 
-                        representing an established company, we genuinely welcome your participation. 
-                        Our community values diverse perspectives and fresh ideas that drive robotics forward.
-                      </p>
-                      <p className="text-xs text-yellow-secondary font-medium mb-2">
-                        Supporting Innovation & Knowledge Transfer
-                      </p>
+                </div>
+
+                {/* Exhibitor Types */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Premium Exhibitor */}
+                  <div className="bg-gradient-to-b from-yellow-secondary/10 to-card/50 border border-yellow-secondary/30 rounded-lg p-8 hover:border-yellow-secondary/50 transition-all duration-300 relative overflow-hidden flex flex-col">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-secondary to-yellow-secondary/70"></div>
+                    
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-yellow-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Building className="w-8 h-8 text-yellow-secondary" />
+                      </div>
+                      <h4 className="text-xl font-bold text-yellow-secondary mb-2">Premium Exhibitor</h4>
+                      <p className="text-sm text-gray-400">€200+ • Official Sponsor Status</p>
+                    </div>
+                    
+                    <div className="space-y-3 flex-grow">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Official sponsor in all communications</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm font-medium">Exclusive keynote presentation spot</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Private pre-networking session at 15:00</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Dedicated exhibition space including a screen</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Priority booking and setup </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">(Optional) Get CVs of robotics seeking jobs or internships</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0" />
+                        <span className="text-sm">Summary and contact of other exhibitors and community contributors</span>
+                      </div>
+                    </div>
+                    
+                    <div className="text-center mt-6">
+                      <div className="text-2xl font-bold text-yellow-secondary mb-1">€450</div>
+                      <p className="text-xs text-gray-400 mb-4">Standard rate • Flexible pricing available</p>
                       <a 
                         href="https://luma.com/58e3ws9x"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Button variant="ghost" size="sm" className="text-xs text-gray-400 hover:text-yellow-secondary">
-                          Apply for Free Spot (Limited Capacity)
+                        <Button className="w-full bg-yellow-secondary text-black hover:bg-yellow-secondary/90">
+                          Become a Premium Exhibitor
                         </Button>
                       </a>
+                    </div>
+                  </div>
+
+                  {/* Community Exhibitor */}
+                  <div className="bg-gradient-to-b from-primary/10 to-card/50 border border-primary/30 rounded-lg p-8 hover:border-primary/50 transition-all duration-300 relative overflow-hidden flex flex-col">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/70"></div>
+                    
+                    <div className="text-center mb-6">
+                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Users className="w-8 h-8 text-primary" />
+                      </div>
+                      <h4 className="text-xl font-bold text-primary mb-2">Community Exhibitor</h4>
+                      <p className="text-sm text-gray-400">Flexible Contribution • Community Focus</p>
+                    </div>
+                    
+                    <div className="space-y-3 flex-grow">
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Exhibition space for your project</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Community spotlight opportunity</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Private pre-networking session at 15:00</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                        <span className="text-sm">Support innovation ecosystem</span>
+                      </div>
+                    </div>
+                    
+                    <div className="text-center mt-6">
+                      <div className="text-2xl font-bold text-primary mb-1">Your Choice</div>
+                      <p className="text-xs text-gray-400 mb-4">Suggest an amount that works for you</p>
+                      <a 
+                        href="https://luma.com/58e3ws9x"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-black">
+                          Join as Community Exhibitor
+                        </Button>
+                      </a>
+                      <p className="text-xs text-gray-400 mt-3">
+                        Limited spaces • Premium Exhibitors have priority
+                      </p>
                     </div>
                   </div>
                 </div>
