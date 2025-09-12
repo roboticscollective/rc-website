@@ -510,42 +510,6 @@ export default async function MeetupPage() {
           </div>
         </section>
 
-        {/* Success Stats Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-b from-background to-card/20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                The Leading <span className="text-yellow-secondary">Robotics Gathering</span> in the Region
-              </h2>
-              
-              <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-                The Aachen Robotics Community Meetup has become the leading robotics gathering in the region. 
-                Join our thriving community of <span className="text-yellow-secondary font-bold">300+ previous participants</span> from 
-                <span className="text-yellow-secondary font-bold"> diverse backgrounds</span> - from industry professionals to curious students and hobbyists.
-              </p>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
-                  <div className="text-3xl font-bold text-yellow-secondary mb-2">300+</div>
-                  <div className="text-sm text-gray-300">Community Members</div>
-                </div>
-                <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
-                  <div className="text-3xl font-bold text-yellow-secondary mb-2">ALL</div>
-                  <div className="text-sm text-gray-300">Levels Welcome</div>
-                </div>
-                <div className="bg-card/50 border border-yellow-secondary/20 rounded-lg p-6 hover:border-yellow-secondary/40 transition-all duration-300">
-                  <div className="text-3xl font-bold text-yellow-secondary mb-2">#1</div>
-                  <div className="text-sm text-gray-300">Regional Robotics Event</div>
-                </div>
-              </div>
-
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                This is your chance to connect with <span className="text-primary font-semibold">researchers, professionals, students, hobbyists, and curious minds</span> who are exploring and shaping the future of robotics together.
-              </p>
-            </div>
-          </div>
-        </section>
 
         {/* Strategic CTA Bridge Section */}
         <section className="py-12 md:py-16 bg-gradient-to-b from-card/20 to-background">
@@ -622,6 +586,10 @@ export default async function MeetupPage() {
                   <div className="text-sm text-gray-400">Regional Event</div>
                 </div>
               </div>
+              
+              <p className="text-lg text-gray-300 mt-8 max-w-3xl mx-auto">
+                This is your chance to connect with <span className="text-primary font-semibold">researchers, professionals, students, hobbyists, and curious minds</span> who are exploring and shaping the future of robotics together.
+              </p>
             </div>
           </div>
         </section>
