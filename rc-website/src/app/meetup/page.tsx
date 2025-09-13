@@ -82,8 +82,8 @@ export default async function MeetupPage() {
     event?.eventPartners && event.eventPartners.length > 0
       ? event.eventPartners
       : allPartners.filter(partner => 
-          partner.partnershipType === "Research Institute" || 
-          partner.partnershipType === "Industry Partner"
+          partner.partnershipType === "research" || 
+          partner.partnershipType === "industry"
         );
 
   // helper
