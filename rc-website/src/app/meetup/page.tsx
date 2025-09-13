@@ -1,6 +1,7 @@
 import { Calendar, MapPin, Users, Clock, CheckCircle2, Building } from "lucide-react";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import CTASection from "@/components/CTASection";
 import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
 import { CONVERSION_EVENTS } from "@/lib/analytics";
@@ -30,21 +31,12 @@ export const metadata: Metadata = {
   ],
 };
 
-/* "https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/Meetup/meetup_logo_xt2pev.jpg",
-"https://res.cloudinary.com/dilan3qfq/image/upload/v1727137781/openroboverse/Meetup/meetup_back_cjvymg.jpg",
-"https://res.cloudinary.com/dilan3qfq/image/upload/v1727137776/openroboverse/Meetup/meetup_pre_up1_fohztd.jpg",
-"https://res.cloudinary.com/dilan3qfq/image/upload/v1727138102/openroboverse/Meetup/meetup_pre_up3_ojmush.jpg",
-"https://res.cloudinary.com/dilan3qfq/image/upload/v1745223313/1730150684425_qqtque.jpg",
-"https://res.cloudinary.com/dilan3qfq/image/upload/v1745223313/1730150684646-3_h250bh.jpg",
-"https://res.cloudinary.com/dilan3qfq/image/upload/v1745223313/1730150684504-2_c3oalr.jpg ",
- */
 const galleryImages = [
   {
     src: "https://res.cloudinary.com/dilan3qfq/image/upload/v1727137785/openroboverse/Meetup/meetup_logo_xt2pev.jpg",
     span: "col-span-2 row-span-2",
     alt: "orom logo picture meetup #1",
   },
-
   {
     src: "https://res.cloudinary.com/dilan3qfq/image/upload/v1745223313/1730150684646-3_h250bh.jpg",
     span: "col-span-2 row-span-2",
@@ -85,11 +77,14 @@ export default async function MeetupPage() {
     getActivePartners(),
   ]);
 
-  // Use event partners if specified, otherwise use all active partners
+  // Use event partners if specified, otherwise filter active partners by specific types
   const displayPartners =
     event?.eventPartners && event.eventPartners.length > 0
       ? event.eventPartners
-      : allPartners;
+      : allPartners.filter(partner => 
+          partner.partnershipType === "Research Institute" || 
+          partner.partnershipType === "Industry Partner"
+        );
 
   // helper
   const isSvg = (url: string) => url?.toLowerCase().endsWith(".svg");
@@ -172,7 +167,7 @@ export default async function MeetupPage() {
                 <div className="flex flex-wrap justify-center lg:justify-start gap-6 mb-10">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-yellow-secondary">300+</div>
-                    <div className="text-sm text-gray-400">Community Members</div>
+                    <div className="text-sm text-gray-400">Past attendees</div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl font-bold text-primary">70%</div>
@@ -330,186 +325,419 @@ export default async function MeetupPage() {
           </div>
         </section>
 
-        {/* Meetup Highlights - Dynamic */}
-        <section className="py-16 md:py-24 bg-gradient-to-b from-background to-card/20">
+        {/* Tab Navigation Section */}
+        <section className="py-8 bg-gradient-to-b from-background to-card/20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                  What Makes Our <span className="text-yellow-secondary">Meetup</span> Special
-                </h2>
-                <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-                  Experience the perfect blend of innovation, networking, and hands-on robotics exploration
-                </p>
-              </div>
-
-              {event.highlights && event.highlights.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {event.highlights.map((highlight, index) => (
-                    <div
-                      key={index}
-                      className={`bg-gradient-to-br from-card/50 to-card/30 border border-primary/20 hover:border-primary/40 p-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 ${
-                        index === event.highlights!.length - 1 &&
-                        event.highlights!.length % 2 === 1
-                          ? "col-span-1 md:col-span-2"
-                          : ""
-                      }`}
+            <div className="max-w-7xl mx-auto">
+              <Tabs defaultValue="attendees" className="w-full">
+                <div className="sticky top-0 z-50 bg-black/95 backdrop-blur-lg py-4 border-b border-primary/20">
+                  <TabsList className="grid w-full grid-cols-2 bg-card/60 backdrop-blur-lg border border-primary/20 rounded-full p-1 h-14 max-w-4xl mx-auto">
+                    <TabsTrigger 
+                      value="attendees" 
+                      className="rounded-full py-3 px-6 text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-secondary data-[state=active]:to-yellow-secondary/90 data-[state=active]:text-black data-[state=active]:shadow-lg transition-all duration-300"
                     >
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                          <CheckCircle2 className="w-6 h-6 text-primary" />
-                        </div>
-                        <div className="prose prose-invert prose-lg max-w-none">
-                          {renderRichTextWithAccents(highlight)}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                      <Users className="w-5 h-5 mr-2" />
+                      For Attendees
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="exhibitors" 
+                      className="rounded-full py-3 px-6 text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-black data-[state=active]:shadow-lg transition-all duration-300"
+                    >
+                      <Building className="w-5 h-5 mr-2" />
+                      For Exhibitors
+                    </TabsTrigger>
+                    </TabsList>
                 </div>
-              ) : (
-                // Enhanced fallback highlights when none are defined in Sanity
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="bg-gradient-to-br from-yellow-secondary/10 to-card/50 border border-yellow-secondary/20 hover:border-yellow-secondary/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-yellow-secondary/10 group">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-yellow-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Building className="w-8 h-8 text-yellow-secondary" />
-                      </div>
-                      <h3 className="text-lg font-bold text-yellow-secondary mb-2">Live Project Showcases</h3>
-                      <p className="text-sm text-gray-300">See cutting-edge robots and innovations from local teams and industry leaders</p>
-                    </div>
-                  </div>
 
-                  <div className="bg-gradient-to-br from-primary/10 to-card/50 border border-primary/20 hover:border-primary/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Users className="w-8 h-8 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-bold text-primary mb-2">Hands-on Experience</h3>
-                      <p className="text-sm text-gray-300">Touch, test, and interact directly with robots and automation systems</p>
-                    </div>
-                  </div>
+                {/* Attendees Tab Content */}
+                <TabsContent value="attendees" className="mt-8">
+                  <div className="bg-gradient-to-b from-card/10 to-card/20 rounded-lg border border-primary/10 p-6">
+                    {/* Attendee Content */}
+                    <div className="space-y-12">
 
-                  <div className="bg-gradient-to-br from-red-accent/10 to-card/50 border border-red-accent/20 hover:border-red-accent/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-red-accent/10 group">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-red-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <CheckCircle2 className="w-8 h-8 text-red-accent" />
-                      </div>
-                      <h3 className="text-lg font-bold text-red-accent mb-2">Expert Knowledge</h3>
-                      <p className="text-sm text-gray-300">Learn from industry professionals and researchers in intimate settings</p>
-                    </div>
-                  </div>
+                      {/* Enhanced Attendee Benefits Section */}
+                      <div className="mt-4">
+                        
+                        <div className="max-w-5xl mx-auto">
+                          {/* Enhanced Attendee Package */}
+                          <div className="bg-gradient-to-br from-primary/10 via-card/50 to-primary/5 border-2 border-primary/30 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-yellow-secondary"></div>
+                            
+                            <div className="text-center mb-8">
+                              <h4 className="text-2xl font-bold text-primary mb-2">Why you shouldn't miss this Meetup</h4>
+                              <p className="text-gray-400">Access to networking, learning and growth opportunities</p>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                              <div className="space-y-4">
+                                <div className="flex items-center gap-3">
+                                  <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
+                                  <span className="font-medium">20+ Live Robot Demonstrations</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
+                                  <span className="font-medium">Expert Keynote Presentations</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
+                                  <span className="font-medium">Premium Networking Opportunities</span>
+                                </div>
 
-                  <div className="bg-gradient-to-br from-primary/10 to-card/50 border border-primary/20 hover:border-primary/40 p-6 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <MapPin className="w-8 h-8 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-bold text-primary mb-2">Welcoming Networking Atmosphere</h3>
-                      <p className="text-sm text-gray-300">Connect with researchers, professionals, students, and curious minds from our growing robotics community</p>
-                    </div>
-                  </div>
-                </div>
-              )}
+                              </div>
+                              <div className="space-y-4">
+                                <div className="flex items-center gap-3">
+                                  <CheckCircle2 className="w-6 h-6 text-yellow-secondary flex-shrink-0" />
+                                  <span className="font-medium">Discuss Production Challenges with Experts</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <CheckCircle2 className="w-6 h-6 text-yellow-secondary flex-shrink-0" />
+                                  <span className="font-medium">Industry Insights & Trends</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                  <CheckCircle2 className="w-6 h-6 text-yellow-secondary flex-shrink-0" />
+                                  <span className="font-medium">Career & Collaboration Opportunities</span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="text-center bg-primary/10 border border-primary/20 rounded-xl p-6">
+                              <p className="text-gray-300 mb-6"> Secure your spot with a small contribution or join as a community member to enjoy a free ticket and full benefits.</p>
+                              <AnalyticsWrapper
+                                href={event?.registrationInfo?.registrationLink || "#"}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                trackEvent={{
+                                  type: "conversion",
+                                  eventName: CONVERSION_EVENTS.MEETUP_REGISTRATION_CLICK,
+                                  parameters: {
+                                    event_date: event.eventDate,
+                                    location: `${event.location?.venue || "TBA"}, ${
+                                      event.location?.city || "Aachen"
+                                    }`,
+                                    platform: "luma",
+                                  },
+                                }}
+                              >
+                                <Button className="w-full sm:w-auto px-10 py-4 text-lg font-bold rounded-full bg-gradient-to-r from-yellow-secondary to-yellow-secondary/90 text-black hover:shadow-lg hover:shadow-yellow-secondary/30 transition-all duration-300">
+                                  Reserve My Spot Now
+                                </Button>
+                              </AnalyticsWrapper>
+                            </div>
 
-              {/* Enhanced Attendee Benefits Section */}
-              <div className="mt-16">
-                <div className="text-center mb-16">
-                  <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-full px-6 py-3 mb-8">
-                    <Users className="w-4 h-4 text-primary" />
-                    <span className="text-primary font-semibold text-sm uppercase tracking-wider">Complete Package Included</span>
-                  </div>
-                  
-                  <h3 className="text-4xl md:text-5xl font-bold mb-6">
-                    Everything <span className="text-primary">Professionals</span> Need
-                  </h3>
-                  <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                    Comprehensive access to networking, learning, and growth opportunities—all included in your free registration.
-                  </p>
-                </div>
-                
-                <div className="max-w-5xl mx-auto">
-                  {/* Enhanced Attendee Package */}
-                  <div className="bg-gradient-to-br from-primary/10 via-card/50 to-primary/5 border-2 border-primary/30 rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-yellow-secondary"></div>
-                    
-                    <div className="text-center mb-8">
-                      <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Users className="w-10 h-10 text-primary" />
-                      </div>
-                      <h4 className="text-2xl font-bold text-primary mb-2">Full Meetup Access</h4>
-                      <p className="text-gray-400">Join our community of 300+ previous participants • Event starts 18:30</p>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                          <span className="font-medium">20+ Live Robot Demonstrations</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                          <span className="font-medium">Expert Keynote Presentations</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                          <span className="font-medium">Premium Networking Opportunities</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-                          <span className="font-medium">Hands-on Technology Interaction</span>
+                            {/* Moving Partner Logos */}
+                            <div className="relative w-full h-20 mt-8 overflow-hidden">
+                              {/* Gradient Masks for smooth edges */}
+                              <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-primary/10 to-transparent z-10 pointer-events-none" />
+                              <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-primary/10 to-transparent z-10 pointer-events-none" />
+                              
+                              {/* Scrolling Container */}
+                              <div className="flex items-center h-full">
+                                <div
+                                  className="flex items-center animate-scroll hover:[animation-play-state:paused]"
+                                  style={{
+                                    animationDuration: `${Math.max(displayPartners.length, 4) * 4}s`,
+                                  }}
+                                >
+                                  {/* First set of logos */}
+                                  {displayPartners.slice(0, 8).map((partner, index) => (
+                                    <div key={index} className="flex-shrink-0 px-6">
+                                      <Image
+                                        src={partner.logo ? buildImageUrl(partner.logo) : '/placeholder-logo.png'}
+                                        alt={partner.name || 'Partner logo'}
+                                        width={64}
+                                        height={64}
+                                        className="w-20 h-20 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300 filter hover:brightness-110"
+                                      />
+                                    </div>
+                                  ))}
+                                  {/* Duplicate set for seamless loop */}
+                                  {displayPartners.slice(0, 8).map((partner, index) => (
+                                    <div key={`duplicate-${index}`} className="flex-shrink-0 px-6">
+                                      <Image
+                                        src={partner.logo ? buildImageUrl(partner.logo) : '/placeholder-logo.png'}
+                                        alt={partner.name || 'Partner logo'}
+                                        width={64}
+                                        height={64}
+                                        className="w-20 h-20 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300 filter hover:brightness-110"
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
                         </div>
                       </div>
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-yellow-secondary flex-shrink-0" />
-                          <span className="font-medium">Industry Insights & Trends</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-yellow-secondary flex-shrink-0" />
-                          <span className="font-medium">Career & Collaboration Opportunities</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-yellow-secondary flex-shrink-0" />
-                          <span className="font-medium">Refreshments & Social Areas</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <CheckCircle2 className="w-6 h-6 text-yellow-secondary flex-shrink-0" />
-                          <span className="font-medium">Community Access & Resources</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="text-center bg-primary/10 border border-primary/20 rounded-xl p-6">
-                      <div className="text-3xl font-bold text-primary mb-2">FREE for Community</div>
-                      <p className="text-gray-300 mb-6">Free for community members or small contribution • Open to all experience levels</p>
-                      <AnalyticsWrapper
-                        href={event?.registrationInfo?.registrationLink || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        trackEvent={{
-                          type: "conversion",
-                          eventName: CONVERSION_EVENTS.MEETUP_REGISTRATION_CLICK,
-                          parameters: {
-                            event_date: event.eventDate,
-                            location: `${event.location?.venue || "TBA"}, ${
-                              event.location?.city || "Aachen"
-                            }`,
-                            platform: "luma",
-                          },
-                        }}
-                      >
-                        <Button className="w-full sm:w-auto px-10 py-4 text-lg font-bold rounded-full bg-gradient-to-r from-primary to-primary/90 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300">
-                          Reserve My Spot Now
-                        </Button>
-                      </AnalyticsWrapper>
                     </div>
                   </div>
-                </div>
-              </div>
+                </TabsContent>
+
+                {/* Exhibitors Tab Content */}
+                <TabsContent value="exhibitors" className="mt-8">
+                  <div className="bg-gradient-to-b from-card/10 to-card/20 rounded-lg border border-primary/10 p-6">
+                    {/* Exhibitor Content */}
+                    <div className="space-y-12">
+                      {/* Enhanced Header */}
+                      <div className="text-center mb-20">
+                        
+                        <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+                          <span className="text-white">Showcase Your Innovation</span><br/>
+                          <span className="text-gradient bg-gradient-to-r from-yellow-secondary via-primary to-yellow-secondary bg-clip-text text-transparent">to 300+ Robotics Enthusiasts</span>
+                        </h2>
+                        
+                        <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12">
+                          Connect directly with professionals, researchers and engineering students. 
+                          <span className="text-yellow-secondary font-bold"> Maximize your ROI</span> through targeted exposure and meaningful networking.
+                        </p>
+
+                        {/* ROI Value Proposition */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                          <div className="text-center bg-gradient-to-br from-yellow-secondary/10 to-card/30 border border-yellow-secondary/20 rounded-xl p-6">
+                            <div className="w-16 h-16 bg-yellow-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <Users className="w-8 h-8 text-yellow-secondary" />
+                            </div>
+                            <div className="text-sm font-medium text-white mb-2">Proven Partnerships</div>
+                            <div className="text-xs text-gray-400">Our events have sparked collaborations and lasting partnerships</div>
+                          </div>
+                          
+                          <div className="text-center bg-gradient-to-br from-primary/10 to-card/30 border border-primary/20 rounded-xl p-6">
+                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <CheckCircle2 className="w-8 h-8 text-primary" />
+                            </div>
+                            <div className="text-sm font-medium text-white mb-2">Recruiting Opportunities</div>
+                            <div className="text-xs text-gray-400">Exhibitors attract strong talent and receive role applications during and after the event</div>
+                          </div>
+                          
+                          <div className="text-center bg-gradient-to-br from-red-accent/10 to-card/30 border border-red-accent/20 rounded-xl p-6">
+                            <div className="w-16 h-16 bg-red-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <Building className="w-8 h-8 text-red-accent" />
+                            </div>
+                            <div className="text-sm font-medium text-white mb-2">Exhibitor Satisfaction</div>
+                            <div className="text-xs text-gray-400">Exhibitors return year after year, valuing the connections, visibility, and impact</div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Enhanced Exhibitor Packages */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* Premium Exhibitor Package */}
+                        <div className="group relative bg-gradient-to-br from-yellow-secondary/15 via-yellow-secondary/5 to-card/50 border-2 border-yellow-secondary/40 rounded-2xl p-8 hover:border-yellow-secondary/60 hover:shadow-2xl hover:shadow-yellow-secondary/20 transition-all duration-500 flex flex-col transform hover:scale-105">
+                          
+                          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-secondary via-yellow-secondary to-yellow-secondary/70 rounded-t-2xl"></div>
+                          
+                          <div className="text-center mb-8">
+                            <div className="w-20 h-20 bg-gradient-to-br from-yellow-secondary/30 to-yellow-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-4 ring-yellow-secondary/20">
+                              <Building className="w-10 h-10 text-yellow-secondary" />
+                            </div>
+                            <h4 className="text-2xl font-bold text-yellow-secondary mb-2">Premium Package</h4>
+                            <p className="text-sm text-gray-400">Maximum Impact • Official Sponsor Status</p>
+                            <div className="inline-flex items-center gap-1 bg-yellow-secondary/20 border border-yellow-secondary/30 rounded-full px-3 py-1 mt-3">
+                              <CheckCircle2 className="w-3 h-3 text-yellow-secondary" />
+                              <span className="text-xs text-yellow-secondary font-medium">Recommended Package</span>
+                            </div>
+                          </div>
+
+                          {/* Enhanced ROI-focused benefits */}
+                          <div className="space-y-4 flex-grow">
+                            <div className="bg-yellow-secondary/10 border border-yellow-secondary/20 rounded-lg p-3">
+                              <div className="flex items-start gap-3">
+                                <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
+                                <div>
+                                  <span className="text-sm font-bold text-yellow-secondary">Official Sponsor Status</span>
+                                  <p className="text-xs text-gray-400 mt-1">Featured across all marketing channels, website, and event materials</p>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">Exclusive 10-Minute Keynote Slot</span>
+                                <p className="text-xs text-gray-400 mt-1">Present to 300+ qualified professionals during prime time</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">VIP Pre-Networking (15:00-18:00)</span>
+                                <p className="text-xs text-gray-400 mt-1">3 hours exclusive access to connect with other exhibitors</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">Premium Exhibition Space + Screen</span>
+                                <p className="text-xs text-gray-400 mt-1">Prime location with dedicated display</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">Talent Pipeline Access</span>
+                                <p className="text-xs text-gray-400 mt-1">Optional CVs from robotics professionals seeking opportunities</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-center mt-8">
+                            <div className="bg-gradient-to-r from-yellow-secondary/20 to-yellow-secondary/10 border border-yellow-secondary/30 rounded-xl p-4 mb-6">
+                              <div className="text-3xl font-bold text-yellow-secondary mb-1">€450+</div>
+                              <div className="text-xs text-gray-400 mb-2">Suggested Investment (starting at €200)</div>
+                              <div className="text-xs text-yellow-secondary font-medium">⚡ Only 8 Premium spots available</div>
+                            </div>
+                            
+                            <a 
+                              href="https://luma.com/58e3ws9x"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Button className="w-full bg-gradient-to-r from-yellow-secondary via-yellow-secondary to-yellow-secondary/90 text-black hover:shadow-xl hover:shadow-yellow-secondary/30 font-bold py-4 rounded-full transform hover:scale-105 transition-all duration-300">
+                                <div className="flex items-center justify-center gap-2">
+                                  <Building className="w-5 h-5" />
+                                  Secure Premium Status Now
+                                </div>
+                              </Button>
+                            </a>
+                            
+                            <p className="text-xs text-gray-500 mt-2">🔒 Limited availability • Book before spots fill up</p>
+                          </div>
+                        </div>
+
+                        {/* Enhanced Community Package */}
+                        <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-card/50 border border-primary/30 rounded-2xl p-8 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 relative overflow-hidden flex flex-col">
+                          <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary to-primary/70 rounded-t-2xl"></div>
+                          
+                          <div className="text-center mb-8">
+                            <div className="w-20 h-20 bg-gradient-to-br from-primary/30 to-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-4 ring-primary/20">
+                              <Users className="w-10 h-10 text-primary" />
+                            </div>
+                            <h4 className="text-2xl font-bold text-primary mb-2">Community Package</h4>
+                            <p className="text-sm text-gray-400">Perfect for Startups • Community Focus</p>
+                            <div className="inline-flex items-center gap-1 bg-primary/20 border border-primary/30 rounded-full px-3 py-1 mt-3">
+                              <Users className="w-3 h-3 text-primary" />
+                              <span className="text-xs text-primary font-medium">Startup-Friendly Option</span>
+                            </div>
+                          </div>
+
+                          {/* Enhanced community benefits */}
+                          <div className="space-y-4 flex-grow">
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">Dedicated Exhibition Space</span>
+                                <p className="text-xs text-gray-400 mt-1">Showcase your innovation to 300+ attendees</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">Community Spotlight Feature</span>
+                                <p className="text-xs text-gray-400 mt-1">Featured in community highlights and social media</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">Pre-Event Networking Access</span>
+                                <p className="text-xs text-gray-400 mt-1">Connect with other exhibitors before the main event (Start 15:00)</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start gap-3">
+                              <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                              <div>
+                                <span className="text-sm font-bold">Innovation Ecosystem Support</span>
+                                <p className="text-xs text-gray-400 mt-1">Join Germany's fastest-growing robotics community</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-center mt-8">
+                            <div className="bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
+                              <div className="text-3xl font-bold text-primary mb-1">Flexible</div>
+                              <div className="text-xs text-gray-400 mb-2">Suggest an investment that works for your budget</div>
+                              <div className="text-xs text-primary font-medium">💡 Perfect for early-stage startups</div>
+                            </div>
+                            
+                            <a 
+                              href="https://luma.com/58e3ws9x"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Button variant="outline" className="w-full border-2 border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-primary/90 hover:text-black font-bold py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
+                                <div className="flex items-center justify-center gap-2">
+                                  <Users className="w-5 h-5" />
+                                  Join Community Program
+                                </div>
+                              </Button>
+                            </a>
+                            
+                            <p className="text-xs text-gray-500 mt-3">
+                              📍 Limited community spots • Premium exhibitors have priority
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         </section>
 
+        {/* Event Gallery - Dynamic */}
+        {event.gallery && event.gallery.length > 0 && (
+          <section className="py-16 md:py-24">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className="text-3xl font-bold mb-8 text-center">
+                Event <span className="text-primary">Gallery</span>
+              </h2>
+              <div className="flex flex-wrap gap-4 justify-center">
+                {event.gallery.map((image, idx) => {
+                  const imageUrl = buildImageUrl(image);
+                  const getWidthClass = (index: number) => {
+                    const patterns = [
+                      "w-[28rem]", // Extra wide
+                      "w-96", // Wide
+                      "w-[22rem]", // Medium-wide
+                      "w-80", // Medium
+                      "w-[26rem]", // Wide
+                      "w-72", // Medium
+                    ];
+                    return patterns[index % patterns.length];
+                  };
+
+                  return (
+                    <div
+                      key={`gallery-${idx}`}
+                      className={`h-80 md:h-96 ${getWidthClass(
+                        idx
+                      )} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative overflow-hidden`}
+                    >
+                      <Image
+                        src={imageUrl}
+                        alt={
+                          image.alt ||
+                          image.caption ||
+                          `${event.title} gallery image ${idx + 1}`
+                        }
+                        fill
+                        className="object-cover transition-transform duration-500 hover:scale-105 rounded-lg"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Strategic CTA Bridge Section */}
         <section className="py-12 md:py-16 bg-gradient-to-b from-card/20 to-background">
@@ -594,278 +822,8 @@ export default async function MeetupPage() {
           </div>
         </section>
 
-        {/* Enhanced Exhibitor Section - Conversion Focused */}
-        <section className="py-20 md:py-32 bg-gradient-to-b from-background via-card/10 to-background relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-20 left-20 w-40 h-40 bg-yellow-secondary rounded-full blur-3xl animate-pulse-slow"></div>
-            <div className="absolute bottom-20 right-20 w-60 h-60 bg-primary rounded-full blur-3xl animate-pulse-slow" style={{animationDelay: '2s'}}></div>
-          </div>
-          
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-7xl mx-auto">
-              {/* Enhanced Header */}
-              <div className="text-center mb-20">
-                <div className="inline-flex items-center gap-2 bg-yellow-secondary/10 border border-yellow-secondary/30 rounded-full px-6 py-3 mb-8">
-                  <Building className="w-4 h-4 text-yellow-secondary" />
-                  <span className="text-yellow-secondary font-semibold text-sm uppercase tracking-wider">EXHIBITOR OPPORTUNITIES</span>
-                </div>
-                
-                <h2 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
-                  <span className="text-white">Showcase Your Innovation</span><br/>
-                  <span className="text-gradient bg-gradient-to-r from-yellow-secondary via-primary to-yellow-secondary bg-clip-text text-transparent">to 300+ Roboticists</span>
-                </h2>
-                
-                <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed mb-12">
-                  Connect directly with robotics professionals, researchers and engineering students. 
-                  <span className="text-yellow-secondary font-bold"> Maximize your ROI</span> through targeted exposure and meaningful networking.
-                </p>
-
-                {/* ROI Value Proposition */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                  <div className="text-center bg-gradient-to-br from-yellow-secondary/10 to-card/30 border border-yellow-secondary/20 rounded-xl p-6">
-                    <div className="w-16 h-16 bg-yellow-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="w-8 h-8 text-yellow-secondary" />
-                    </div>
-                    <div className="text-sm font-medium text-white mb-2">Proven Partnerships</div>
-                    <div className="text-xs text-gray-400">Our events have sparked collaborations and lasting partnerships</div>
-                  </div>
-                  
-                  <div className="text-center bg-gradient-to-br from-primary/10 to-card/30 border border-primary/20 rounded-xl p-6">
-                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle2 className="w-8 h-8 text-primary" />
-                    </div>
-                    <div className="text-sm font-medium text-white mb-2">Recruiting Opportunities</div>
-                    <div className="text-xs text-gray-400">Exhibitors attract strong talent and receive role applications during and after the event</div>
-                  </div>
-                  
-                  <div className="text-center bg-gradient-to-br from-red-accent/10 to-card/30 border border-red-accent/20 rounded-xl p-6">
-                    <div className="w-16 h-16 bg-red-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Building className="w-8 h-8 text-red-accent" />
-                    </div>
-                    <div className="text-sm font-medium text-white mb-2">Exhibitor Satisfaction</div>
-                    <div className="text-xs text-gray-400">Exhibitors return year after year, valuing the connections, visibility, and impact</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Enhanced Exhibitor Packages */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Premium Exhibitor Package */}
-                <div className="group relative bg-gradient-to-br from-yellow-secondary/15 via-yellow-secondary/5 to-card/50 border-2 border-yellow-secondary/40 rounded-2xl p-8 hover:border-yellow-secondary/60 hover:shadow-2xl hover:shadow-yellow-secondary/20 transition-all duration-500 flex flex-col transform hover:scale-105">
-                  
-                  <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-yellow-secondary via-yellow-secondary to-yellow-secondary/70 rounded-t-2xl"></div>
-                  
-                  <div className="text-center mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-br from-yellow-secondary/30 to-yellow-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-4 ring-yellow-secondary/20">
-                      <Building className="w-10 h-10 text-yellow-secondary" />
-                    </div>
-                    <h4 className="text-2xl font-bold text-yellow-secondary mb-2">Premium Package</h4>
-                    <p className="text-sm text-gray-400">Maximum Impact • Official Sponsor Status</p>
-                    <div className="inline-flex items-center gap-1 bg-yellow-secondary/20 border border-yellow-secondary/30 rounded-full px-3 py-1 mt-3">
-                      <CheckCircle2 className="w-3 h-3 text-yellow-secondary" />
-                      <span className="text-xs text-yellow-secondary font-medium">Recommended Package</span>
-                    </div>
-                  </div>
-
-                  {/* Enhanced ROI-focused benefits */}
-                  <div className="space-y-4 flex-grow">
-                    <div className="bg-yellow-secondary/10 border border-yellow-secondary/20 rounded-lg p-3">
-                      <div className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
-                        <div>
-                          <span className="text-sm font-bold text-yellow-secondary">Official Sponsor Status</span>
-                          <p className="text-xs text-gray-400 mt-1">Featured across all marketing channels, website, and event materials</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">Exclusive 10-Minute Keynote Slot</span>
-                        <p className="text-xs text-gray-400 mt-1">Present to 300+ qualified professionals during prime time</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">VIP Pre-Networking (15:00-18:00)</span>
-                        <p className="text-xs text-gray-400 mt-1">3 hours exclusive access to connect with other exhibitors</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">Premium Exhibition Space + Screen</span>
-                        <p className="text-xs text-gray-400 mt-1">Prime location with dedicated display</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-yellow-secondary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">Talent Pipeline Access</span>
-                        <p className="text-xs text-gray-400 mt-1">Optional CVs from robotics professionals seeking opportunities</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-center mt-8">
-                    <div className="bg-gradient-to-r from-yellow-secondary/20 to-yellow-secondary/10 border border-yellow-secondary/30 rounded-xl p-4 mb-6">
-                      <div className="text-3xl font-bold text-yellow-secondary mb-1">€450+</div>
-                      <div className="text-xs text-gray-400 mb-2">Suggested Investment (starting at €200)</div>
-                      <div className="text-xs text-yellow-secondary font-medium">⚡ Only 8 Premium spots available</div>
-                    </div>
-                    
-                    <a 
-                      href="https://luma.com/58e3ws9x"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button className="w-full bg-gradient-to-r from-yellow-secondary via-yellow-secondary to-yellow-secondary/90 text-black hover:shadow-xl hover:shadow-yellow-secondary/30 font-bold py-4 rounded-full transform hover:scale-105 transition-all duration-300">
-                        <div className="flex items-center justify-center gap-2">
-                          <Building className="w-5 h-5" />
-                          Secure Premium Status Now
-                        </div>
-                      </Button>
-                    </a>
-                    
-                    <p className="text-xs text-gray-500 mt-2">🔒 Limited availability • Book before spots fill up</p>
-                  </div>
-                </div>
-
-                {/* Enhanced Community Package */}
-                <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-card/50 border border-primary/30 rounded-2xl p-8 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 transition-all duration-500 relative overflow-hidden flex flex-col">
-                  <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary to-primary/70 rounded-t-2xl"></div>
-                  
-                  <div className="text-center mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-br from-primary/30 to-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-4 ring-primary/20">
-                      <Users className="w-10 h-10 text-primary" />
-                    </div>
-                    <h4 className="text-2xl font-bold text-primary mb-2">Community Package</h4>
-                    <p className="text-sm text-gray-400">Perfect for Startups • Community Focus</p>
-                    <div className="inline-flex items-center gap-1 bg-primary/20 border border-primary/30 rounded-full px-3 py-1 mt-3">
-                      <Users className="w-3 h-3 text-primary" />
-                      <span className="text-xs text-primary font-medium">Startup-Friendly Option</span>
-                    </div>
-                  </div>
-
-                  {/* Enhanced community benefits */}
-                  <div className="space-y-4 flex-grow">
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">Dedicated Exhibition Space</span>
-                        <p className="text-xs text-gray-400 mt-1">Showcase your innovation to 300+ attendees</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">Community Spotlight Feature</span>
-                        <p className="text-xs text-gray-400 mt-1">Featured in community highlights and social media</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">Pre-Event Networking Access</span>
-                        <p className="text-xs text-gray-400 mt-1">Connect with other exhibitors before the main event (Start 15:00)</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-sm font-bold">Innovation Ecosystem Support</span>
-                        <p className="text-xs text-gray-400 mt-1">Join Germany's fastest-growing robotics community</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-center mt-8">
-                    <div className="bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-xl p-4 mb-6">
-                      <div className="text-3xl font-bold text-primary mb-1">Flexible</div>
-                      <div className="text-xs text-gray-400 mb-2">Suggest an investment that works for your budget</div>
-                      <div className="text-xs text-primary font-medium">💡 Perfect for early-stage startups</div>
-                    </div>
-                    
-                    <a 
-                      href="https://luma.com/58e3ws9x"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button variant="outline" className="w-full border-2 border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-primary/90 hover:text-black font-bold py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/20">
-                        <div className="flex items-center justify-center gap-2">
-                          <Users className="w-5 h-5" />
-                          Join Community Program
-                        </div>
-                      </Button>
-                    </a>
-                    
-                    <p className="text-xs text-gray-500 mt-3">
-                      📍 Limited community spots • Premium exhibitors have priority
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Event Gallery - Dynamic */}
-        {event.gallery && event.gallery.length > 0 && (
-          <section className="py-16 md:py-24">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl font-bold mb-8 text-center">
-                Event <span className="text-primary">Gallery</span>
-              </h2>
-              <div className="flex flex-wrap gap-4 justify-center">
-                {event.gallery.map((image, idx) => {
-                  const imageUrl = buildImageUrl(image);
-                  const getWidthClass = (index: number) => {
-                    const patterns = [
-                      "w-[28rem]", // Extra wide
-                      "w-96", // Wide
-                      "w-[22rem]", // Medium-wide
-                      "w-80", // Medium
-                      "w-[26rem]", // Wide
-                      "w-72", // Medium
-                    ];
-                    return patterns[index % patterns.length];
-                  };
-
-                  return (
-                    <div
-                      key={`gallery-${idx}`}
-                      className={`h-80 md:h-96 ${getWidthClass(
-                        idx
-                      )} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative overflow-hidden`}
-                    >
-                      <Image
-                        src={imageUrl}
-                        alt={
-                          image.alt ||
-                          image.caption ||
-                          `${event.title} gallery image ${idx + 1}`
-                        }
-                        fill
-                        className="object-cover transition-transform duration-500 hover:scale-105 rounded-lg"
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-        )}
-
         <LogoCarousel partners={displayPartners} title="Our Partners" />
+        
         {/* Past Events Gallery - Dynamic */}
         {pastEvents && pastEvents.length > 0 && (
           <section className="py-16 md:py-24 bg-card/50">
