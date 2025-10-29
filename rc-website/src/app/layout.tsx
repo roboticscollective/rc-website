@@ -18,6 +18,7 @@ import { ScrollTracker } from "@/components/ScrollTracker";
 import type { EventData } from "@/components/EventNotification";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 import { getWebsiteSettings, getNextUpcomingEvent } from "@/lib/sanity-queries";
+import HackathonBanner from "@/components/HackathonBanner";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -94,13 +95,15 @@ export default async function RootLayout({
               <TooltipProvider>
                 <PageViewTracker />
                 <ScrollTracker />
+                {/* Hackathon Banner - positioned at the very top */}
+                <HackathonBanner />
                 {/* Event Banner - positioned above navbar */}
-                <BannerWrapper 
+                <BannerWrapper
                   event={nextEvent}
                   settings={websiteSettings}
                   showDaysThreshold={websiteSettings?.eventControls?.bannerShowDaysThreshold || 365}
                 />
-                <Navbar 
+                <Navbar
                   nextEvent={nextEvent}
                   settings={websiteSettings}
                 />

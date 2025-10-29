@@ -67,14 +67,19 @@ export default function HackathonPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
-              <Button
-                variant="secondary"
-                className="px-8 py-6 text-lg rounded-3xl cursor-not-allowed opacity-75"
-                size="lg"
-                disabled
+              <a
+                href="https://luma.com/wfw8i9r5"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Registration Opens Soon
-              </Button>
+                <Button
+                  variant="secondary"
+                  className="px-8 py-6 text-lg rounded-3xl bg-gradient-to-r from-red-accent to-red-accent/90 text-white font-bold hover:shadow-xl hover:shadow-red-accent/30 transform hover:scale-105 transition-all duration-300"
+                  size="lg"
+                >
+                  Register Now
+                </Button>
+              </a>
               <Link href="/contact">
                 <Button
                   variant="outline"

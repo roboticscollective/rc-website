@@ -59,10 +59,22 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
     return pathname.startsWith("/meetup") || pathname.startsWith("/hackathon") || pathname.startsWith("/conference");
   };
 
+  // Check if hackathon banner is visible
+  const [hackathonBannerVisible, setHackathonBannerVisible] = useState(false);
+
+  useEffect(() => {
+    const isDismissed = localStorage.getItem("hackathon-banner-dismissed-2025");
+    setHackathonBannerVisible(!isDismissed);
+  }, []);
+
   return (
     <nav
       className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? 'top-0' : shouldShowBanner ? 'top-16 sm:top-12' : 'top-0'
+        isScrolled
+          ? hackathonBannerVisible ? 'top-[52px]' : 'top-0'
+          : shouldShowBanner
+            ? hackathonBannerVisible ? 'top-[68px] sm:top-[64px]' : 'top-16 sm:top-12'
+            : hackathonBannerVisible ? 'top-[52px]' : 'top-0'
       } ${
         isMobile
           ? "backdrop-blur-md"
