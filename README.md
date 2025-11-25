@@ -2,55 +2,72 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e307b1b0-0632-4eea-9f87-295defcc6ffd/deploy-status)](https://app.netlify.com/projects/roboticscollective/deploys)
 
-The new Robotics Collective website repository.
+The official Robotics Collective website built with Next.js 15 and Sanity CMS.
+
+## Architecture
+
+This repository contains two main components:
+
+- **`rc-website/`** - The main Next.js website application
+- **`studio-website/`** - Sanity Studio CMS for content management
+
+The website uses Sanity CMS for all dynamic content including team members, projects, positions, and blog posts.
 
 ## Prerequisites
 
-Ensure you have the following installed on your system:
-
-- [Docker](https://docs.docker.com/get-docker/)
+- [Node.js](https://nodejs.org/) (v18 or later)
 
 ## Getting Started
 
 ### Clone the Repository
 
-```sh
+```bash
 git clone git@github.com:openroboticmetaverse/rc-web.git
 cd rc-web
 ```
 
-### Start the Services
+### Website Development
 
-Run the following command to start the necessary service in the background:
+Navigate to the website directory and install dependencies:
 
-```sh
-docker compose up -d
+```bash
+cd rc-website
+yarn install
 ```
 
-### Access the Container
+### Available Commands
 
-To enter the running container:
+- **`yarn dev`** - Start the development server at `http://localhost:3000`
+- **`yarn build`** - Create an optimized production build
+- **`yarn start`** - Start the production server (requires build first)
+- **`yarn lint`** - Run ESLint to check code quality
 
-```sh
-docker exec -it rc_website_v2 bash
-```
+### Sanity Studio (Content Management)
 
-### Start the Development Server
+To manage website content, navigate to the studio directory:
 
-Once inside the container, run:
-
-```sh
-yarn 
-```
-Then 
-
-```sh
+```bash
+cd studio-website
+yarn install
 yarn dev
 ```
 
-This will start the development server, and the website should be accessible at `http://localhost:3000`.
+The Sanity Studio will be available at `http://localhost:3333` for content editing.
 
+## Development Workflow
+
+1. **Content Updates**: Use Sanity Studio (`studio-website/`) to manage team members, projects, positions, and other content
+2. **Website Development**: Work in the `rc-website/` directory for UI/UX changes and new features
+3. **Testing**: Run `yarn build` to ensure everything compiles correctly before committing
+
+## Tech Stack
+
+- **Frontend**: Next.js 15 with App Router, TypeScript, Tailwind CSS
+- **CMS**: Sanity Studio
+- **UI Components**: Radix UI primitives with custom styling
+- **Animations**: Framer Motion
+- **Deployment**: Netlify
 
 ---
 
-For any questions or issues, please create an issue in the repository or contact the maintainers.
+For questions or issues, please create an issue in the repository or contact the maintainers.

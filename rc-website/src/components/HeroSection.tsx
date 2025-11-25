@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { getCldVideoUrl } from "next-cloudinary";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useIsMobile();
   const [sectionBounds, setSectionBounds] = useState({
     left: 0,
     top: 0,
@@ -92,17 +95,28 @@ export const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         {/* Gradient overlay that fades from 70% to 100% opacity of the background color */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/70 to-background backdrop-blur-[1px] z-10"></div>
+        
+        {/* Simple video */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
           className="absolute w-full h-full object-cover z-0 transform -translate-y-8"
         >
           <source
-            src="https://res.cloudinary.com/dilan3qfq/video/upload/v1745159975/h9s9mcjx0okpvll66gmg.webm"
+            src={getCldVideoUrl({
+              src: "hero_bg_video_vyk4sj",
+              format: "webm",
+            })}
             type="video/webm"
+          />
+          <source
+            src={getCldVideoUrl({
+              src: "hero_bg_video_vyk4sj",
+              format: "mp4",
+            })}
+            type="video/mp4"
           />
         </video>
         <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-primary/20 rounded-full filter blur-3xl animate-pulse-slow z-20"></div>
@@ -124,13 +138,13 @@ export const HeroSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/projects">
+            <Link href="/meetup">
               <Button
                 variant="default"
                 className="px-8 py-6 text-lg rounded-3xl"
                 size="lg"
               >
-                Explore Our Projects
+                Be Part of Our Next Event
               </Button>
             </Link>
           </div>

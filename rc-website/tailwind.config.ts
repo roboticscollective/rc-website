@@ -78,13 +78,23 @@ const config: Config = {
         "fade-in": {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' }
+        },
+        "infinite-scroll": {
+          '0%': { transform: 'translate3d(0,0,0)' },
+          '100%': { transform: 'translate3d(-100%,0,0)' }
+        },
+        "scroll": {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' }
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.3s ease-out",
         "accordion-up": "accordion-up 0.3s ease-out",
         "pulse-slow": "pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "fade-in": "fade-in 0.8s ease-in-out"
+        "fade-in": "fade-in 0.8s ease-in-out",
+        "infinite-scroll": "infinite-scroll 60s linear infinite",
+        "scroll": "scroll linear infinite"
       },
     },
   },

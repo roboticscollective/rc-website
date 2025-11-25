@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
+import { Github, Linkedin, Mail, UserPlus } from "lucide-react";
 import {
-  CircleUserRound,
-  Github,
-  Linkedin,
-  Mail,
-  UserPlus,
-  UserRound,
-} from "lucide-react";
-import {
-  teamMembers,
-  communityMembers,
-  partnerOrganizations,
+  getLeadershipMembers,
   getCoreTeamMembers,
-} from "@/data/team";
+  getCommunityMembers,
+  getAlumniMembers,
+  getAllPartners,
+} from "@/lib/sanity-queries";
+import { buildImageUrl } from "@/lib/sanity";
 import { Button } from "@/components/ui/button";
+import { LogoCarousel } from "@/components/LogoCarousel";
 import Link from "next/link";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About | Robotics Collective",
@@ -22,15 +19,13 @@ export const metadata: Metadata = {
   keywords: ["about us", "robotics team", "mission", "values", "history"],
 };
 
-export default function AboutPage() {
-  // Get the leadership team (first two members who are on the board)
-  const leadershipTeam = teamMembers
-    .filter((member) => member.isBoard)
-    .slice(0, 2);
-  // Get the rest of the core team (excluding the leadership team)
-  const coreTeam = teamMembers.filter(
-    (member) => !leadershipTeam.includes(member)
-  );
+export default async function AboutPage() {
+  // Fetch data from Sanity
+  const leadershipTeam = await getLeadershipMembers();
+  const coreTeam = await getCoreTeamMembers();
+  const communityMembers = await getCommunityMembers();
+  const alumniMembers = await getAlumniMembers();
+  const partners = await getAllPartners();
 
   return (
     <div className="min-h-screen bg-background">
@@ -47,9 +42,9 @@ export default function AboutPage() {
                 Our <span className="text-primary">Mission</span>
               </h2>
               <p className="text-lg text-gray-300 mb-12">
-                At the Robotics Collective, our mission is to
-                accelerate robotics adoption and the development of intelligent
-                robotic systems that harmoniously interact with humans and their
+                At the Robotics Collective, our mission is to accelerate
+                robotics adoption and the development of intelligent robotic
+                systems that harmoniously interact with humans and their
                 environment. We believe in the power of collaborative innovation
                 and open-source technologies to democratize robotics and create
                 a future where advanced automation enhances human potential
@@ -98,34 +93,36 @@ export default function AboutPage() {
               <span className="text-primary">Leadership</span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
               {leadershipTeam.map((member) => (
                 <div
-                  key={member.id}
+                  key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
-                  <div className="w-40 h-40 mb-6 overflow-hidden rounded-full border-3 border-yellow-secondary group-hover:border-primary transition-colors duration-300 relative shadow-lg">
-                    <img
-                      src={member.image}
+                  <div className="w-32 h-32 mb-4 overflow-hidden rounded-full border-3 border-yellow-secondary group-hover:border-primary transition-colors duration-300 relative shadow-lg">
+                    <Image
+                      src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold mb-2 text-white">
+                  <h3 className="text-lg font-bold mb-1 text-white text-center">
                     {member.name}
                   </h3>
-                  <p className="text-primary text-lg mb-4">{member.role}</p>
-                  <p className="text-gray-300 text-center max-w-sm mb-4">
+                  <p className="text-primary text-sm mb-2 text-center">{member.role}</p>
+                  <p className="text-gray-300 text-center text-xs mb-3 leading-tight">
                     {member.description}
                   </p>
-                  <div className="flex mt-3 space-x-4">
+                  <div className="flex justify-center mt-2 space-x-2">
                     {member.contact?.email && (
                       <a
                         href={`mailto:${member.contact.email}`}
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`Email ${member.name}`}
                       >
-                        <Mail className="w-6 h-6" />
+                        <Mail className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.linkedin && (
@@ -136,7 +133,7 @@ export default function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s LinkedIn profile`}
                       >
-                        <Linkedin className="w-6 h-6" />
+                        <Linkedin className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.github && (
@@ -147,7 +144,7 @@ export default function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s GitHub profile`}
                       >
-                        <Github className="w-6 h-6" />
+                        <Github className="w-4 h-4" />
                       </a>
                     )}
                   </div>
@@ -185,22 +182,24 @@ export default function AboutPage() {
               <span className="text-primary">Core</span> Team
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6 max-w-7xl mx-auto">
               {coreTeam.map((member) => (
                 <div
-                  key={member.id}
+                  key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
                   <div
-                    className={`w-32 h-32 mb-4 overflow-hidden rounded-full border-2 ${
+                    className={`w-24 h-24 mb-3 overflow-hidden rounded-full border-2 ${
                       member.isBoard
                         ? "border-yellow-secondary"
                         : "border-primary/30"
                     } group-hover:border-primary transition-colors duration-300 relative`}
                   >
-                    <img
-                      src={member.image}
+                    <Image
+                      src={buildImageUrl(member.imageUrl || member.image)}
                       alt={member.name}
+                      width={96}
+                      height={96}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     {member.isBoard && (
@@ -223,18 +222,18 @@ export default function AboutPage() {
                       </div>
                     )}
                   </div>
-                  <h3 className="text-xl font-bold mb-1 text-white">
+                  <h3 className="text-sm font-bold mb-1 text-white text-center">
                     {member.name}
                   </h3>
-                  <p className="text-primary">{member.role}</p>
-                  <div className="flex mt-3 space-x-4">
+                  <p className="text-primary text-xs text-center mb-2">{member.role}</p>
+                  <div className="flex justify-center mt-2 space-x-2">
                     {member.contact?.email && (
                       <a
                         href={`mailto:${member.contact.email}`}
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`Email ${member.name}`}
                       >
-                        <Mail className="w-5 h-5" />
+                        <Mail className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.linkedin && (
@@ -245,7 +244,7 @@ export default function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s LinkedIn profile`}
                       >
-                        <Linkedin className="w-5 h-5" />
+                        <Linkedin className="w-4 h-4" />
                       </a>
                     )}
                     {member.contact?.github && (
@@ -256,7 +255,7 @@ export default function AboutPage() {
                         className="text-primary hover:text-primary/80 transition-colors"
                         aria-label={`${member.name}'s GitHub profile`}
                       >
-                        <Github className="w-5 h-5" />
+                        <Github className="w-4 h-4" />
                       </a>
                     )}
                   </div>
@@ -275,7 +274,7 @@ export default function AboutPage() {
                       Become part of our core team and help shape the future of
                       robotics.
                     </p>
-                    <Link href="/contact">
+                    <Link href="/positions">
                       <Button variant="default">Apply Now</Button>
                     </Link>
                   </div>
@@ -293,56 +292,92 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
               {communityMembers.map((member) => (
                 <div
-                  key={member.id}
+                  key={member._id}
                   className="flex flex-col items-center group transition-all duration-300 hover:translate-y-[-4px]"
                 >
-                  <div className="w-24 h-24 mb-3 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300">
-                    <img
-                      src={member.image}
-                      alt={member.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <h3 className="text-sm font-medium text-center text-white">
-                    {member.name}
-                  </h3>
+                  <a
+                    href={member.contact?.linkedin || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative"
+                    aria-label={`${member.name}'s LinkedIn profile`}
+                  >
+                    <div className="w-24 h-24 mb-3 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300">
+                      <Image
+                        src={buildImageUrl(member.imageUrl || member.image)}
+                        alt={member.name}
+                        width={96}
+                        height={96}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+                    <h3 className="text-sm font-medium text-center text-white group-hover:text-primary transition-colors">
+                      {member.name}
+                    </h3>
+                  </a>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
+        {/* Alumni Section */}
+        {alumniMembers.length > 0 && (
+          <>
+            <div className="max-w-3xl mx-auto my-12 border-t border-primary/20"></div>
+            <section className="py-8 md:py-16">
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
+                  <span className="text-primary">Alumni</span>
+                </h2>
+
+                <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+                  {alumniMembers.map((member) => (
+                    <div
+                      key={member._id}
+                      className="flex flex-col items-center group transition-all duration-300 hover:scale-110"
+                    >
+                      <a
+                        href={member.contact?.linkedin || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative"
+                        aria-label={`${member.name}'s LinkedIn profile`}
+                      >
+                        <div className="w-16 h-16 mb-2 overflow-hidden rounded-full border-2 border-primary/30 group-hover:border-primary transition-colors duration-300 shadow-md group-hover:shadow-lg group-hover:shadow-primary/20">
+                          <Image
+                            src={buildImageUrl(member.imageUrl || member.image)}
+                            alt={member.name}
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                          />
+                        </div>
+                        <p className="text-xs font-medium text-center text-gray-300 group-hover:text-white transition-colors">
+                          {member.name.split(" ")[0]}
+                        </p>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+
         <div className="max-w-3xl mx-auto my-20 border-t border-primary/20"></div>
 
         {/* Partner Organizations Section */}
-        <section className="py-16 md:py-24">
+        <LogoCarousel
+          partners={partners}
+          title="Partner Organizations"
+          showOnlyActive={true}
+        />
+
+        {/* Join as Organization CTA */}
+        <section className="py-8 md:py-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-              <span className="text-primary">Partner</span> Organizations
-            </h2>
-
-            {/* Display partner organizations logos */}
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
-              {partnerOrganizations.map((org) => (
-                <a
-                  key={org.id}
-                  href={org.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center p-6 bg-card/30 rounded-lg border border-primary/10 transition-all duration-300 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5"
-                  aria-label={org.name}
-                >
-                  <img
-                    src={org.logo}
-                    alt={org.name}
-                    className="max-h-16 max-w-full"
-                  />
-                </a>
-              ))}
-            </div> */}
-
-            {/* Join as Organization CTA */}
-            <div className="mt-16 max-w-3xl mx-auto bg-card/70 p-8 rounded-lg border border-primary/20">
+            <div className="max-w-3xl mx-auto bg-card/70 p-8 rounded-lg border border-primary/20">
               <div className="text-center">
                 <h3 className="text-2xl font-semibold mb-3">
                   Become a Partner Organization

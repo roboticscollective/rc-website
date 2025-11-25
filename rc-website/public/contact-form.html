@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - Hidden for Netlify Detection</title>
+</head>
+<body>
+    <!-- Hidden form for Netlify Forms detection -->
+    <!-- This file is only used for Netlify to detect form fields at build time -->
+    <!-- Actual form submissions are handled by the React component -->
+    
+    <form name="contact" data-netlify="true" style="display: none;">
+        <input type="hidden" name="form-name" value="contact" />
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <textarea name="message"></textarea>
+    </form>
+
+    <!-- Application form for future use -->
+    <form name="application" data-netlify="true" style="display: none;">
+        <input type="hidden" name="form-name" value="application" />
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="text" name="position" />
+        <textarea name="skills"></textarea>
+        <textarea name="experience"></textarea>
+        <textarea name="motivation"></textarea>
+        <input type="url" name="portfolio" />
+        <input type="url" name="github" />
+        <input type="url" name="linkedin" />
+    </form>
+</body>
+</html>

@@ -1,8 +1,11 @@
 // src/app/projects/[slug]/page.tsx
 
 import { Button } from "@/components/ui/button";
-import { getProjectBySlug, getAllProjectSlugs } from "@/data/projects";
-import { getTeamMemberById } from "@/data/team";
+import { getProjectBySlug, getAllProjectSlugs } from "@/lib/sanity-queries";
+import { buildImageUrl } from "@/lib/sanity";
+import OptimizedVideo from "@/components/OptimizedVideo";
+import Image from "next/image";
+import { PortableText } from '@portabletext/react';
 import {
   ArrowLeft,
   Github,
@@ -23,7 +26,7 @@ type PageSearchParams = Promise<{
 }>;
 
 export async function generateStaticParams() {
-  const slugs = getAllProjectSlugs();
+  const slugs = await getAllProjectSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
@@ -35,7 +38,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const params = await paramsPromise; // Await the promise
   const { slug } = params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     return {
@@ -46,7 +49,7 @@ export async function generateMetadata({
   return {
     title: `${project.title} - Robotics Collective`,
     description: project.description,
-    keywords: [...project.tags, "robotics", "innovation", "project details"],
+    keywords: [...(project.tags || []), "robotics", "innovation", "project details"],
   };
 }
 
@@ -84,23 +87,39 @@ export default async function ProjectPage({
   const params = await paramsPromise; // Await the promise
   const searchParams = await searchParamsPromise; // Await the promise
   const { slug } = params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
-  const pointOfContact = getTeamMemberById(project.pointOfContactId);
+  const pointOfContact = project.pointOfContact;
+  const contributors = project.contributors || [];
+  const projectImageUrl = buildImageUrl(project.image || project.imageUrl);
+  
+  // Combine point of contact and contributors into a unified team
+  const teamMembers = [];
+  if (pointOfContact) {
+    teamMembers.push({ ...pointOfContact, isLead: true });
+  }
+  contributors.forEach(contributor => {
+    // Avoid duplicating the point of contact
+    if (!pointOfContact || contributor._id !== pointOfContact._id) {
+      teamMembers.push({ ...contributor, isLead: false });
+    }
+  });
 
   return (
     <div className="min-h-screen bg-background">
       {/* Hero section with full-width image */}
       <div className="relative w-full h-[50vh] min-h-[400px] overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img
-            src={project.image}
+          <Image
+            src={projectImageUrl}
             alt={project.title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-background" />
         </div>
@@ -125,7 +144,7 @@ export default async function ProjectPage({
           </h1>
 
           <div className="flex flex-wrap gap-2 mb-2">
-            {project.tags.map((tag, index) => (
+            {project.tags?.map((tag, index) => (
               <span
                 key={index}
                 className="text-sm bg-secondary/80 backdrop-blur-sm px-3 py-1 rounded-full text-primary"
@@ -143,30 +162,179 @@ export default async function ProjectPage({
           {/* Main content column */}
           <div className="md:col-span-2">
             <div className="prose prose-invert max-w-none">
-              {project.content?.split("\n\n").map((paragraph, idx) => (
-                <p key={idx} className="mb-6 text-lg text-gray-300">
-                  {paragraph}
-                </p>
-              ))}
+              {project.content && project.content.length > 0 ? (
+                <PortableText 
+                  value={project.content}
+                  components={{
+                    block: {
+                      normal: ({ children }) => (
+                        <p className="mb-6 text-lg text-gray-300">{children}</p>
+                      ),
+                    },
+                    marks: {
+                      strong: ({ children }) => (
+                        <strong className="text-primary">{children}</strong>
+                      ),
+                    },
+                  }}
+                />
+              ) : (
+                <p className="mb-6 text-lg text-gray-300">{project.description}</p>
+              )}
             </div>
 
             {/* Gallery Grid */}
-            {project.galleryImages && project.galleryImages.length > 0 && (
+            {(projectImageUrl || 
+              (project.galleryImages && project.galleryImages.length > 0) || 
+              (project.galleryImageUrls && project.galleryImageUrls.length > 0) ||
+              (project.galleryVideos && project.galleryVideos.length > 0) ||
+              (project.galleryVideoUrls && project.galleryVideoUrls.length > 0)) && (
               <div className="mt-12">
                 <h2 className="text-2xl font-bold mb-6">Gallery</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {project.galleryImages.map((image, idx) => (
-                    <div
-                      key={idx}
-                      className="aspect-square rounded-lg overflow-hidden"
-                    >
-                      <img
-                        src={image}
-                        alt={`${project.title} gallery image ${idx + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                <div className="flex flex-wrap gap-4 justify-center">
+                  {/* Featured project image */}
+                  {projectImageUrl && (
+                    <div className="h-64 md:h-80 w-96 rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative">
+                      <Image
+                        src={projectImageUrl}
+                        alt={`${project.title} featured image`}
+                        fill
+                        className="object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
                       />
                     </div>
-                  ))}
+                  )}
+                  
+                  {/* Handle gallery images */}
+                  {(project.galleryImages || []).map((image, idx) => {
+                    const imageUrl = buildImageUrl(image);
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    // Adjust index to account for featured image
+                    const adjustedIdx = projectImageUrl ? idx + 1 : idx;
+                    
+                    return (
+                      <div
+                        key={`image-${idx}`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative`}
+                      >
+                        <Image
+                          src={imageUrl}
+                          alt={image.alt || `${project.title} gallery image ${idx + 1}`}
+                          fill
+                          className="object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
+                        />
+                      </div>
+                    )
+                  })}
+                  
+                  {/* Handle gallery image URLs (migration) */}
+                  {(project.galleryImageUrls || []).map((image, idx) => {
+                    const galleryImagesCount = (project.galleryImages || []).length;
+                    const featuredOffset = projectImageUrl ? 1 : 0;
+                    const adjustedIdx = idx + galleryImagesCount + featuredOffset;
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    
+                    return (
+                      <div
+                        key={`image-url-${idx}`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center relative`}
+                      >
+                        <Image
+                          src={image.url}
+                          alt={image.alt || `${project.title} gallery image ${adjustedIdx + 1}`}
+                          fill
+                          className="object-contain transition-transform duration-500 hover:scale-105 rounded-lg"
+                        />
+                      </div>
+                    )
+                  })}
+
+                  {/* Handle gallery videos */}
+                  {(project.galleryVideos || []).map((video, idx) => {
+                    const imagesCount = (project.galleryImages || []).length + (project.galleryImageUrls || []).length;
+                    const featuredOffset = projectImageUrl ? 1 : 0;
+                    const adjustedIdx = idx + imagesCount + featuredOffset;
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    
+                    return (
+                      <div
+                        key={`video-${idx}`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center overflow-hidden`}
+                      >
+                        <OptimizedVideo
+                          video={video}
+                          className="max-w-full max-h-full object-contain"
+                          muted={true}
+                          controls={false}
+                          autoPlay={true}
+                        />
+                      </div>
+                    )
+                  })}
+
+                  {/* Handle gallery video URLs (migration) */}
+                  {(project.galleryVideoUrls || []).map((video, idx) => {
+                    const mediaCount = (project.galleryImages || []).length + 
+                                     (project.galleryImageUrls || []).length + 
+                                     (project.galleryVideos || []).length;
+                    const featuredOffset = projectImageUrl ? 1 : 0;
+                    const adjustedIdx = idx + mediaCount + featuredOffset;
+                    const getWidthClass = (index: number) => {
+                      const patterns = [
+                        "w-96", // Wide
+                        "w-64", // Medium
+                        "w-80", // Medium-wide
+                        "w-72", // Medium
+                        "w-88", // Wide
+                        "w-60", // Medium-narrow
+                      ];
+                      return patterns[index % patterns.length];
+                    };
+                    
+                    return (
+                      <div
+                        key={`video-url-${idx}`}
+                        className={`h-64 md:h-80 ${getWidthClass(adjustedIdx)} rounded-lg flex-shrink-0 bg-card/20 flex items-center justify-center overflow-hidden`}
+                      >
+                        <OptimizedVideo
+                          videoUrl={video}
+                          className="max-w-full max-h-full object-contain"
+                          muted={true}
+                          controls={false}
+                          autoPlay={true}
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -184,36 +352,6 @@ export default async function ProjectPage({
                 <Link href="/contact">
                   <Button>Contact Us</Button>
                 </Link>
-                {project.links?.github && (
-                  <a
-                    href={project.links.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button
-                      variant="secondary"
-                      className="flex items-center gap-2"
-                    >
-                      <Github size={16} />
-                      View on GitHub
-                    </Button>
-                  </a>
-                )}
-                {project.links?.website && (
-                  <a
-                    href={project.links.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button
-                      variant="secondary"
-                      className="flex items-center gap-2"
-                    >
-                      <Globe size={16} />
-                      Visit Website
-                    </Button>
-                  </a>
-                )}
                 {project.links?.documentation && (
                   <a
                     href={project.links.documentation}
@@ -250,7 +388,7 @@ export default async function ProjectPage({
                 <div>
                   <h4 className="text-sm text-gray-400 mb-1">Tags</h4>
                   <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, index) => (
+                    {project.tags?.map((tag, index) => (
                       <span
                         key={index}
                         className="text-xs bg-secondary px-2 py-1 rounded-full text-primary"
@@ -261,64 +399,50 @@ export default async function ProjectPage({
                   </div>
                 </div>
 
-                {/* Point of Contact */}
-                {pointOfContact && (
+                {/* Team Section */}
+                {teamMembers.length > 0 && (
                   <div>
-                    <h4 className="text-sm text-gray-400 mb-2">
-                      Point of Contact
+                    <h4 className="text-sm text-gray-400 mb-3">
+                      Team
                     </h4>
-                    <div className="flex items-center mb-3">
-                      <div className="w-12 h-12 rounded-full overflow-hidden mr-3">
-                        <img
-                          src={pointOfContact.image}
-                          alt={pointOfContact.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium">{pointOfContact.name}</p>
-                        {/* Contact Links */}
-                        <div className="flex items-center space-x-2 mt-2">
-                          {pointOfContact.contact?.email && (
-                            <a
-                              href={`mailto:${pointOfContact.contact.email}`}
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Mail size={16} />
-                            </a>
-                          )}
-                          {pointOfContact.contact?.github && (
-                            <a
-                              href={pointOfContact.contact.github}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Github size={16} />
-                            </a>
-                          )}
-                          {pointOfContact.contact?.twitter && (
-                            <a
-                              href={pointOfContact.contact.twitter}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Twitter size={16} />
-                            </a>
-                          )}
-                          {pointOfContact.contact?.linkedin && (
-                            <a
-                              href={pointOfContact.contact.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-400 hover:text-primary"
-                            >
-                              <Linkedin size={16} />
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                    <div className="flex flex-wrap gap-2">
+                      {teamMembers.map((member) => {
+                        const memberImageUrl = buildImageUrl(member.image || member.imageUrl);
+                        const linkedinUrl = member.contact?.linkedin;
+                        
+                        const imageElement = (
+                          <div className="relative group">
+                            <div className={`w-10 h-10 rounded-full overflow-hidden transition-transform duration-200 group-hover:scale-105 ${
+                              member.isLead ? 'border-2 border-yellow-secondary' : ''
+                            }`}>
+                              <Image
+                                src={memberImageUrl}
+                                alt={member.name}
+                                width={48}
+                                height={48}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          </div>
+                        );
+
+                        return linkedinUrl ? (
+                          <a
+                            key={member._id}
+                            href={linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={`${member.name} - ${member.role}`}
+                            className="transition-opacity duration-200 hover:opacity-80"
+                          >
+                            {imageElement}
+                          </a>
+                        ) : (
+                          <div key={member._id} title={`${member.name} - ${member.role}`}>
+                            {imageElement}
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 )}

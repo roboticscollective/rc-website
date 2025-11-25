@@ -6,12 +6,29 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { EventNotification, shouldShowNotification } from "@/components/EventNotification";
+import type { EventData } from "@/components/EventNotification";
+import { useBanner } from "@/contexts/BannerContext";
+import type { WebsiteSettings } from "@/lib/sanity";
 
-export function Navbar() {
+interface NavbarProps {
+  nextEvent: EventData | null;
+  settings: WebsiteSettings | null;
+}
+
+export function Navbar({ nextEvent, settings }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { bannerDismissed } = useBanner();
   const pathname = usePathname();
   const isMobile = useIsMobile();
+  
+  // Check if banner should be visible
+  const shouldShowBanner = !bannerDismissed && 
+    pathname !== "/meetup" && 
+    settings?.eventControls?.showEventBanner && 
+    nextEvent &&
+    shouldShowNotification(nextEvent.date, settings?.eventControls?.bannerShowDaysThreshold || 30);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,14 +55,20 @@ export function Navbar() {
     return false;
   };
 
+  const isEventActive = () => {
+    return pathname.startsWith("/meetup") || pathname.startsWith("/hackathon") || pathname.startsWith("/conference");
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isMobile 
-          ? "backdrop-blur-md" 
+      className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+        isScrolled ? 'top-0' : shouldShowBanner ? 'top-16 sm:top-12' : 'top-0'
+      } ${
+        isMobile
+          ? "backdrop-blur-md"
           : isScrolled
-            ? "backdrop-blur-md"
-            : "bg-transparent"
+          ? "backdrop-blur-md"
+          : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,7 +96,7 @@ export function Navbar() {
             </Link>
           </div>
 
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             <Link
               href="/"
               className={`transition-colors ${
@@ -104,16 +127,60 @@ export function Navbar() {
             >
               Projects
             </Link>
-            <Link
-              href="/meetup"
-              className={`transition-colors ${
-                isActivePath("/meetup")
-                  ? "text-white font-medium glow"
-                  : "text-gray-300 hover:text-white"
-              }`}
-            >
-              Meetup
-            </Link>
+            <div className="flex items-center gap-2 relative group">
+              {/* Main Events Link */}
+              <div className="relative">
+                <button
+                  className={`transition-colors relative z-10 flex items-center gap-1 ${
+                    isEventActive()
+                      ? "text-white font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  Events
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                <div className="absolute top-full left-0 mt-2 w-36 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
+                  <div className="bg-card/95 backdrop-blur-md border border-primary/20 rounded-lg shadow-lg overflow-hidden">
+                    {/* Meetup Option */}
+                    <Link
+                      href="/meetup"
+                      className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200 border-b border-gray-800/50"
+                    >
+                      <span className="font-medium">Meetup</span>
+                    </Link>
+                    
+                    {/* Hackathon Option */}
+                    <Link
+                      href="/hackathon"
+                      className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200 border-b border-gray-800/50"
+                    >
+                      <span className="font-medium">Hackathon</span>
+                    </Link>
+                    
+                    {/* Conference Option */}
+                    <Link
+                      href="/conference"
+                      className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200"
+                    >
+                      <span className="font-medium">Conference</span>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              
+              {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
+                <EventNotification
+                  event={nextEvent}
+                  variant="badge"
+                  showDaysThreshold={30}
+                />
+              )}
+            </div>
             <Link
               href="/contact"
               className={`transition-colors ${
@@ -127,12 +194,8 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:block">
-            <Link href="/contact">
-              <Button
-                variant="default"
-              >
-                Join Us
-              </Button>
+            <Link href="/positions">
+              <Button variant="default">Join Us</Button>
             </Link>
           </div>
 
@@ -184,17 +247,54 @@ export function Navbar() {
             >
               Projects
             </Link>
-            <Link
-              href="/meetup"
-              className={`block py-2 transition-colors ${
-                isActivePath("/meetup")
-                  ? "text-white font-medium glow"
-                  : "text-gray-300 hover:text-white"
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Meetup
-            </Link>
+            {/* Events Section for Mobile */}
+            <div className="py-2">
+              <div className="text-white font-medium mb-2">Events</div>
+              <div className="pl-4 space-y-2">
+                <Link
+                  href="/meetup"
+                  className={`block py-2 transition-colors ${
+                    isActivePath("/meetup")
+                      ? "text-primary font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Meetup
+                </Link>
+                <Link
+                  href="/hackathon"
+                  className={`block py-2 transition-colors ${
+                    isActivePath("/hackathon")
+                      ? "text-primary font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Hackathon
+                </Link>
+                <Link
+                  href="/conference"
+                  className={`block py-2 transition-colors ${
+                    isActivePath("/conference")
+                      ? "text-primary font-medium glow"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Conference
+                </Link>
+              </div>
+              {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
+                <div className="mt-2 pl-4">
+                  <EventNotification
+                    event={nextEvent}
+                    variant="badge"
+                    showDaysThreshold={30}
+                  />
+                </div>
+              )}
+            </div>
             <Link
               href="/contact"
               className={`block py-2 transition-colors ${
@@ -206,15 +306,13 @@ export function Navbar() {
             >
               Contact
             </Link>
-            <Button
-              variant="default"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Join Us
-            </Button>
+            <Link href="/positions" onClick={() => setMobileMenuOpen(false)}>
+              <Button variant="default">Join Us</Button>
+            </Link>
           </div>
         </div>
       )}
+
     </nav>
   );
 }

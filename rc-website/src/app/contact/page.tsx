@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import ContactPageContent from "@/components/ContactPageContent";
-import TemporaryContactContent from "@/components/TemporaryContactContent";
 import { Suspense } from "react";
 
 //TODO change image and tags etc..
@@ -38,16 +37,13 @@ export default function ContactPage() {
     <>
       <Suspense
         fallback={
-          <div className="min-h-screen bg-background pt-24 flex items-center justify-center">
+          <div className="min-h-screen bg-background page-with-banner flex items-center justify-center">
             Loading...
           </div>
         }
       >
-        {/* Original contact form component - commented out until backend integration is complete */}
-        {/* <ContactPageContent /> */}
-
-        {/* Temporary contact form with Google Forms link */}
-        <TemporaryContactContent />
+        {/* Contact form with Netlify Forms integration */}
+        <ContactPageContent />
       </Suspense>
     </>
   );
