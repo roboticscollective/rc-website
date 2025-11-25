@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, TrendingUp, Award, Mail, CheckCircle2 } from "lucide-react";
+import { Users, TrendingUp, Award, CheckCircle2, ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 import { type Position } from "@/lib/sanity";
+import { useState } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -37,6 +38,8 @@ interface PositionsPageContentProps {
 export default function PositionsPageContent({
   positions,
 }: PositionsPageContentProps) {
+  const [isPositionsExpanded, setIsPositionsExpanded] = useState(false);
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#e6af2e]/12 via-background to-[#C03221]/12">
       {/* Hero Section */}
@@ -413,17 +416,22 @@ export default function PositionsPageContent({
                   <p className="text-sm text-gray-400 mb-6 min-h-[2.5rem] flex items-center justify-center">Apply for the positions below or let us know how you want to contribute</p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center mt-auto">
-                  <Button 
-                    variant="outline" 
-                    className="border-red-accent text-red-accent hover:bg-red-accent hover:text-black"
-                    onClick={() => document.querySelector('#volunteer-positions')?.scrollIntoView({ behavior: 'smooth' })}
+                  <Button
+                    variant="outline"
+                    className="border-red-accent/30 bg-red-accent/10 text-red-accent hover:bg-red-accent hover:text-black rounded-full px-6"
+                    onClick={() => {
+                      setIsPositionsExpanded(true);
+                      setTimeout(() => {
+                        document.querySelector('#volunteer-positions')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }}
                   >
                     See Open Positions
                   </Button>
                   <Link href="/contact">
-                    <Button 
-                      variant="outline" 
-                      className="border-red-accent text-red-accent hover:bg-red-accent hover:text-black"
+                    <Button
+                      variant="outline"
+                      className="border-red-accent/30 bg-red-accent/10 text-red-accent hover:bg-red-accent hover:text-black rounded-full px-6"
                     >
                       Contact Us
                     </Button>
@@ -437,14 +445,14 @@ export default function PositionsPageContent({
                   <p className="text-sm text-gray-400 mb-6 min-h-[2.5rem] flex items-center justify-center">Be part of the Robotics Community</p>
                 </div>
                 <div className="mt-auto">
-                  <a 
+                  <a
                     href="https://donate.stripe.com/14A5kEek40ekeFLbXtabK01"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Button 
-                      variant="outline" 
-                      className="border-primary text-primary hover:bg-primary hover:text-black"
+                    <Button
+                      variant="outline"
+                      className="border-primary/30 bg-primary/10 text-primary hover:bg-primary hover:text-black rounded-full px-6"
                     >
                       Join the Community
                     </Button>
@@ -459,9 +467,9 @@ export default function PositionsPageContent({
                 </div>
                 <div className="mt-auto">
                   <Link href="/contact">
-                    <Button 
-                      variant="outline" 
-                      className="border-yellow-secondary text-yellow-secondary hover:bg-yellow-secondary hover:text-black"
+                    <Button
+                      variant="outline"
+                      className="border-yellow-secondary/30 bg-yellow-secondary/10 text-yellow-secondary hover:bg-yellow-secondary hover:text-black rounded-full px-6"
                     >
                       Get Started
                     </Button>
@@ -482,14 +490,39 @@ export default function PositionsPageContent({
             viewport={{ once: true }}
             variants={containerVariants}
           >
-            <motion.h2
-              variants={itemVariants}
-              className="text-3xl md:text-4xl font-bold text-center mb-16"
-            >
-              Open <span className="text-primary">Volunteer</span> Positions
-            </motion.h2>
+            <div className="text-center mb-8">
+              <motion.h2
+                variants={itemVariants}
+                className="text-3xl md:text-4xl font-bold mb-4"
+              >
+                Open <span className="text-primary">Volunteer</span> Positions
+              </motion.h2>
+              <Button
+                variant="outline"
+                onClick={() => setIsPositionsExpanded(!isPositionsExpanded)}
+                className="border-primary/30 bg-primary/10 text-primary hover:bg-primary hover:text-black rounded-full px-6 py-3"
+              >
+                {isPositionsExpanded ? (
+                  <>
+                    <ChevronUp className="mr-2 h-4 w-4" />
+                    Hide Positions
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="mr-2 h-4 w-4" />
+                    View All Open Positions ({positions.length})
+                  </>
+                )}
+              </Button>
+            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {isPositionsExpanded && (
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={containerVariants}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto"
+              >
               {positions.map((position) => (
                 <motion.div key={position._id} variants={itemVariants}>
                   <Card className="h-full border-yellow-secondary/20 hover:border-yellow-secondary/35 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 group relative overflow-hidden hover:bg-gradient-to-r hover:from-yellow-secondary/15 hover:via-yellow-secondary/10 hover:to-yellow-secondary/15">
@@ -534,84 +567,8 @@ export default function PositionsPageContent({
                   </Card>
                 </motion.div>
               ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Trial Process Section */}
-      <section className="py-20 bg-card/20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="max-w-4xl mx-auto"
-          >
-            <motion.h2
-              variants={itemVariants}
-              className="text-3xl md:text-4xl font-bold text-center mb-16"
-            >
-              The <span className="text-primary">3-Week</span> Trial Process
-            </motion.h2>
-
-            <div className="space-y-8">
-              <motion.div
-                variants={itemVariants}
-                className="flex items-start gap-6"
-              >
-                <div className="flex-shrink-0 w-12 h-12 bg-yellow-secondary/20 border border-yellow-secondary rounded-full flex items-center justify-center">
-                  <span className="text-yellow-secondary font-bold">1-2</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-yellow-secondary mb-2">
-                    Deep Dive Weeks
-                  </h3>
-                  <p className="text-gray-300">
-                    Shadow current processes, access all internal tools and
-                    documents, attend weekly meetings and work sessions, and get
-                    1:1 mentorship.
-                  </p>
-                </div>
               </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="flex items-start gap-6"
-              >
-                <div className="flex-shrink-0 w-12 h-12 bg-red-accent/20 border border-red-accent rounded-full flex items-center justify-center">
-                  <span className="text-red-accent font-bold">3</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-red-accent mb-2">
-                    Prove It Week
-                  </h3>
-                  <p className="text-gray-300">
-                    Analyze current processes, research best practices, and
-                    present your 15-minute pitch: "Here's how I'd transform this
-                    function."
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="flex items-start gap-6"
-              >
-                <div className="flex-shrink-0 w-12 h-12 bg-primary/20 border border-primary rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="text-primary h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-primary mb-2">
-                    Decision Point
-                  </h3>
-                  <p className="text-gray-300">
-                    Both sides decide if it's a match. No hard feelings if not.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
+            )}
           </motion.div>
         </div>
       </section>
@@ -633,41 +590,10 @@ export default function PositionsPageContent({
               Ready to <span className="text-primary">Apply</span>?
             </motion.h2>
 
-            <motion.div
-              variants={itemVariants}
-              className="bg-card/30 border border-primary/20 rounded-lg p-8 mb-8"
-            >
-              <h3 className="text-xl font-bold mb-4 text-yellow-secondary">
-                Send us 3 things (max 500 words total):
-              </h3>
-              <div className="space-y-3 text-left">
-                <div className="flex items-start gap-3">
-                  <span className="text-primary font-bold">1.</span>
-                  <span className="text-gray-300">
-                    Why this specific role excites you more than others
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-primary font-bold">2.</span>
-                  <span className="text-gray-300">
-                    One example of when you took ownership of something messy
-                    and made it better
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-primary font-bold">3.</span>
-                  <span className="text-gray-300">
-                    What you want to learn that you can't learn in a university
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-
             <motion.div variants={itemVariants} className="space-y-4">
-              <Link href="mailto:info@roboticscollective.org">
-                <Button size="lg" className="text-lg px-8 py-6 rounded-full">
-                  <Mail className="mr-2 h-5 w-5" />
-                  info@roboticscollective.org
+              <Link href="/contact">
+                <Button size="lg" className="text-lg px-10 py-6 rounded-full bg-primary/20 hover:bg-primary border border-primary/30 text-primary hover:text-black">
+                  Apply Now
                 </Button>
               </Link>
 

@@ -6,8 +6,8 @@ import CTASection from "@/components/CTASection";
 import { AnalyticsWrapper } from "@/components/AnalyticsWrapper";
 import { CONVERSION_EVENTS } from "@/lib/analytics";
 import {
-  getEventForConferencePage,
-  getPastEventsWithGallery,
+  getEventForMeetupPage,
+  getPastEventsByType,
   getActivePartners,
 } from "@/lib/sanity-queries";
 import { buildImageUrl, renderRichTextWithAccents } from "@/lib/sanity";
@@ -72,8 +72,8 @@ const galleryImages = [
 export default async function MeetupPage() {
   // Fetch all data at build time - zero runtime traffic
   const [event, pastEvents, allPartners] = await Promise.all([
-    getEventForConferencePage(),
-    getPastEventsWithGallery(),
+    getEventForMeetupPage(),
+    getPastEventsByType("meetup"),
     getActivePartners(),
   ]);
 

@@ -366,7 +366,25 @@ export async function getNextUpcomingEvent(): Promise<Event | null> {
 
 export async function getEventForConferencePage(): Promise<Event | null> {
   return client.fetch(groq`
-    *[_type == "event" && eventType == "conference" && status == "upcoming" && eventDate > now()] 
+    *[_type == "event" && eventType == "conference" && status == "upcoming" && eventDate > now()]
+    | order(eventDate asc)[0] {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getEventForMeetupPage(): Promise<Event | null> {
+  return client.fetch(groq`
+    *[_type == "event" && eventType == "meetup" && status == "upcoming" && eventDate > now()]
+    | order(eventDate asc)[0] {
+      ${eventFields}
+    }
+  `)
+}
+
+export async function getEventForHackathonPage(): Promise<Event | null> {
+  return client.fetch(groq`
+    *[_type == "event" && eventType == "hackathon" && status == "upcoming" && eventDate > now()]
     | order(eventDate asc)[0] {
       ${eventFields}
     }
@@ -375,11 +393,20 @@ export async function getEventForConferencePage(): Promise<Event | null> {
 
 export async function getPastEventsWithGallery(): Promise<Event[]> {
   return client.fetch(groq`
-    *[_type == "event" && status == "past" && defined(gallery) && length(gallery) > 0] 
+    *[_type == "event" && status == "past" && defined(gallery) && length(gallery) > 0]
     | order(eventDate desc)[0...6] {
       ${eventFields}
     }
   `)
+}
+
+export async function getPastEventsByType(eventType: string): Promise<Event[]> {
+  return client.fetch(groq`
+    *[_type == "event" && eventType == $eventType && status == "past" && defined(gallery) && length(gallery) > 0]
+    | order(eventDate desc)[0...6] {
+      ${eventFields}
+    }
+  `, { eventType })
 }
 
 export async function getUpcomingEventsForBanner(): Promise<Event[]> {
