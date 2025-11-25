@@ -89,10 +89,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/positions"
+                  href="/join"
                   className="text-4xl hover:text-white transition-colors"
                 >
-                  Positions
+                  Join Us
                 </Link>
               </li>
             </ul>

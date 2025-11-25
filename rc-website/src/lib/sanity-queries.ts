@@ -188,6 +188,7 @@ const blogPostFields = groq`
   publishedAt,
   tags,
   categories,
+  readingTime,
   seo
 `
 
@@ -220,6 +221,30 @@ export async function getBlogPostsByAuthor(authorId: string): Promise<BlogPost[]
       ${blogPostFields}
     }
   `, { authorId })
+}
+
+export async function getBlogPostsByCategory(category: string): Promise<BlogPost[]> {
+  return client.fetch(groq`
+    *[_type == "blogPost" && $category in categories] | order(publishedAt desc) {
+      ${blogPostFields}
+    }
+  `, { category })
+}
+
+export async function getFeaturedBlogPosts(limit: number = 3): Promise<BlogPost[]> {
+  return client.fetch(groq`
+    *[_type == "blogPost"] | order(publishedAt desc)[0...$limit] {
+      ${blogPostFields}
+    }
+  `, { limit })
+}
+
+export async function getRelatedBlogPosts(currentPostId: string, categories: string[], limit: number = 3): Promise<BlogPost[]> {
+  return client.fetch(groq`
+    *[_type == "blogPost" && _id != $currentPostId && count(categories[@ in $categories]) > 0] | order(publishedAt desc)[0...$limit] {
+      ${blogPostFields}
+    }
+  `, { currentPostId, categories, limit })
 }
 
 // Partner Queries (defined early because used in eventFields)

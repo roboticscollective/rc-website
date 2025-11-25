@@ -223,16 +223,19 @@ export interface BlogPost {
   title: string
   slug: { current: string }
   excerpt: string
-  content: any[] // Portable text
+  content: any[] // Portable text with images, YouTube, and videos
   featuredImage?: any
   author: TeamMember
   contributors?: TeamMember[]
   publishedAt: string
   tags?: string[]
   categories?: string[]
+  readingTime?: number
   seo?: {
     metaTitle?: string
     metaDescription?: string
+    canonicalUrl?: string
+    socialImage?: any
   }
 }
 

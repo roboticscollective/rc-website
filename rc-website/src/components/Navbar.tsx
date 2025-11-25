@@ -123,6 +123,16 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             >
               Projects
             </Link>
+            <Link
+              href="/blog"
+              className={`transition-colors ${
+                isActivePath("/blog")
+                  ? "text-white font-medium glow"
+                  : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Blog
+            </Link>
             <div className="flex items-center gap-2">
               <Link
                 href="/meetup"
@@ -155,7 +165,7 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
           </div>
 
           <div className="hidden md:block">
-            <Link href="/positions">
+            <Link href="/join">
               <Button variant="default">Join Us</Button>
             </Link>
           </div>
@@ -208,6 +218,17 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             >
               Projects
             </Link>
+            <Link
+              href="/blog"
+              className={`block py-2 transition-colors ${
+                isActivePath("/blog")
+                  ? "text-white font-medium glow"
+                  : "text-gray-300 hover:text-white"
+              }`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blog
+            </Link>
             <div className="flex items-center justify-between py-2">
               <Link
                 href="/meetup"
@@ -239,7 +260,7 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             >
               Contact
             </Link>
-            <Link href="/positions" onClick={() => setMobileMenuOpen(false)}>
+            <Link href="/join" onClick={() => setMobileMenuOpen(false)}>
               <Button variant="default">Join Us</Button>
             </Link>
           </div>

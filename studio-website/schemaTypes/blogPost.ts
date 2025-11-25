@@ -36,6 +36,42 @@ export default defineType({
       of: [
         {
           type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'H1', value: 'h1'},
+            {title: 'H2', value: 'h2'},
+            {title: 'H3', value: 'h3'},
+            {title: 'H4', value: 'h4'},
+            {title: 'Quote', value: 'blockquote'},
+          ],
+          marks: {
+            decorators: [
+              {title: 'Bold', value: 'strong'},
+              {title: 'Italic', value: 'em'},
+              {title: 'Code', value: 'code'},
+              {title: 'Accent', value: 'accent'},
+            ],
+            annotations: [
+              {
+                title: 'URL',
+                name: 'link',
+                type: 'object',
+                fields: [
+                  {
+                    title: 'URL',
+                    name: 'href',
+                    type: 'url',
+                  },
+                  {
+                    title: 'Open in new tab',
+                    name: 'blank',
+                    type: 'boolean',
+                    initialValue: true,
+                  },
+                ],
+              },
+            ],
+          },
         },
         {
           type: 'image',
@@ -50,6 +86,71 @@ export default defineType({
               name: 'alt',
               type: 'string',
               title: 'Alternative Text',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+        },
+        {
+          name: 'youtube',
+          type: 'object',
+          title: 'YouTube Video',
+          icon: () => '📺',
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'YouTube URL',
+              validation: (Rule) =>
+                Rule.required().uri({
+                  scheme: ['http', 'https'],
+                }),
+            },
+            {
+              name: 'title',
+              type: 'string',
+              title: 'Video Title',
+              description: 'Optional title for the video',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              url: 'url',
+            },
+            prepare(selection) {
+              const {title, url} = selection
+              const videoId = url?.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)?.[1]
+              return {
+                title: title || 'YouTube Video',
+                subtitle: url,
+                media: () => '📺',
+              }
+            },
+          },
+        },
+        {
+          name: 'video',
+          type: 'object',
+          title: 'Video Upload',
+          icon: () => '🎬',
+          fields: [
+            {
+              name: 'file',
+              type: 'file',
+              title: 'Video File',
+              accept: 'video/*',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+            },
+            {
+              name: 'poster',
+              type: 'image',
+              title: 'Poster Image',
+              description: 'Thumbnail image for the video',
             },
           ],
         },
@@ -126,6 +227,14 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'readingTime',
+      title: 'Reading Time (minutes)',
+      type: 'number',
+      description: 'Estimated reading time in minutes',
+      initialValue: 5,
+      validation: (Rule) => Rule.min(1).max(60),
+    }),
+    defineField({
       name: 'seo',
       title: 'SEO Settings',
       type: 'object',
@@ -135,6 +244,7 @@ export default defineType({
           title: 'Meta Title',
           type: 'string',
           description: 'Override the page title for SEO',
+          validation: (Rule) => Rule.max(60),
         }),
         defineField({
           name: 'metaDescription',
@@ -142,6 +252,19 @@ export default defineType({
           type: 'text',
           description: 'Meta description for search engines',
           validation: (Rule) => Rule.max(160),
+        }),
+        defineField({
+          name: 'canonicalUrl',
+          title: 'Canonical URL',
+          type: 'url',
+          description: 'Canonical URL if different from default',
+        }),
+        defineField({
+          name: 'socialImage',
+          title: 'Social Share Image',
+          type: 'image',
+          description: 'Custom image for social sharing (overrides featured image)',
+          options: {hotspot: true},
         }),
       ],
       options: {
