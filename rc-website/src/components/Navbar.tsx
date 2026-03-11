@@ -147,20 +147,24 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
                 <div className="absolute top-full left-0 mt-2 w-36 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
                   <div className="bg-card/95 backdrop-blur-md border border-primary/20 rounded-lg shadow-lg overflow-hidden">
                     {/* Meetup Option */}
-                    <Link
-                      href="/meetup"
+                    <a
+                      href="https://www.linkedin.com/feed/update/urn:li:activity:7385056010165448704"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200 border-b border-gray-800/50"
                     >
                       <span className="font-medium">Meetup</span>
-                    </Link>
+                    </a>
                     
                     {/* Hackathon Option */}
-                    <Link
-                      href="/hackathon"
+                    <a
+                      href="https://www.linkedin.com/feed/update/urn:li:activity:7398811910407680000"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block px-4 py-3 text-gray-300 hover:text-white hover:bg-primary/10 transition-all duration-200 border-b border-gray-800/50"
                     >
                       <span className="font-medium">Hackathon</span>
-                    </Link>
+                    </a>
                     
                     {/* Conference Option */}
                     <Link
@@ -251,28 +255,24 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             <div className="py-2">
               <div className="text-white font-medium mb-2">Events</div>
               <div className="pl-4 space-y-2">
-                <Link
-                  href="/meetup"
-                  className={`block py-2 transition-colors ${
-                    isActivePath("/meetup")
-                      ? "text-primary font-medium glow"
-                      : "text-gray-300 hover:text-white"
-                  }`}
+                <a
+                  href="https://www.linkedin.com/feed/update/urn:li:activity:7385056010165448704"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block py-2 transition-colors text-gray-300 hover:text-white"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Meetup
-                </Link>
-                <Link
-                  href="/hackathon"
-                  className={`block py-2 transition-colors ${
-                    isActivePath("/hackathon")
-                      ? "text-primary font-medium glow"
-                      : "text-gray-300 hover:text-white"
-                  }`}
+                </a>
+                <a
+                  href="https://www.linkedin.com/feed/update/urn:li:activity:7398811910407680000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block py-2 transition-colors text-gray-300 hover:text-white"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Hackathon
-                </Link>
+                </a>
                 <Link
                   href="/conference"
                   className={`block py-2 transition-colors ${

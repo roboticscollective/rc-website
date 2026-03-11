@@ -138,13 +138,13 @@ export const HeroSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/meetup">
+            <Link href="/contact">
               <Button
                 variant="default"
                 className="px-8 py-6 text-lg rounded-3xl"
                 size="lg"
               >
-                Be Part of Our Next Event
+                Join Us
               </Button>
             </Link>
           </div>

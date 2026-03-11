@@ -114,14 +114,14 @@ const CTASection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/positions">
+            <Link href="/contact">
               <Button
                 variant="default"
                 className="px-8 py-6 text-lg rounded-3xl"
                 size="lg"
                 onClick={() => trackEngagement(ENGAGEMENT_EVENTS.CTA_BUTTON_CLICK, {
                   button_text: 'Join Us',
-                  destination: '/positions',
+                  destination: '/contact',
                   section: 'cta'
                 })}
               >
