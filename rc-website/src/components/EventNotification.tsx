@@ -86,9 +86,13 @@ const EventBadge: React.FC<EventNotificationProps> = ({ event, onDismiss }) => {
 
   if (!timeUntil) return null;
 
+  const href = event.registrationUrl || "/meetup";
+  const isExternal = /^https?:\/\//.test(href);
+
   return (
     <Link
-      href="/meetup"
+      href={href}
+      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className="relative group event-notification-focusable"
       aria-label={`Upcoming event: ${event.title} in ${timeUntil.days} days`}
     >
@@ -135,6 +139,9 @@ const EventBanner: React.FC<EventNotificationProps> = ({
     setIsVisible(false);
     onDismiss?.();
   };
+
+  const registrationHref = event.registrationUrl || "/meetup";
+  const isExternal = /^https?:\/\//.test(registrationHref);
 
   return (
     <div
@@ -188,8 +195,9 @@ const EventBanner: React.FC<EventNotificationProps> = ({
               </div>
             </div>
             
-            <Link 
-              href="/meetup"
+            <Link
+              href={registrationHref}
+              {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-xs bg-yellow-secondary text-black px-2 py-1 rounded-full font-semibold hover:bg-yellow-secondary/90 transition-colors flex-shrink-0"
               aria-label={`Register for ${event.title}`}
             >
@@ -244,8 +252,9 @@ const EventBanner: React.FC<EventNotificationProps> = ({
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-            <Link 
-              href="/meetup"
+            <Link
+              href={registrationHref}
+              {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-sm bg-yellow-secondary text-black px-3 py-1.5 rounded-full font-semibold hover:bg-yellow-secondary/90 transition-colors shadow-md hover:shadow-lg"
               aria-label={`Register for ${event.title}`}
             >
@@ -284,9 +293,13 @@ const EventCountdown: React.FC<EventNotificationProps> = ({ event }) => {
 
   if (!timeUntil) return null;
 
+  const href = event.registrationUrl || "/meetup";
+  const isExternal = /^https?:\/\//.test(href);
+
   return (
     <Link
-      href="/meetup"
+      href={href}
+      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className="block event-notification-focusable"
       aria-label={`Next meetup countdown: ${timeUntil.days} days, ${timeUntil.hours} hours, ${timeUntil.minutes} minutes remaining`}
     >

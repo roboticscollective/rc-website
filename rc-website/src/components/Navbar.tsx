@@ -127,7 +127,7 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             >
               Projects
             </Link>
-            <div className="flex items-center gap-2 relative group">
+            <div className="flex items-center gap-2 relative group/events">
               {/* Main Events Link */}
               <div className="relative">
                 <button
@@ -138,13 +138,13 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
                   }`}
                 >
                   Events
-                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover/events:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
-                
+
                 {/* Dropdown Menu */}
-                <div className="absolute top-full left-0 mt-2 w-36 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out transform translate-y-2 group-hover:translate-y-0 z-50">
+                <div className="absolute top-full left-0 mt-2 w-36 opacity-0 invisible group-hover/events:opacity-100 group-hover/events:visible transition-all duration-300 ease-out transform translate-y-2 group-hover/events:translate-y-0 z-50">
                   <div className="bg-card/95 backdrop-blur-md border border-primary/20 rounded-lg shadow-lg overflow-hidden">
                     {/* Meetup Option */}
                     <a
@@ -177,7 +177,7 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
                 </div>
               </div>
               
-              {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
+              {settings?.eventControls?.showEventNotificationBadge && nextEvent && !shouldShowBanner && (
                 <EventNotification
                   event={nextEvent}
                   variant="badge"
@@ -198,9 +198,13 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
           </div>
 
           <div className="hidden md:block">
-            <Link href="/positions">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd366e4bzN3yZAiWgNSJgT9FlJfaVEv0H0nMyTe3JKrQVj00Q/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button variant="default">Join Us</Button>
-            </Link>
+            </a>
           </div>
 
           <div className="md:hidden">
@@ -285,7 +289,7 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
                   Conference
                 </Link>
               </div>
-              {settings?.eventControls?.showEventNotificationBadge && nextEvent && (
+              {settings?.eventControls?.showEventNotificationBadge && nextEvent && !shouldShowBanner && (
                 <div className="mt-2 pl-4">
                   <EventNotification
                     event={nextEvent}
@@ -306,9 +310,14 @@ export function Navbar({ nextEvent, settings }: NavbarProps) {
             >
               Contact
             </Link>
-            <Link href="/positions" onClick={() => setMobileMenuOpen(false)}>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd366e4bzN3yZAiWgNSJgT9FlJfaVEv0H0nMyTe3JKrQVj00Q/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               <Button variant="default">Join Us</Button>
-            </Link>
+            </a>
           </div>
         </div>
       )}
