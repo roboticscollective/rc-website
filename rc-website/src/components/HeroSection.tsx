@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
-import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { getCldVideoUrl } from "next-cloudinary";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -138,15 +137,19 @@ export const HeroSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd366e4bzN3yZAiWgNSJgT9FlJfaVEv0H0nMyTe3JKrQVj00Q/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button
                 variant="default"
                 className="px-8 py-6 text-lg rounded-3xl"
                 size="lg"
               >
-                Join Us
+                Apply Now
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
