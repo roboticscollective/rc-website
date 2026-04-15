@@ -591,11 +591,15 @@ export default function PositionsPageContent({
             </motion.h2>
 
             <motion.div variants={itemVariants} className="space-y-4">
-              <Link href="/contact">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSd366e4bzN3yZAiWgNSJgT9FlJfaVEv0H0nMyTe3JKrQVj00Q/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button size="lg" className="text-lg px-10 py-6 rounded-full bg-primary/20 hover:bg-primary border border-primary/30 text-primary hover:text-black">
                   Apply Now
                 </Button>
-              </Link>
+              </a>
 
               <div className="flex flex-col items-center gap-4 text-sm text-gray-400">
                 <div className="text-center max-w-md">
