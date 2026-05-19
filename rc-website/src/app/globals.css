@@ -1,53 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 0%; /* Changed to #000000 (pure black) */
-    --foreground: 0 0% 98%;
-    --card: 0 0% 0%; /* Changed to match background */
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 0%; /* Changed to match background */
-    --popover-foreground: 0 0% 98%;
-    --primary: 187 47% 47%; /* Changed to #47A8BD */
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 6 71% 44%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 187 47% 47%; /* Changed to match primary */
+    /* ETH two-tone palette — light-themed site */
+    --background: 0 0% 92%;       /* #ebebeb */
+    --foreground: 0 0% 13%;       /* #212121 */
+    --card: 0 0% 13%;             /* #212121 dark cards on light bg */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 13%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 13%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 85%;        /* #d8d8d8 */
+    --secondary-foreground: 0 0% 13%;
+    --muted: 0 0% 85%;
+    --muted-foreground: 0 0% 30%;
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 0 0% 13%;
     --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 0 0% 0%; /* Changed to #000000 (pure black) */
-    --foreground: 0 0% 98%;
-    --card: 0 0% 0%; /* Changed to match background */
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 0%; /* Changed to match background */
-    --popover-foreground: 0 0% 98%;
-    --primary: 187 47% 47%; /* Changed to #47A8BD */
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 187 47% 47%; /* Changed to match primary */
   }
 }
 
@@ -57,7 +34,9 @@
   }
 
   body {
-    @apply bg-background text-foreground font-spaceGrotesk;
+    @apply bg-light text-dark font-satoshi;
+    font-size: 2vh;
+    line-height: 1.4;
   }
 
   html {
@@ -69,247 +48,109 @@
   .text-balance {
     text-wrap: balance;
   }
-  
-  /* Account for event banner + navbar height */
-  .page-with-banner {
-    padding-top: 7rem; /* ~112px - accounts for banner (~48px) + navbar (~64px) */
+
+  /* ETH typography scale — viewport-relative */
+  .text-hero        { font-size: 9vh;  font-weight: 500; line-height: 1.3; }
+  .text-giant       { font-size: 40vh; font-weight: 500; line-height: 1;   color: var(--white-60); }
+  .text-section-num { font-size: 17vh; font-weight: 400; line-height: 1; }
+  .text-h1          { font-size: 10vh; font-weight: 400; line-height: 0.9; }
+  .text-h2          { font-size: 8vh;  font-weight: 500; line-height: 1.2; }
+  .text-h3          { font-size: 7vh;  font-weight: 500; line-height: 1.2; }
+  .text-h4          { font-size: 6vh;  font-weight: 400; line-height: 1.2; }
+  .text-h5          { font-size: 5vh;  font-weight: 500; line-height: 1.2; }
+  .text-card-title  { font-size: 3vh;  font-weight: 500; line-height: 1.4; }
+  .text-subheading  { font-size: 2.7vh; font-weight: 500; line-height: 1.2; }
+  .text-hero-sub    { font-size: 2.5vh; font-weight: 400; line-height: 1.4; }
+  .text-body        { font-size: 2vh;  font-weight: 400; line-height: 1.4; }
+  .text-nav         { font-size: 2vh;  font-weight: 500; line-height: 1.2; }
+  .text-small       { font-size: 1.8vh; font-weight: 500; line-height: 1.4; }
+  .text-btn         { font-size: 1.6vh; font-weight: 700; letter-spacing: 0.5vh; }
+}
+
+@layer components {
+  .section {
+    @apply flex flex-col justify-center items-center;
+    min-height: 100vh;
+    padding: 5vh;
   }
-}
 
-@layer utilities {
-  .glow {
-    text-shadow: 0 0 10px rgba(71, 168, 189, 0.5);
+  .section-inner {
+    width: 100%;
+    max-width: 150vh;
   }
-  
-  .accent-glow {
-    text-shadow: 0 0 10px rgba(192, 50, 33, 0.5);
+
+  .btn-ghost {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 1vh;
+    padding: 2vh 5vh;
+    font-size: 1.6vh;
+    font-weight: 700;
+    letter-spacing: 0.5vh;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
   }
-  
-  .secondary-glow {
-    text-shadow: 0 0 10px rgba(230, 175, 46, 0.5);
+  .btn-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
   }
-}
 
-/* Stats Slider Styles */
-.scroll-reveal-card {
-  @apply transition-all duration-700 ease-in-out;
-  transform: translateY(40px);
-  opacity: 0;
-}
-
-.scroll-reveal-card.in-view {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-/* Hide scrollbars but keep functionality */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(40px);
-    opacity: 0;
+  .btn-solid-dark {
+    color: #fff;
+    background-color: #212121;
+    border-radius: 1vh;
+    padding: 2vh 5vh;
+    font-size: 1.6vh;
+    font-weight: 700;
+    letter-spacing: 0.5vh;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    display: inline-block;
   }
-  to {
-    transform: translateX(0);
-    opacity: 1;
+  .btn-solid-dark:hover {
+    transform: scale(1.05);
   }
-}
 
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-40px);
-    opacity: 0;
+  .btn-outline-pill {
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 2.5vh;
+    padding: 0.6vh 2vh;
+    font-size: 2vh;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
   }
-  to {
-    transform: translateX(0);
-    opacity: 1;
+  .btn-outline-pill:hover {
+    color: #212121;
+    background-color: #fff;
+    transform: scale(1.03);
   }
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+  .btn-outline-pill-dark {
+    color: #212121;
+    background-color: transparent;
+    border: 2px solid #212121;
+    border-radius: 2.5vh;
+    padding: 0.6vh 2vh;
+    font-size: 2vh;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
   }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Smooth sliding animation */
-.partners-smooth-scroll {
-  transition: transform 1000ms cubic-bezier(0.25, 1, 0.35, 1);
-}
-
-/* Partner logo styles */
-.partner-logo {
-  transition: transform 0.5s ease;
-}
-
-.partner-logo:hover {
-  transform: scale(1.05);
-  border-color: hsl(var(--primary) / 0.5);
-  box-shadow: 0 0 15px 0 rgba(71, 168, 189, 0.2);
-}
-
-@keyframes floatAnimation {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.animate-float {
-  animation: floatAnimation 3s ease-in-out infinite;
-}
-
-/* Event Notification Animations */
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 8px rgba(71, 168, 189, 0.3);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 0 0 15px rgba(71, 168, 189, 0.6);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes slide-down {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  animation: shimmer 2s ease-in-out infinite;
-}
-
-.animate-slide-down {
-  animation: slide-down 0.5s ease-out;
-}
-
-.banner-sweep {
-  position: relative;
-  overflow: hidden;
-}
-
-.banner-sweep::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(71, 168, 189, 0.1), transparent);
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-.event-hover-glow:hover {
-  box-shadow: 0 0 20px rgba(71, 168, 189, 0.3);
-}
-
-.event-notification-focusable:focus {
-  outline: 2px solid rgba(71, 168, 189, 0.5);
-  outline-offset: 2px;
-}
-
-.event-notification-badge {
-  position: relative;
-}
-
-/* Recruiting Toast Styles */
-.recruiting-toast-glow {
-  position: relative;
-  transform: translateY(0);
-  animation: slideInFromTop 0.5s ease-out;
-}
-
-.recruiting-toast-glow::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(71, 168, 189, 0.15), rgba(192, 50, 33, 0.1), transparent);
-  animation: shimmer 4s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.recruiting-toast-glow:hover {
-  box-shadow: 0 0 25px rgba(71, 168, 189, 0.4), 0 0 50px rgba(71, 168, 189, 0.1);
-  transform: translateY(-1px);
-  transition: all 0.3s ease;
-}
-
-/* Slide in animation for recruiting toast */
-@keyframes slideInFromTop {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Enhanced animations for recruiting toast elements */
-.recruiting-toast-glow .lucide-sparkles {
-  animation: sparkle 2s ease-in-out infinite;
-}
-
-.recruiting-toast-glow .lucide-users {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1) rotate(180deg);
-    opacity: 0.8;
-  }
-}
-
-/* Mobile responsiveness for toast */
-@media (max-width: 640px) {
-  .recruiting-toast-glow {
-    margin: 0 8px;
-    max-width: calc(100vw - 16px);
+  .btn-outline-pill-dark:hover {
+    color: #fff;
+    background-color: #212121;
+    transform: scale(1.03);
   }
 }

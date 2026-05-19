@@ -1,38 +1,26 @@
-import { HeroSection } from "@/components/HeroSection";
-import { VisionSection } from "@/components/VisionSection";
-import { AboutSection } from "@/components/AboutSection";
-import { PillarsSection } from "@/components/PillarsSection";
-import ProjectsSection from "@/components/ProjectsSection";
-import { getFeaturedProjects } from "@/lib/sanity-queries";
-import StatsSlider from "@/components/StatsSlider";
-import { FAQSection } from "@/components/FAQSection";
-import CTASection from "@/components/CTASection";
 import type { Metadata } from "next";
-import PartnersSection from "@/components/PartnersSection";
-import BotsSection from "@/components/BotsSection";
-import ContactSection from "@/components/ContactSection";
+import { HeroSection } from "@/components/HeroSection";
+import { AboutSection } from "@/components/AboutSection";
+import { VisionSection } from "@/components/VisionSection";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { FAQSection } from "@/components/FAQSection";
+import { TeamSection } from "@/components/TeamSection";
 
 export const metadata: Metadata = {
-  title: "Robotics Collective | Home",
+  title: "Robotics Collective Aachen | Home",
   description:
     "A collective of engineers and AI enthusiasts pushing the boundaries of robotic intelligence.",
 };
 
-export default async function Home() {
-  // Fetch featured projects at build time for better performance
-  const featuredProjects = await getFeaturedProjects();
-  
+export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-light">
       <HeroSection />
-      <VisionSection />
-      <PillarsSection />
       <AboutSection />
-      <StatsSlider />
-      <ProjectsSection projects={featuredProjects} />
+      <VisionSection />
+      <ProjectsSection />
       <FAQSection />
-      {/* <PartnersSection /> */}
-      <CTASection />
+      <TeamSection />
     </main>
   );
 }

@@ -1,158 +1,75 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
-import { getCldVideoUrl } from "next-cloudinary";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
+import { cn } from "@/lib/utils";
 
 export const HeroSection = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const sectionRef = useRef<HTMLElement>(null);
-  const isMobile = useIsMobile();
-  const [sectionBounds, setSectionBounds] = useState({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0,
-  });
-
-  // Update bounds when component mounts or window resizes
-  useEffect(() => {
-    const updateBounds = () => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        setSectionBounds({
-          left: rect.left,
-          top: rect.top,
-          width: rect.width,
-          height: rect.height,
-        });
-      }
-    };
-
-    updateBounds();
-    window.addEventListener("resize", updateBounds);
-
-    return () => {
-      window.removeEventListener("resize", updateBounds);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition({
-        x: event.clientX,
-        y: event.clientY,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  // Calculate normalized mouse position relative to the section (0-1 range)
-  const normalizedX =
-    (mousePosition.x - sectionBounds.left) / sectionBounds.width;
-  const normalizedY =
-    (mousePosition.y - sectionBounds.top) / sectionBounds.height;
-
-  // Calculate the movement of each glow based on cursor position
-  // Limit the movement to keep glows in their general area
-  const topLeftGlowPosition = {
-    x: `calc(25% + ${normalizedX * 40 - 20}px)`,
-    y: `calc(25% + ${normalizedY * 40 - 20}px)`,
-    scale:
-      1 +
-      (normalizedX > 0.1 &&
-      normalizedX < 0.4 &&
-      normalizedY > 0.1 &&
-      normalizedY < 0.4
-        ? 0.15
-        : 0),
-  };
-
-  const bottomRightGlowPosition = {
-    x: `calc(75% + ${normalizedX * 40 - 20}px)`,
-    y: `calc(75% + ${normalizedY * 40 - 20}px)`,
-    scale:
-      1 +
-      (normalizedX > 0.6 &&
-      normalizedX < 0.9 &&
-      normalizedY > 0.6 &&
-      normalizedY < 0.9
-        ? 0.15
-        : 0),
-  };
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background video */}
-      <div className="absolute inset-0 z-0">
-        {/* Gradient overlay that fades from 70% to 100% opacity of the background color */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 to-background backdrop-blur-[1px] z-10"></div>
-        
-        {/* Simple video */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute w-full h-full object-cover z-0 transform -translate-y-8"
+    <section
+      id="hero"
+      className="relative w-full overflow-hidden flex flex-col justify-center items-start"
+      style={{
+        minHeight: "100vh",
+        padding: "16vh 7vh 8vh",
+        backgroundColor: "#212121",
+        borderBottomLeftRadius: "4vh",
+        borderBottomRightRadius: "4vh",
+      }}
+    >
+      <AnimatedGridPattern
+        width={90}
+        height={90}
+        numSquares={30}
+        maxOpacity={0.18}
+        duration={3}
+        className={cn(
+          "[mask-image:radial-gradient(100vh_circle_at_center,white,transparent)]",
+          "inset-x-0 inset-y-[-30%] h-[160%] skew-y-12 fill-white/25 stroke-white/20"
+        )}
+      />
+
+      <div className="relative z-10 max-w-[140vh]">
+        <h1
+          className="text-white"
+          style={{
+            fontSize: "9vh",
+            fontWeight: 700,
+            lineHeight: 1.05,
+            marginBottom: "3vh",
+          }}
         >
-          <source
-            src={getCldVideoUrl({
-              src: "hero_bg_video_vyk4sj",
-              format: "webm",
-            })}
-            type="video/webm"
-          />
-          <source
-            src={getCldVideoUrl({
-              src: "hero_bg_video_vyk4sj",
-              format: "mp4",
-            })}
-            type="video/mp4"
-          />
-        </video>
-        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-primary/20 rounded-full filter blur-3xl animate-pulse-slow z-20"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full filter blur-3xl animate-pulse-slow z-20"></div>
-      </div>
+          Together, we shape the future of robotics.
+        </h1>
+        <p
+          style={{
+            fontSize: "2.5vh",
+            fontWeight: 400,
+            lineHeight: 1.4,
+            maxWidth: "70vh",
+            marginBottom: "5vh",
+            color: "#ffffff99",
+          }}
+        >
+          We are a community-driven collective, empowering each other to
+          explore, build, and innovate through open collaboration.
+        </p>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 z-30">
-        <div className="text-center max-w-4xl mx-auto animate-fade-in">
-          <h1 className="text-6xl sm:text-6xl md:text-7xl lg:text-7xl font-bold mb-6">
-            <span className="block glow">
-              <span className="text-primary">together</span>, we shape the
-              future of robotics
-            </span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            We are a community-driven collective, empowering each other to
-            explore, build, and innovate through open collaboration.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSd366e4bzN3yZAiWgNSJgT9FlJfaVEv0H0nMyTe3JKrQVj00Q/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button
-                variant="default"
-                className="px-8 py-6 text-lg rounded-3xl"
-                size="lg"
-              >
-                Apply Now
-              </Button>
-            </a>
-          </div>
-        </div>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSd366e4bzN3yZAiWgNSJgT9FlJfaVEv0H0nMyTe3JKrQVj00Q/viewform"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-ghost"
+          style={{
+            fontSize: "2vh",
+            fontWeight: 900,
+            padding: "2.5vh 6vh",
+          }}
+        >
+          Apply Now
+        </a>
       </div>
     </section>
   );
 };
+
+export default HeroSection;

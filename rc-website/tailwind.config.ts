@@ -51,16 +51,30 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "yellow-secondary": "#e6af2e",
-        "red-accent": "#C03221",
+        // ETH two-tone tokens
+        dark: "#212121",
+        light: "#ebebeb",
+        "gray-mid": "#d8d8d8",
+        "gray-text": "#333333",
+        "white-60": "#ffffff99",
+        "white-30": "#ffffff4d",
+        "white-10": "#ffffff1a",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        "vh-sm": "1vh",
+        "vh-md": "3vh",
+        "vh-lg": "4vh",
+        "vh-pill": "5vh",
       },
       fontFamily: {
-        spaceGrotesk: ["var(--font-space-grotesk)", ...fontFamily.sans],
+        satoshi: ["var(--font-satoshi)", ...fontFamily.sans],
+        sans: ["var(--font-satoshi)", ...fontFamily.sans],
+      },
+      letterSpacing: {
+        btn: "0.5vh",
       },
       keyframes: {
         "accordion-down": {
@@ -71,34 +85,19 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "pulse-slow": {
-          '0%, 100%': { opacity: '0.6' },
-          '50%': { opacity: '0.8' }
-        },
         "fade-in": {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' }
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
-        "infinite-scroll": {
-          '0%': { transform: 'translate3d(0,0,0)' },
-          '100%': { transform: 'translate3d(-100%,0,0)' }
-        },
-        "scroll": {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }
-        }
       },
       animation: {
         "accordion-down": "accordion-down 0.3s ease-out",
         "accordion-up": "accordion-up 0.3s ease-out",
-        "pulse-slow": "pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "fade-in": "fade-in 0.8s ease-in-out",
-        "infinite-scroll": "infinite-scroll 60s linear infinite",
-        "scroll": "scroll linear infinite"
       },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-}
+};
 
 export default config;

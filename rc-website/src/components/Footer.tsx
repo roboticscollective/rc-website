@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Github, Linkedin, MessageCircle, Instagram } from "lucide-react";
+import { Github, Instagram } from "lucide-react";
 import { useConsent } from "@/contexts/ConsentContext";
 
 const XIcon = () => (
   <svg
-    className="h-5 w-5"
+    style={{ width: "2.5vh", height: "2.5vh" }}
     fill="currentColor"
-    stroke="currentColor"
-    strokeWidth="2"
     viewBox="0 0 50 50"
     aria-hidden="true"
   >
@@ -20,7 +18,7 @@ const XIcon = () => (
 
 const LinkedInIcon = () => (
   <svg
-    className="h-5 w-5"
+    style={{ width: "2.5vh", height: "2.5vh" }}
     fill="currentColor"
     viewBox="0 0 50 50"
     aria-hidden="true"
@@ -32,82 +30,50 @@ const LinkedInIcon = () => (
 export function Footer() {
   const { resetConsent } = useConsent();
 
-  const handleCookieSettings = () => {
-    resetConsent();
-  };
-
   return (
-    <footer className="bg-card text-gray-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex items-start justify-between h-25">
-          {/* Logo - Left */}
-          <div className="col-span-1 md:col-span-1">
-            <Link href="/" className="flex items-center mb-4">
-              <Image
-                src="/logo.svg"
-                alt="Robotics Collective Logo"
-                width={48}
-                height={48}
-                className="h-12 w-auto"
-              />
-              <Image
-                src="/logotext.svg"
-                alt="Robotics Collective Text Logo"
-                width={140}
-                height={42}
-                className="hidden md:block h-10 w-auto ml-4"
-              />
-            </Link>
-          </div>
+    <footer
+      className="bg-dark text-white"
+      style={{ padding: "8vh 5vh 4vh" }}
+    >
+      <div className="max-w-[180vh] mx-auto">
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-[4vh] mb-[6vh]">
+          <Link href="/" className="flex items-center" aria-label="Robotics Collective Aachen home">
+            <Image
+              src="/logo.svg"
+              alt="Robotics Collective Aachen"
+              width={64}
+              height={64}
+              style={{ height: "6vh", width: "auto", filter: "brightness(0) invert(1)" }}
+            />
+          </Link>
 
-          {/* Navigation - Right */}
-          <div className="text-right">
-            <ul className="space-y-2 mt-2">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-4xl hover:text-white transition-colors"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/projects"
-                  className="text-4xl hover:text-white transition-colors"
-                >
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/meetup"
-                  className="text-4xl hover:text-white transition-colors"
-                >
-                  Conference
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/positions"
-                  className="text-4xl hover:text-white transition-colors"
-                >
-                  Positions
-                </Link>
-              </li>
-            </ul>
-          </div>
+          <nav className="flex flex-col md:flex-row gap-[2vh] md:gap-[3vh] text-right">
+            <a href="#about" className="text-h5 hover:opacity-70 transition-opacity">
+              About
+            </a>
+            <a href="#network" className="text-h5 hover:opacity-70 transition-opacity">
+              Network
+            </a>
+            <a href="#projects" className="text-h5 hover:opacity-70 transition-opacity">
+              Projects
+            </a>
+            <a href="#team" className="text-h5 hover:opacity-70 transition-opacity">
+              Team
+            </a>
+          </nav>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          {/* Social Media Icons - Bottom Left */}
-          <div className="flex space-x-3 mb-4 md:mb-0">
+        <div
+          className="border-t border-white-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-[2vh]"
+          style={{ paddingTop: "3vh" }}
+        >
+          <div className="flex gap-[1.5vh]">
             <a
               href="https://x.com/robocollectiv"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition-colors p-1.5 hover:bg-gray-800 rounded-full"
-              aria-label="X (formerly Twitter)"
+              className="hover:opacity-70 transition-opacity"
+              aria-label="X (Twitter)"
             >
               <XIcon />
             </a>
@@ -115,63 +81,48 @@ export function Footer() {
               href="https://www.instagram.com/roboticscollective/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition-colors p-1.5 hover:bg-gray-800 rounded-full"
+              className="hover:opacity-70 transition-opacity"
               aria-label="Instagram"
             >
-              <Instagram className="h-5 w-5" />
+              <Instagram style={{ width: "2.5vh", height: "2.5vh" }} />
             </a>
             <a
               href="https://github.com/roboticscollective"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition-colors p-1.5 hover:bg-gray-800 rounded-full"
+              className="hover:opacity-70 transition-opacity"
               aria-label="GitHub"
             >
-              <Github className="h-5 w-5" />
+              <Github style={{ width: "2.5vh", height: "2.5vh" }} />
             </a>
             <a
               href="https://www.linkedin.com/company/roboticscollective/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition-colors p-1.5 hover:bg-gray-800 rounded-full"
+              className="hover:opacity-70 transition-opacity"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
             </a>
           </div>
 
-          <p className="text-sm text-center md:text-left">
-            © {new Date().getFullYear()} Robotics Collective | All rights
-            reserved.
+          <p className="text-small" style={{ color: "#ffffff99" }}>
+            © {new Date().getFullYear()} Robotics Collective Aachen. All rights reserved.
           </p>
 
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link
-              href="/privacy"
-              className="text-sm hover:text-white transition-colors"
-            >
-              Privacy Policy
+          <div className="flex gap-[2vh] text-small" style={{ color: "#ffffff99" }}>
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy
             </Link>
-            <Link
-              href="/imprint"
-              className="text-sm hover:text-white transition-colors"
-            >
+            <Link href="/imprint" className="hover:text-white transition-colors">
               Imprint
             </Link>
             <button
-              onClick={handleCookieSettings}
-              className="text-sm hover:text-white transition-colors"
+              onClick={resetConsent}
+              className="hover:text-white transition-colors"
             >
-              Cookie Settings
+              Cookies
             </button>
-            <a
-              href="https://www.netlify.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm hover:text-white transition-colors"
-            >
-              Powered by Netlify
-            </a>
           </div>
         </div>
       </div>
