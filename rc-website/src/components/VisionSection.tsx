@@ -4,35 +4,54 @@ import { useId } from "react";
 import { motion } from "motion/react";
 import { DottedMap, type Marker } from "@/components/ui/dotted-map";
 
-type AachenMarker = Marker & {
-  overlay: {
-    countryCode: string;
-    label: string;
-  };
+type FlagOverlay = { type: "flag"; countryCode: string; label: string };
+type DotOverlay = { type: "dot"; label: string };
+type OrgMarker = Marker & { overlay: FlagOverlay | DotOverlay };
+
+type Org = {
+  name: string;
+  city?: string;
+  lat?: number;
+  lng?: number;
 };
 
-const markers: AachenMarker[] = [
+const orgs: Org[] = [
+  { name: "ETH Robotics Club", city: "Zurich", lat: 47.3769, lng: 8.5417 },
+  { name: "AI Team", city: "Lausanne", lat: 46.5197, lng: 6.6323 },
+  { name: "RoboTUM", city: "Munich", lat: 48.1351, lng: 11.582 },
+  { name: "Team Polar", city: "Eindhoven", lat: 51.4416, lng: 5.4697 },
+  { name: "Unaite", city: "Paris", lat: 48.8566, lng: 2.3522 },
+  { name: "TU Wien Robotics Club", city: "Vienna", lat: 48.2082, lng: 16.3738 },
   {
+    name: "Robotics Collective Aachen",
+    city: "Aachen",
     lat: 50.775,
     lng: 6.084,
-    size: 2.8,
-    overlay: { countryCode: "de", label: "Aachen" },
   },
+  { name: "KTH AI Society", city: "Stockholm", lat: 59.3293, lng: 18.0686 },
+  { name: "Delft RSA", city: "Delft", lat: 52.0116, lng: 4.3571 },
+  { name: "KN CybAiR", city: "Konstanz", lat: 47.6952, lng: 9.1307 },
+  { name: "AEA Polimi", city: "Milan", lat: 45.4781, lng: 9.2272 },
 ];
 
-const orgList = [
-  "ETH Robotics Club",
-  "AI Team",
-  "RoboTUM",
-  "Team Polar",
-  "Unaite",
-  "TU Wien Robotics Club",
-  "Robotics Collective Aachen",
-  "KTH AI Society",
-  "Delft RSA",
-  "KN CybAiR",
-  "AEA Polimi",
-];
+const markers: OrgMarker[] = orgs
+  .filter((o): o is Required<Org> => o.lat !== undefined && o.lng !== undefined)
+  .map((o) => {
+    if (o.name === "Robotics Collective Aachen") {
+      return {
+        lat: o.lat,
+        lng: o.lng,
+        size: 1.7,
+        overlay: { type: "flag", countryCode: "de", label: o.city },
+      };
+    }
+    return {
+      lat: o.lat,
+      lng: o.lng,
+      size: 0.9,
+      overlay: { type: "dot", label: o.city },
+    };
+  });
 
 export const VisionSection = () => {
   const id = useId();
@@ -40,8 +59,18 @@ export const VisionSection = () => {
   return (
     <section
       id="network"
-      className="relative bg-dark text-white"
-      style={{ padding: "14vh 5vh", minHeight: "100vh" }}
+      className="relative bg-dark text-white overflow-hidden"
+      style={{
+        padding: "14vh 5vh",
+        minHeight: "100vh",
+        borderTopLeftRadius: "7vh",
+        borderTopRightRadius: "7vh",
+        borderBottomLeftRadius: "7vh",
+        borderBottomRightRadius: "7vh",
+        marginTop: "-7vh",
+        marginBottom: "-7vh",
+        zIndex: 2,
+      }}
     >
       <div
         aria-hidden="true"
@@ -68,6 +97,7 @@ export const VisionSection = () => {
         >
           02 — European Network
         </p>
+
         <h2
           className="mb-[3vh] max-w-[120vh]"
           style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
@@ -87,19 +117,34 @@ export const VisionSection = () => {
           funding access.
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-[5vh] items-center">
-          <div className="lg:col-span-7 relative overflow-hidden rounded-vh-md">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[5vh] items-center">
+          <div className="hidden md:block lg:col-span-9 relative overflow-hidden rounded-vh-md">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0 z-10"
               style={{
                 background:
-                  "radial-gradient(ellipse at center, transparent 35%, #212121 95%)",
+                  "radial-gradient(ellipse 75% 70% at center, transparent 65%, #212121 100%)",
               }}
             />
-            <DottedMap<AachenMarker>
+            <DottedMap<OrgMarker>
               markers={markers}
+              className="aspect-[2/1] lg:aspect-[20/10]"
               renderMarkerOverlay={({ marker, x, y, r, index }) => {
+                if (marker.overlay.type === "dot") {
+                  return (
+                    <g style={{ pointerEvents: "none" }}>
+                      <circle
+                        cx={x}
+                        cy={y}
+                        r={r * 1.6}
+                        fill="rgba(255,255,255,0.18)"
+                      />
+                      <circle cx={x} cy={y} r={r} fill="#ffffff" />
+                    </g>
+                  );
+                }
+
                 const { countryCode, label } = marker.overlay;
                 const href = `https://flagcdn.com/w80/${countryCode}.webp`;
                 const clipId = `${id}-flag-${index}`.replace(/:/g, "-");
@@ -165,7 +210,8 @@ export const VisionSection = () => {
               Founding Members
             </h3>
             <motion.ul
-              className="grid grid-cols-2 gap-[1vh]"
+              className="flex flex-col"
+              style={{ borderTop: "1px solid #ffffff1f" }}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
@@ -173,13 +219,13 @@ export const VisionSection = () => {
                 visible: { transition: { staggerChildren: 0.04 } },
               }}
             >
-              {orgList.map((org) => {
-                const isHome = org === "Robotics Collective Aachen";
+              {orgs.map((org, i) => {
+                const isHome = org.name === "Robotics Collective Aachen";
                 return (
                   <motion.li
-                    key={org}
+                    key={org.name}
                     variants={{
-                      hidden: { opacity: 0, y: 8 },
+                      hidden: { opacity: 0, y: 6 },
                       visible: {
                         opacity: 1,
                         y: 0,
@@ -189,22 +235,57 @@ export const VisionSection = () => {
                         },
                       },
                     }}
-                    className="rounded-full text-center"
+                    className="flex items-center justify-between"
                     style={{
-                      fontSize: "1.45vh",
+                      padding: "1.1vh 0",
+                      borderBottom: "1px solid #ffffff1f",
+                      color: isHome ? "#ffffff" : "#ffffffb3",
+                      fontSize: "1.7vh",
                       fontWeight: isHome ? 700 : 500,
-                      padding: "0.9vh 1.4vh",
-                      color: isHome ? "#212121" : "#ffffffcc",
-                      backgroundColor: isHome ? "#ffffff" : "transparent",
-                      border: isHome
-                        ? "1px solid #ffffff"
-                        : "1px solid #ffffff33",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      letterSpacing: "0.02vh",
                     }}
                   >
-                    {org}
+                    <span className="flex items-center" style={{ gap: "1.4vh" }}>
+                      <span
+                        style={{
+                          fontSize: "1.2vh",
+                          fontWeight: 500,
+                          color: isHome ? "#ffffff" : "#ffffff55",
+                          fontVariantNumeric: "tabular-nums",
+                          minWidth: "2.4vh",
+                        }}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="flex flex-col">
+                        <span>{org.name}</span>
+                        {org.city && (
+                          <span
+                            style={{
+                              fontSize: "1.1vh",
+                              fontWeight: 500,
+                              color: "#ffffff66",
+                              letterSpacing: "0.05vh",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {org.city}
+                          </span>
+                        )}
+                      </span>
+                    </span>
+                    {isHome && (
+                      <span
+                        aria-label="Your organization"
+                        style={{
+                          width: "0.9vh",
+                          height: "0.9vh",
+                          borderRadius: "50%",
+                          backgroundColor: "#22c55e",
+                          boxShadow: "0 0 0 0.4vh #22c55e33",
+                        }}
+                      />
+                    )}
                   </motion.li>
                 );
               })}

@@ -20,11 +20,13 @@ interface DottedMapProps<T extends Marker> {
   }) => ReactNode;
   dotColor?: string;
   bgColor?: string;
+  aspectRatio?: string;
+  className?: string;
 }
 
 const REGION = {
-  lat: { min: 36, max: 64 },
-  lng: { min: -10, max: 28 },
+  lat: { min: 40, max: 60 },
+  lng: { min: -12, max: 30 },
 };
 
 export function DottedMap<T extends Marker>({
@@ -32,6 +34,8 @@ export function DottedMap<T extends Marker>({
   renderMarkerOverlay,
   dotColor = "#ffffff45",
   bgColor = "transparent",
+  aspectRatio = "4 / 3",
+  className,
 }: DottedMapProps<T>) {
   const { svgInner, viewBox, positions } = useMemo(() => {
     const map = new DottedMapLib({
@@ -75,7 +79,10 @@ export function DottedMap<T extends Marker>({
   }, [markers, dotColor, bgColor]);
 
   return (
-    <div className="relative w-full" style={{ aspectRatio: "4 / 3" }}>
+    <div
+      className={`relative w-full ${className ?? ""}`}
+      style={className ? undefined : { aspectRatio }}
+    >
       <svg
         viewBox={viewBox}
         preserveAspectRatio="xMidYMid meet"

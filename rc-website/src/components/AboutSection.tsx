@@ -50,7 +50,7 @@ export const AboutSection = () => {
               className="absolute inset-0 z-0"
               style={{
                 backgroundImage:
-                  "linear-gradient(#212121d9, #212121d9), url('/team-placeholder.jpg')",
+                  "linear-gradient(transparent 40%, #212121e6 100%), url('/1%20-%20About.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

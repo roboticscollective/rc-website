@@ -1,8 +1,8 @@
 const projects = [
-  { id: "1", image: "/projects/placeholder-1.jpg" },
-  { id: "2", image: "/projects/placeholder-2.jpg" },
-  { id: "3", image: "/projects/placeholder-3.jpg" },
-  { id: "4", image: "/projects/placeholder-4.jpg" },
+  { id: "1", image: "/More%20-%201.jpeg" },
+  { id: "2", image: "/More%20-%202.jpg" },
+  { id: "3", image: "/More%20-3.png" },
+  { id: "4", image: "/More%20-%204.jpeg" },
 ];
 
 export const ProjectsSection = () => {
@@ -35,22 +35,22 @@ export const ProjectsSection = () => {
             fontWeight: 500,
           }}
         >
-          03 — Projects
+          03 — Behind the Build
         </p>
         <h2
           className="mb-[6vh] max-w-[100vh]"
           style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
         >
-          What We Build.
+          Behind the Build.
         </h2>
 
         <div className="flex flex-col gap-[1vh]">
-          <div className="flex gap-[1vh]" style={{ height: "40vh" }}>
+          <div className="flex flex-col md:flex-row gap-[1vh] md:h-[40vh]">
             {[projects[0], projects[1]].map((p) => (
               <ProjectCard key={p.id} image={p.image} />
             ))}
           </div>
-          <div className="flex gap-[1vh]" style={{ height: "40vh" }}>
+          <div className="flex flex-col md:flex-row gap-[1vh] md:h-[40vh]">
             {[projects[2], projects[3]].map((p) => (
               <ProjectCard key={p.id} image={p.image} />
             ))}
@@ -64,7 +64,7 @@ export const ProjectsSection = () => {
 function ProjectCard({ image }: { image: string }) {
   return (
     <div
-      className="flex-1 overflow-hidden bg-dark"
+      className="md:flex-1 overflow-hidden bg-dark aspect-video md:aspect-auto"
       style={{
         borderRadius: "3vh",
         backgroundImage: `linear-gradient(#00000040, #00000040), url('${image}')`,

@@ -58,7 +58,7 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="font-satoshi bg-light text-dark">
+      <body className="font-satoshi">
         <ConsentProvider>
           <Providers>
             <Navbar />

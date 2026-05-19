@@ -34,13 +34,19 @@
   }
 
   body {
-    @apply bg-light text-dark font-satoshi;
+    @apply bg-dark text-dark font-satoshi;
     font-size: 2vh;
     line-height: 1.4;
   }
 
   html {
     scroll-behavior: smooth;
+    background-color: #212121;
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
   }
 }
 

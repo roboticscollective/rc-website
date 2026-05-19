@@ -5,8 +5,18 @@ export const TeamSection = () => {
   return (
     <section
       id="team"
-      className="relative bg-dark text-white"
-      style={{ padding: "14vh 5vh", minHeight: "100vh" }}
+      className="relative bg-dark text-white overflow-hidden"
+      style={{
+        padding: "14vh 5vh",
+        minHeight: "100vh",
+        borderTopLeftRadius: "7vh",
+        borderTopRightRadius: "7vh",
+        borderBottomLeftRadius: "7vh",
+        borderBottomRightRadius: "7vh",
+        marginTop: "-7vh",
+        marginBottom: "-7vh",
+        zIndex: 2,
+      }}
     >
       <div
         aria-hidden="true"

@@ -32,11 +32,11 @@ export function Footer() {
 
   return (
     <footer
-      className="bg-dark text-white"
+      className="bg-dark text-white overflow-hidden"
       style={{ padding: "8vh 5vh 4vh" }}
     >
       <div className="max-w-[180vh] mx-auto">
-        <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-[4vh] mb-[6vh]">
+        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-[4vh] mb-[6vh]">
           <Link href="/" className="flex items-center" aria-label="Robotics Collective Aachen home">
             <Image
               src="/logo.svg"
@@ -47,7 +47,7 @@ export function Footer() {
             />
           </Link>
 
-          <nav className="flex flex-col md:flex-row gap-[2vh] md:gap-[3vh] text-right">
+          <nav className="flex flex-col lg:flex-row gap-[2vh] lg:gap-[3vh] text-left lg:text-right">
             <a href="#about" className="text-h5 hover:opacity-70 transition-opacity">
               About
             </a>
@@ -64,7 +64,7 @@ export function Footer() {
         </div>
 
         <div
-          className="border-t border-white-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-[2vh]"
+          className="border-t border-white-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-[2vh]"
           style={{ paddingTop: "3vh" }}
         >
           <div className="flex gap-[1.5vh]">
