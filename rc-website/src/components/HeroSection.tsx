@@ -17,7 +17,7 @@ export const HeroSection = () => {
       {/* Looped video — centered card behind the hero content */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        className="hidden md:block pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         style={{
           width: "min(88%, 160vh)",
           height: "min(80%, 80vh)",
@@ -28,15 +28,18 @@ export const HeroSection = () => {
         }}
       >
         <video
-          src="/videos/teleoperation-ur5.mp4"
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          poster="/videos/teleoperation-ur5-poster.jpg"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 0.32 }}
-        />
+        >
+          <source src="/videos/teleoperation-ur5-web.webm" type="video/webm" />
+          <source src="/videos/teleoperation-ur5-web.mp4" type="video/mp4" />
+        </video>
         {/* Dark gradient overlay for text legibility on the left */}
         <div
           className="absolute inset-0"
@@ -56,7 +59,7 @@ export const HeroSection = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-[140vh] pointer-events-none text-center md:text-left">
+      <div className="relative z-10 w-full max-w-[140vh] pointer-events-none text-left">
         <h1
           className="text-white"
           style={{
@@ -70,7 +73,6 @@ export const HeroSection = () => {
           <span className="text-brand">future of robotics</span>.
         </h1>
         <p
-          className="mx-auto md:mx-0"
           style={{
             fontSize: "clamp(1.15rem, min(2.5vh, 4.4vw), 1.75rem)",
             fontWeight: 500,
