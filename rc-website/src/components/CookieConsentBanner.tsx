@@ -30,7 +30,7 @@ export const CookieConsentBanner: React.FC = () => {
           <button
             onClick={acceptAllConsent}
             className="btn-outline-pill"
-            style={{ backgroundColor: "#fff", color: "#212121" }}
+            style={{ backgroundColor: "#fff", color: "#0d0d0d" }}
           >
             Accept all
           </button>

@@ -1,8 +1,8 @@
 const projects = [
-  { id: "1", image: "/More%20-%201.jpeg" },
-  { id: "2", image: "/More%20-%202.jpg" },
-  { id: "3", image: "/More%20-3.png" },
-  { id: "4", image: "/More%20-%204.jpeg" },
+  { id: "1", image: "/more-1.jpeg" },
+  { id: "2", image: "/more-2.jpg" },
+  { id: "3", image: "/more-pics/more-03.jpeg" },
+  { id: "4", image: "/more-pics/more-04.jpeg" },
 ];
 
 export const ProjectsSection = () => {
@@ -41,7 +41,7 @@ export const ProjectsSection = () => {
           className="mb-[6vh] max-w-[100vh]"
           style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
         >
-          Behind the Build.
+          Behind the <span className="text-brand">Build</span>.
         </h2>
 
         <div className="flex flex-col gap-[1vh]">

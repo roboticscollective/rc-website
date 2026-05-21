@@ -102,14 +102,14 @@ export const VisionSection = () => {
           className="mb-[3vh] max-w-[120vh]"
           style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
         >
-          Building Europe&apos;s Robotics Network.
+          Building Europe&apos;s Robotics <span className="text-brand">Network</span>.
         </h2>
         <p
           className="mb-[8vh] max-w-[110vh]"
           style={{ fontSize: "2.5vh", color: "#ffffff99", lineHeight: 1.5 }}
         >
           Robotics Collective Aachen is a founding member of{" "}
-          <strong style={{ color: "#fff" }}>ESRA</strong> — the European Student
+          <strong className="text-brand">ESRA</strong> — the European Student
           Robotics Association. Europe doesn&apos;t have a talent problem; it has a
           fragmentation problem. Together with 10+ student robotics
           organizations across the continent, we&apos;re building a unified network
@@ -124,7 +124,7 @@ export const VisionSection = () => {
               className="pointer-events-none absolute inset-0 z-10"
               style={{
                 background:
-                  "radial-gradient(ellipse 75% 70% at center, transparent 65%, #212121 100%)",
+                  "radial-gradient(ellipse 75% 70% at center, transparent 65%, #0d0d0d 100%)",
               }}
             />
             <DottedMap<OrgMarker>

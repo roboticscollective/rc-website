@@ -129,7 +129,7 @@ export function Navbar() {
             gap: "1.25rem",
             padding: "0.45rem 0.45rem 0.45rem 1.1rem",
             borderRadius: "999px",
-            border: scrolled ? "1.5px solid #21212122" : "1.5px solid #ffffff55",
+            border: scrolled ? "1.5px solid #0d0d0d22" : "1.5px solid #ffffff55",
             background: scrolled
               ? "rgba(255,255,255,0.92)"
               : "rgba(33,33,33,0.55)",
@@ -164,8 +164,8 @@ export function Navbar() {
               width: "2.25rem",
               height: "2.25rem",
               borderRadius: "999px",
-              background: scrolled ? "#212121" : "#ffffff",
-              color: scrolled ? "#ffffff" : "#212121",
+              background: scrolled ? "#0d0d0d" : "#ffffff",
+              color: scrolled ? "#ffffff" : "#0d0d0d",
               border: "none",
             }}
           >
@@ -182,7 +182,7 @@ export function Navbar() {
             : "opacity-0 pointer-events-none"
         }`}
         style={{
-          background: "#212121",
+          background: "#0d0d0d",
         }}
         aria-hidden={!mobileMenuOpen}
       >
@@ -215,7 +215,7 @@ export function Navbar() {
                 height: "2.25rem",
                 borderRadius: "999px",
                 background: "#ffffff",
-                color: "#212121",
+                color: "#0d0d0d",
                 border: "none",
               }}
             >

@@ -22,12 +22,10 @@ export interface Partner {
   url?: string;
 }
 
-// TODO: Replace placeholders with real partner logos in /public/partners/
 export const partners: Partner[] = [
-  { name: "Partner 1", logo: "/logo.png" },
-  { name: "Partner 2", logo: "/logo.png" },
-  { name: "Partner 3", logo: "/logo.png" },
-  { name: "Partner 4", logo: "/logo.png" },
-  { name: "Partner 5", logo: "/logo.png" },
-  { name: "Partner 6", logo: "/logo.png" },
+  { name: "Vorwerk", logo: "/partners/vorwerk.png" },
+  { name: "Hugging Face", logo: "/partners/huggingface.png" },
+  { name: "Partner 3", logo: "/partners/partner-03.svg" },
+  { name: "Partner 4", logo: "/partners/partner-04.png" },
+  { name: "Partner 5", logo: "/partners/partner-05.png" },
 ];

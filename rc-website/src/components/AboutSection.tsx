@@ -34,7 +34,7 @@ export const AboutSection = () => {
           className="mb-[6vh] max-w-[100vh]"
           style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
         >
-          Bridging Aachen's Robotics Scene.
+          Bridging Aachen&apos;s <span className="text-brand">Robotics</span> Scene.
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[5vh] items-stretch">
@@ -50,7 +50,7 @@ export const AboutSection = () => {
               className="absolute inset-0 z-0"
               style={{
                 backgroundImage:
-                  "linear-gradient(transparent 40%, #212121e6 100%), url('/1%20-%20About.jpg')",
+                  "linear-gradient(transparent 40%, #0d0d0de6 100%), url('/1%20-%20About.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}
@@ -65,13 +65,13 @@ export const AboutSection = () => {
                   maxWidth: "40vh",
                 }}
               >
-                Since 2023, uniting passionate minds to shape the future of
-                robotics.
+                Since 2023, uniting passionate minds to shape the{" "}
+                <span className="text-brand">future of robotics</span>.
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col justify-center gap-[3vh]">
+          <div className="flex flex-col justify-start gap-[3vh]">
             <p style={{ fontSize: "2.4vh", lineHeight: 1.5 }}>
               Founded in 2023 as <strong>open robotic metaverse</strong>, we
               quickly spotted a critical gap: Aachen's vibrant robotics

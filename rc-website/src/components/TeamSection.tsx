@@ -47,7 +47,7 @@ export const TeamSection = () => {
           className="mb-[3vh] max-w-[110vh]"
           style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
         >
-          The People Behind the Collective.
+          The People Behind the <span className="text-brand">Collective</span>.
         </h2>
         <p
           className="mb-[8vh] max-w-[100vh]"
@@ -86,30 +86,27 @@ export const TeamSection = () => {
           Partners
         </h3>
         <div
-          className="grid gap-[2vh]"
+          className="grid items-center gap-x-[6vh] gap-y-[4vh]"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(20vh, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(16vh, 1fr))",
           }}
         >
           {partners.map((p) => (
             <div
               key={p.name}
-              className="flex items-center justify-center bg-white-10 border border-white-10"
-              style={{
-                aspectRatio: "16/9",
-                borderRadius: "2vh",
-                padding: "3vh",
-              }}
+              className="flex items-center justify-center"
+              style={{ height: "8vh" }}
             >
               <Image
                 src={p.logo}
                 alt={p.name}
-                width={120}
-                height={60}
+                width={200}
+                height={100}
                 style={{
-                  maxHeight: "60%",
+                  maxHeight: "100%",
+                  maxWidth: "100%",
                   width: "auto",
-                  filter: "brightness(0) invert(1) opacity(0.8)",
+                  height: "auto",
                   objectFit: "contain",
                 }}
               />

@@ -6,8 +6,8 @@
   :root {
     /* ETH two-tone palette — light-themed site */
     --background: 0 0% 92%;       /* #ebebeb */
-    --foreground: 0 0% 13%;       /* #212121 */
-    --card: 0 0% 13%;             /* #212121 dark cards on light bg */
+    --foreground: 0 0% 13%;       /* #0d0d0d */
+    --card: 0 0% 13%;             /* #0d0d0d dark cards on light bg */
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 13%;
     --popover-foreground: 0 0% 100%;
@@ -41,7 +41,7 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: #212121;
+    background-color: #0d0d0d;
     overflow-x: clip;
   }
 
@@ -105,7 +105,7 @@
 
   .btn-solid-dark {
     color: #fff;
-    background-color: #212121;
+    background-color: #0d0d0d;
     border-radius: 1vh;
     padding: 2vh 5vh;
     font-size: 1.6vh;
@@ -118,6 +118,20 @@
   }
   .btn-solid-dark:hover {
     transform: scale(1.05);
+  }
+
+  /* Brand accent — note: do NOT use `.text-accent`, Tailwind generates
+     that from the `accent` theme color (dark gray) and overrides it.
+     Use `text-brand` (from theme.colors.brand) or this class instead. */
+  .text-brand,
+  .accent-blue {
+    color: #47A8BD !important;
+  }
+  .accent-underline {
+    background-image: linear-gradient(transparent 70%, #47A8BD55 70%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 0 0.15em;
   }
 
   .btn-outline-pill {
@@ -135,15 +149,15 @@
     text-decoration: none;
   }
   .btn-outline-pill:hover {
-    color: #212121;
+    color: #0d0d0d;
     background-color: #fff;
     transform: scale(1.03);
   }
 
   .btn-outline-pill-dark {
-    color: #212121;
+    color: #0d0d0d;
     background-color: transparent;
-    border: 2px solid #212121;
+    border: 2px solid #0d0d0d;
     border-radius: 2.5vh;
     padding: 0.6vh 2vh;
     font-size: 2vh;
@@ -156,7 +170,7 @@
   }
   .btn-outline-pill-dark:hover {
     color: #fff;
-    background-color: #212121;
+    background-color: #0d0d0d;
     transform: scale(1.03);
   }
 }

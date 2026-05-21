@@ -105,7 +105,7 @@ export const FAQSection = ({ items = defaultItems }: { items?: FAQItem[] }) => {
                   fontSize: "2.7vh",
                   fontWeight: 500,
                   padding: "3vh 0",
-                  color: "#212121",
+                  color: "#0d0d0d",
                 }}
               >
                 {question}

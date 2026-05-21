@@ -33,3 +33,8 @@ pnpm-debug.log*
 Thumbs.db
 *.swp
 *.swo
+
+# Local-only docs / notes
+design-engineer-skill.md
+ethrobotics-style-guide.md
+SYNC_TO_VERCEL.md

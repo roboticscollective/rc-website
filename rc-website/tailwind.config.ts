@@ -52,13 +52,20 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         // ETH two-tone tokens
-        dark: "#212121",
+        dark: "#0d0d0d",
+        "dark-surface": "#161616",
         light: "#ebebeb",
         "gray-mid": "#d8d8d8",
         "gray-text": "#333333",
         "white-60": "#ffffff99",
         "white-30": "#ffffff4d",
         "white-10": "#ffffff1a",
+        // Primary brand accent
+        brand: {
+          DEFAULT: "#47A8BD",
+          soft: "#47A8BD33",
+          glow: "#47A8BD66",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
