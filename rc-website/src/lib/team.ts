@@ -7,13 +7,18 @@ export interface TeamMember {
   email?: string;
 }
 
-// TODO: Replace placeholder image paths with real photos in /public/team/
-const PLACEHOLDER = "/logo.png";
-
 export const leadership: TeamMember[] = [
-  { name: "Amine Kharrat", role: "Co-founder", image: PLACEHOLDER },
-  { name: "Karim Siala", role: "Co-founder", image: PLACEHOLDER },
-  { name: "Jan Strehl", role: "Co-founder", image: PLACEHOLDER },
+  {
+    name: "Amine Kharrat",
+    role: "Initiator and Co-Founder",
+    image: "/team/Amine.webp",
+  },
+  { name: "Karim Siala", role: "Co-Founder", image: "/team/Karim.webp" },
+  {
+    name: "Siddarth S. Pillai",
+    role: "Technical Projects Lead",
+    image: "/team/Sid.webp",
+  },
 ];
 
 export interface Partner {
