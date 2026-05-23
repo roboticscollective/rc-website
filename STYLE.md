@@ -4,15 +4,19 @@ Two-tone, viewport-relative, no breakpoints. Satoshi everywhere. Numbered sectio
 
 ## Tokens
 
-| Token         | Value       | Use                                  |
-|---------------|-------------|--------------------------------------|
-| `dark`        | `#212121`   | Dark bg, text on light               |
-| `light`       | `#ebebeb`   | Light bg                             |
-| `gray-mid`    | `#d8d8d8`   | Secondary surfaces                   |
-| `gray-text`   | `#333333`   | Body text on light                   |
-| `white-60`    | `#ffffff99` | Muted text on dark                   |
-| `white-30`    | `#ffffff4d` | Hairline borders, hover              |
-| `white-10`    | `#ffffff1a` | Ghost fills                          |
+| Token          | Value       | Use                                  |
+|----------------|-------------|--------------------------------------|
+| `dark`         | `#0d0d0d`   | Dark bg, text on light               |
+| `dark-surface` | `#161616`   | Raised surfaces on dark              |
+| `light`        | `#ebebeb`   | Light bg                             |
+| `gray-mid`     | `#d8d8d8`   | Secondary surfaces                   |
+| `gray-text`    | `#333333`   | Body text on light                   |
+| `white-60`     | `#ffffff99` | Muted text on dark                   |
+| `white-30`     | `#ffffff4d` | Hairline borders, hover              |
+| `white-10`     | `#ffffff1a` | Ghost fills                          |
+| `brand`        | `#47A8BD`   | Primary accent (links, glow, highlights) |
+| `brand.soft`   | `#47A8BD33` | Underline / tinted fills             |
+| `brand.glow`   | `#47A8BD66` | Glow shadows                         |
 
 ## Sizing
 
