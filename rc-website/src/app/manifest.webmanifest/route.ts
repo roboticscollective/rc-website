@@ -4,7 +4,7 @@ export async function GET() {
   const manifest = {
     id: "/",
     scope: "/",
-    name: "Robotics Collective",
+    name: "Robotics Collective Aachen",
     short_name: "rc",
     description: "Together, we shape the future of robotics",
     start_url: "/",

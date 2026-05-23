@@ -137,7 +137,7 @@ export const trackDonationClick = (amount?: number, method?: string): void => {
     method: method || 'stripe',
     items: [{
       item_id: 'donation',
-      item_name: 'Robotics Collective Donation',
+      item_name: 'Robotics Collective Aachen Donation',
       item_category: 'donation',
       quantity: 1,
       price: amount || 0,

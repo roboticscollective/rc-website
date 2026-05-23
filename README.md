@@ -1,73 +1,58 @@
-# Robotics Collective Website
+# Robotics Collective Aachen — Website
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e307b1b0-0632-4eea-9f87-295defcc6ffd/deploy-status)](https://app.netlify.com/projects/roboticscollective/deploys)
 
-The official Robotics Collective website built with Next.js 15 and Sanity CMS.
+One-page marketing site for **Robotics Collective Aachen**, a non-profit student robotics organization in Aachen, Germany and founding member of **ESRA** (European Student Robotics Association).
 
-## Architecture
-
-This repository contains two main components:
-
-- **`rc-website/`** - The main Next.js website application
-- **`studio-website/`** - Sanity Studio CMS for content management
-
-The website uses Sanity CMS for all dynamic content including team members, projects, positions, and blog posts.
+Built with Next.js 15. All content is static — no CMS, no external data sources.
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18 or later)
+- [Node.js](https://nodejs.org/) v18 or later
+- [Yarn](https://classic.yarnpkg.com/) (Classic, v1.x — see `packageManager` in `package.json`)
 
 ## Getting Started
 
-### Clone the Repository
-
 ```bash
 git clone git@github.com:openroboticmetaverse/rc-web.git
-cd rc-web
-```
-
-### Website Development
-
-Navigate to the website directory and install dependencies:
-
-```bash
-cd rc-website
-yarn install
-```
-
-### Available Commands
-
-- **`yarn dev`** - Start the development server at `http://localhost:3000`
-- **`yarn build`** - Create an optimized production build
-- **`yarn start`** - Start the production server (requires build first)
-- **`yarn lint`** - Run ESLint to check code quality
-
-### Sanity Studio (Content Management)
-
-To manage website content, navigate to the studio directory:
-
-```bash
-cd studio-website
+cd rc-web/rc-website
 yarn install
 yarn dev
 ```
 
-The Sanity Studio will be available at `http://localhost:3333` for content editing.
+The dev server runs at `http://localhost:3000`.
 
-## Development Workflow
+### Available Commands
 
-1. **Content Updates**: Use Sanity Studio (`studio-website/`) to manage team members, projects, positions, and other content
-2. **Website Development**: Work in the `rc-website/` directory for UI/UX changes and new features
-3. **Testing**: Run `yarn build` to ensure everything compiles correctly before committing
+- **`yarn dev`** — Start the development server
+- **`yarn build`** — Create an optimized production build
+- **`yarn start`** — Start the production server (requires `yarn build` first)
+- **`yarn lint`** — Run ESLint
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15 with App Router, TypeScript, Tailwind CSS
-- **CMS**: Sanity Studio
-- **UI Components**: Radix UI primitives with custom styling
-- **Animations**: Framer Motion
+- **Framework**: Next.js 15 (App Router) + TypeScript
+- **Styling**: Tailwind CSS with shadcn / Radix UI primitives
+- **Animations**: Motion (Framer Motion successor)
+- **Font**: Satoshi (self-hosted via `next/font/local`)
+- **Analytics**: GA4 with opt-in cookie consent
 - **Deployment**: Netlify
+
+## Editing Content
+
+All copy and data lives in TypeScript files inside `rc-website/src/` — no admin panel needed.
+
+- Team / partners — `src/lib/team.ts`
+- FAQ — `src/components/FAQSection.tsx`
+- Hero / About / Vision copy — inline at the top of each section component in `src/components/`
+- Images — `rc-website/public/` (`team/`, `projects/`, `partners/`, etc.)
+
+See **`PROJECT.md`** for the full landing-page structure and **`STYLE.md`** for the design-token reference.
+
+## Deployment
+
+Pushes to `main` deploy automatically to Netlify. The build command is `yarn build` and the publish directory is the standard Next.js output.
 
 ---
 
-For questions or issues, please create an issue in the repository or contact the maintainers.
+For questions, issues, or requests, contact **xerico12345@gmail.com**.
