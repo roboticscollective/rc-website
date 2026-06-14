@@ -23,7 +23,9 @@ export const leadership: TeamMember[] = [
 
 export interface Partner {
   name: string;
-  logo: string;
+  logo?: string;
+  /** Render the name as a styled text wordmark instead of an image logo. */
+  wordmark?: boolean;
   url?: string;
 }
 
@@ -33,4 +35,8 @@ export const partners: Partner[] = [
   { name: "Partner 3", logo: "/partners/partner-03.svg" },
   { name: "Partner 4", logo: "/partners/partner-04.png" },
   { name: "Partner 5", logo: "/partners/partner-05.png" },
+  { name: "Gateway Factory", logo: "/partners/gateway-Factory.svg" },
+  { name: "INFORM", logo: "/partners/inform-white.svg" },
+  { name: "Vectioneer", logo: "/partners/Vectioneer-white.png" },
+  { name: "Birdwave", wordmark: true },
 ];

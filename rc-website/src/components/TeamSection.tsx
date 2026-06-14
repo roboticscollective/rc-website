@@ -97,19 +97,35 @@ export const TeamSection = () => {
               className="flex items-center justify-center"
               style={{ height: "8vh" }}
             >
-              <Image
-                src={p.logo}
-                alt={p.name}
-                width={200}
-                height={100}
-                style={{
-                  maxHeight: "100%",
-                  maxWidth: "100%",
-                  width: "auto",
-                  height: "auto",
-                  objectFit: "contain",
-                }}
-              />
+              {p.wordmark ? (
+                <span
+                  className="group inline-flex items-baseline gap-[0.05em] font-medium leading-none text-white"
+                  style={{
+                    fontFamily: "'Afacad', 'Inter', ui-sans-serif, sans-serif",
+                    fontSize: "3.4vh",
+                    letterSpacing: "-0.035em",
+                  }}
+                >
+                  <span>{p.name}</span>
+                  <span className="text-[#e9b872] transition-transform duration-300 group-hover:translate-y-[2px]">
+                    .
+                  </span>
+                </span>
+              ) : (
+                <Image
+                  src={p.logo!}
+                  alt={p.name}
+                  width={200}
+                  height={100}
+                  style={{
+                    maxHeight: "100%",
+                    maxWidth: "100%",
+                    width: "auto",
+                    height: "auto",
+                    objectFit: "contain",
+                  }}
+                />
+              )}
             </div>
           ))}
         </div>
