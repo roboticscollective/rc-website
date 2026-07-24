@@ -1,8 +1,8 @@
 const projects = [
-  { id: "1", image: "/more-1.jpeg" },
-  { id: "2", image: "/more-2.jpg" },
-  { id: "3", image: "/more-pics/more-03.jpeg" },
-  { id: "4", image: "/more-pics/more-04.jpeg" },
+  { id: "1", image: "/build-1.webp" },
+  { id: "2", image: "/build-2.webp" },
+  { id: "3", image: "/build-3.webp" },
+  { id: "4", image: "/build-4.webp" },
 ];
 
 export const ProjectsSection = () => {
