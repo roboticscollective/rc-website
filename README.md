@@ -1,15 +1,15 @@
-# Robotics Collective Aachen — Website
+# Robotics Collective Aachen
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e307b1b0-0632-4eea-9f87-295defcc6ffd/deploy-status)](https://app.netlify.com/projects/roboticscollective/deploys)
 
 One-page marketing site for **Robotics Collective Aachen**, a non-profit student robotics organization in Aachen, Germany and founding member of **ESRA** (European Student Robotics Association).
 
-Built with Next.js 15. All content is static — no CMS, no external data sources.
+Built with Next.js 15. All content is static. No external data sources. 
 
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) v18 or later
-- [Yarn](https://classic.yarnpkg.com/) (Classic, v1.x — see `packageManager` in `package.json`)
+- [Yarn](https://classic.yarnpkg.com/) (Classic, v1.x - see `packageManager` in `package.json`)
 
 ## Getting Started
 
@@ -24,10 +24,10 @@ The dev server runs at `http://localhost:3000`.
 
 ### Available Commands
 
-- **`yarn dev`** — Start the development server
-- **`yarn build`** — Create an optimized production build
-- **`yarn start`** — Start the production server (requires `yarn build` first)
-- **`yarn lint`** — Run ESLint
+- **`yarn dev`**: Start the development server
+- **`yarn build`**: Create an optimized production build
+- **`yarn start`**: Start the production server (requires `yarn build` first)
+- **`yarn lint`**: Run ESLint
 
 ## Tech Stack
 
@@ -40,12 +40,12 @@ The dev server runs at `http://localhost:3000`.
 
 ## Editing Content
 
-All copy and data lives in TypeScript files inside `rc-website/src/` — no admin panel needed.
+All copy and data lives in TypeScript files inside `rc-website/src/`. No admin panel needed.
 
-- Team / partners — `src/lib/team.ts`
-- FAQ — `src/components/FAQSection.tsx`
-- Hero / About / Vision copy — inline at the top of each section component in `src/components/`
-- Images — `rc-website/public/` (`team/`, `projects/`, `partners/`, etc.)
+- Team / partners: `src/lib/team.ts`
+- FAQ: `src/components/FAQSection.tsx`
+- Hero / About / Vision copy: inline at the top of each section component in `src/components/`
+- Images: `rc-website/public/` (`team/`, `projects/`, `partners/`, etc.)
 
 See **`PROJECT.md`** for the full landing-page structure and **`STYLE.md`** for the design-token reference.
 

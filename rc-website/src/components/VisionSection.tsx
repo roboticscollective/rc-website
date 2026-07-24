@@ -108,7 +108,7 @@ export const VisionSection = () => {
             fontWeight: 500,
           }}
         >
-          02 — European Network
+          02 · European Network
         </p>
 
         <h2
@@ -122,7 +122,7 @@ export const VisionSection = () => {
           style={{ fontSize: "2.5vh", color: "#ffffff99", lineHeight: 1.5 }}
         >
           Robotics Collective Aachen is a founding member of{" "}
-          <strong className="text-brand">ESRA</strong> — the European Student
+          <strong className="text-brand">ESRA</strong>, the European Student
           Robotics Association. Europe doesn&apos;t have a talent problem; it has a
           fragmentation problem. Together with 10+ student robotics
           organizations across the continent, we&apos;re building a unified network

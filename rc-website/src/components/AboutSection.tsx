@@ -28,7 +28,7 @@ export const AboutSection = () => {
             fontWeight: 500,
           }}
         >
-          01 — About the Collective
+          01 · About the Collective
         </p>
         <h2
           className="mb-[6vh] max-w-[100vh]"
@@ -75,7 +75,7 @@ export const AboutSection = () => {
             <p style={{ fontSize: "2.4vh", lineHeight: 1.5 }}>
               Founded in 2023 as <strong>open robotic metaverse</strong>, we
               quickly spotted a critical gap: Aachen's vibrant robotics
-              community was booming, yet efforts remained scattered — research
+              community was booming, yet efforts remained scattered: research
               institutes, startups, companies, and student teams often tackling
               the same challenges in parallel, reinventing the wheel.
             </p>
