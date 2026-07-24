@@ -50,7 +50,7 @@ export const AboutSection = () => {
               className="absolute inset-0 z-0"
               style={{
                 backgroundImage:
-                  "linear-gradient(transparent 40%, #0d0d0de6 100%), url('/1%20-%20About.jpg')",
+                  "linear-gradient(transparent 40%, #0d0d0de6 100%), url('/about.webp')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

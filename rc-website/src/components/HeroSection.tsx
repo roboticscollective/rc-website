@@ -6,7 +6,7 @@ export const HeroSection = () => {
       id="hero"
       className="relative w-full overflow-hidden flex flex-col justify-center items-center"
       style={{
-        minHeight: "100dvh",
+        minHeight: "100svh",
         padding:
           "clamp(7rem, 16vh, 14rem) clamp(1.5rem, 7vh, 6rem) clamp(4rem, 8vh, 8rem)",
         backgroundColor: "#0d0d0d",
