@@ -10,13 +10,13 @@ export const ProjectsSection = () => {
     <section
       id="projects"
       className="relative bg-light text-dark"
-      style={{ padding: "12vh 5vh", minHeight: "100vh" }}
+      style={{ padding: "12svh 5svh", minHeight: "100svh" }}
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none select-none absolute top-0 right-[5vh]"
+        className="pointer-events-none select-none absolute top-0 right-[5svh]"
         style={{
-          fontSize: "40vh",
+          fontSize: "40svh",
           fontWeight: 500,
           lineHeight: 1,
           color: "#d8d8d8",
@@ -25,32 +25,32 @@ export const ProjectsSection = () => {
         03
       </div>
 
-      <div className="relative max-w-[150vh] mx-auto">
+      <div className="relative max-w-[150svh] mx-auto">
         <p
           className="uppercase mb-4"
           style={{
-            letterSpacing: "0.3vh",
+            letterSpacing: "0.3svh",
             color: "#666",
-            fontSize: "1.8vh",
+            fontSize: "1.8svh",
             fontWeight: 500,
           }}
         >
           03 · Behind the Build
         </p>
         <h2
-          className="mb-[6vh] max-w-[100vh]"
-          style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
+          className="mb-[6svh] max-w-[100svh]"
+          style={{ fontSize: "8svh", fontWeight: 700, lineHeight: 1.05 }}
         >
           Behind the <span className="text-brand">Build</span>.
         </h2>
 
-        <div className="flex flex-col gap-[1vh]">
-          <div className="flex flex-col md:flex-row gap-[1vh] md:h-[40vh]">
+        <div className="flex flex-col gap-[1svh]">
+          <div className="flex flex-col md:flex-row gap-[1svh] md:h-[40svh]">
             {[projects[0], projects[1]].map((p) => (
               <ProjectCard key={p.id} image={p.image} />
             ))}
           </div>
-          <div className="flex flex-col md:flex-row gap-[1vh] md:h-[40vh]">
+          <div className="flex flex-col md:flex-row gap-[1svh] md:h-[40svh]">
             {[projects[2], projects[3]].map((p) => (
               <ProjectCard key={p.id} image={p.image} />
             ))}
@@ -66,7 +66,7 @@ function ProjectCard({ image }: { image: string }) {
     <div
       className="md:flex-1 overflow-hidden bg-dark aspect-video md:aspect-auto"
       style={{
-        borderRadius: "3vh",
+        borderRadius: "3svh",
         backgroundImage: `linear-gradient(#00000040, #00000040), url('${image}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",

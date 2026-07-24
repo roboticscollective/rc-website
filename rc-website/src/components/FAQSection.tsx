@@ -58,13 +58,13 @@ export const FAQSection = ({ items = defaultItems }: { items?: FAQItem[] }) => {
     <section
       id="faq"
       className="relative bg-light text-dark"
-      style={{ padding: "12vh 5vh", minHeight: "100vh" }}
+      style={{ padding: "12svh 5svh", minHeight: "100svh" }}
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none select-none absolute top-0 right-[5vh]"
+        className="pointer-events-none select-none absolute top-0 right-[5svh]"
         style={{
-          fontSize: "40vh",
+          fontSize: "40svh",
           fontWeight: 500,
           lineHeight: 1,
           color: "#d8d8d8",
@@ -73,21 +73,21 @@ export const FAQSection = ({ items = defaultItems }: { items?: FAQItem[] }) => {
         04
       </div>
 
-      <div className="relative max-w-[120vh] mx-auto">
+      <div className="relative max-w-[120svh] mx-auto">
         <p
           className="uppercase mb-4"
           style={{
-            letterSpacing: "0.3vh",
+            letterSpacing: "0.3svh",
             color: "#666",
-            fontSize: "1.8vh",
+            fontSize: "1.8svh",
             fontWeight: 500,
           }}
         >
           04 · FAQ
         </p>
         <h2
-          className="mb-[6vh]"
-          style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
+          className="mb-[6svh]"
+          style={{ fontSize: "8svh", fontWeight: 700, lineHeight: 1.05 }}
         >
           Frequently Asked Questions.
         </h2>
@@ -102,9 +102,9 @@ export const FAQSection = ({ items = defaultItems }: { items?: FAQItem[] }) => {
               <AccordionTrigger
                 className="text-left hover:no-underline"
                 style={{
-                  fontSize: "2.7vh",
+                  fontSize: "2.7svh",
                   fontWeight: 500,
-                  padding: "3vh 0",
+                  padding: "3svh 0",
                   color: "#0d0d0d",
                 }}
               >
@@ -112,10 +112,10 @@ export const FAQSection = ({ items = defaultItems }: { items?: FAQItem[] }) => {
               </AccordionTrigger>
               <AccordionContent
                 style={{
-                  fontSize: "2vh",
+                  fontSize: "2svh",
                   lineHeight: 1.5,
                   color: "#333",
-                  paddingBottom: "3vh",
+                  paddingBottom: "3svh",
                 }}
               >
                 {typeof answer === "string" ? <p>{answer}</p> : answer}

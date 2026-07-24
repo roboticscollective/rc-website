@@ -74,22 +74,22 @@ export const VisionSection = () => {
       id="network"
       className="relative bg-dark text-white overflow-hidden"
       style={{
-        padding: "14vh 5vh",
-        minHeight: "100vh",
-        borderTopLeftRadius: "7vh",
-        borderTopRightRadius: "7vh",
-        borderBottomLeftRadius: "7vh",
-        borderBottomRightRadius: "7vh",
-        marginTop: "-7vh",
-        marginBottom: "-7vh",
+        padding: "14svh 5svh",
+        minHeight: "100svh",
+        borderTopLeftRadius: "7svh",
+        borderTopRightRadius: "7svh",
+        borderBottomLeftRadius: "7svh",
+        borderBottomRightRadius: "7svh",
+        marginTop: "-7svh",
+        marginBottom: "-7svh",
         zIndex: 2,
       }}
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none select-none absolute top-0 right-[5vh]"
+        className="pointer-events-none select-none absolute top-0 right-[5svh]"
         style={{
-          fontSize: "40vh",
+          fontSize: "40svh",
           fontWeight: 500,
           lineHeight: 1,
           color: "#ffffff14",
@@ -98,13 +98,13 @@ export const VisionSection = () => {
         02
       </div>
 
-      <div className="relative max-w-[170vh] mx-auto">
+      <div className="relative max-w-[170svh] mx-auto">
         <p
           className="uppercase mb-4"
           style={{
-            letterSpacing: "0.3vh",
+            letterSpacing: "0.3svh",
             color: "#ffffff99",
-            fontSize: "1.8vh",
+            fontSize: "1.8svh",
             fontWeight: 500,
           }}
         >
@@ -112,14 +112,14 @@ export const VisionSection = () => {
         </p>
 
         <h2
-          className="mb-[3vh] max-w-[120vh]"
-          style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
+          className="mb-[3svh] max-w-[120svh]"
+          style={{ fontSize: "8svh", fontWeight: 700, lineHeight: 1.05 }}
         >
           Building Europe&apos;s Robotics <span className="text-brand">Network</span>.
         </h2>
         <p
-          className="mb-[8vh] max-w-[110vh]"
-          style={{ fontSize: "2.5vh", color: "#ffffff99", lineHeight: 1.5 }}
+          className="mb-[8svh] max-w-[110svh]"
+          style={{ fontSize: "2.5svh", color: "#ffffff99", lineHeight: 1.5 }}
         >
           Robotics Collective Aachen is a founding member of{" "}
           <strong className="text-brand">ESRA</strong>, the European Student
@@ -130,16 +130,16 @@ export const VisionSection = () => {
           funding access.
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[5vh] items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[5svh] items-center">
           {isDesktop && <NetworkMap markers={markers} />}
 
-          <div className="lg:col-span-3 flex flex-col gap-[2.5vh]">
+          <div className="lg:col-span-3 flex flex-col gap-[2.5svh]">
             <h3
               style={{
-                fontSize: "2.2vh",
+                fontSize: "2.2svh",
                 fontWeight: 700,
                 color: "#fff",
-                letterSpacing: "0.1vh",
+                letterSpacing: "0.1svh",
               }}
             >
               Founding Members
@@ -172,22 +172,22 @@ export const VisionSection = () => {
                     }}
                     className="flex items-center justify-between"
                     style={{
-                      padding: "1.1vh 0",
+                      padding: "1.1svh 0",
                       borderBottom: "1px solid #ffffff1f",
                       color: isHome ? "#ffffff" : "#ffffffb3",
-                      fontSize: "1.7vh",
+                      fontSize: "1.7svh",
                       fontWeight: isHome ? 700 : 500,
-                      letterSpacing: "0.02vh",
+                      letterSpacing: "0.02svh",
                     }}
                   >
-                    <span className="flex items-center" style={{ gap: "1.4vh" }}>
+                    <span className="flex items-center" style={{ gap: "1.4svh" }}>
                       <span
                         style={{
-                          fontSize: "1.2vh",
+                          fontSize: "1.2svh",
                           fontWeight: 500,
                           color: isHome ? "#ffffff" : "#ffffff55",
                           fontVariantNumeric: "tabular-nums",
-                          minWidth: "2.4vh",
+                          minWidth: "2.4svh",
                         }}
                       >
                         {String(i + 1).padStart(2, "0")}
@@ -197,10 +197,10 @@ export const VisionSection = () => {
                         {org.city && (
                           <span
                             style={{
-                              fontSize: "1.1vh",
+                              fontSize: "1.1svh",
                               fontWeight: 500,
                               color: "#ffffff66",
-                              letterSpacing: "0.05vh",
+                              letterSpacing: "0.05svh",
                               textTransform: "uppercase",
                             }}
                           >
@@ -213,11 +213,11 @@ export const VisionSection = () => {
                       <span
                         aria-label="Your organization"
                         style={{
-                          width: "0.9vh",
-                          height: "0.9vh",
+                          width: "0.9svh",
+                          height: "0.9svh",
                           borderRadius: "50%",
                           backgroundColor: "#22c55e",
-                          boxShadow: "0 0 0 0.4vh #22c55e33",
+                          boxShadow: "0 0 0 0.4svh #22c55e33",
                         }}
                       />
                     )}
@@ -230,7 +230,7 @@ export const VisionSection = () => {
               href="https://www.linkedin.com/feed/update/urn:li:activity:7385056010165448704"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline-pill mt-[1vh] w-fit"
+              className="btn-outline-pill mt-[1svh] w-fit"
             >
               Read the launch announcement
             </a>

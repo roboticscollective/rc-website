@@ -8,10 +8,10 @@ export const HeroSection = () => {
       style={{
         minHeight: "100svh",
         padding:
-          "clamp(7rem, 16vh, 14rem) clamp(1.5rem, 7vh, 6rem) clamp(4rem, 8vh, 8rem)",
+          "clamp(7rem, 16svh, 14rem) clamp(1.5rem, 7svh, 6rem) clamp(4rem, 8svh, 8rem)",
         backgroundColor: "#0d0d0d",
-        borderBottomLeftRadius: "4vh",
-        borderBottomRightRadius: "4vh",
+        borderBottomLeftRadius: "4svh",
+        borderBottomRightRadius: "4svh",
       }}
     >
       {/* Looped video — centered card behind the hero content */}
@@ -19,9 +19,9 @@ export const HeroSection = () => {
         aria-hidden="true"
         className="hidden md:block pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         style={{
-          width: "min(88%, 160vh)",
-          height: "min(80%, 80vh)",
-          borderRadius: "3vh",
+          width: "min(88%, 160svh)",
+          height: "min(80%, 80svh)",
+          borderRadius: "3svh",
           overflow: "hidden",
           boxShadow:
             "inset 0 0 0 1px #ffffff14, 0 0 80px -20px #47A8BD33",
@@ -59,14 +59,14 @@ export const HeroSection = () => {
         />
       </div>
 
-      <div className="relative z-10 w-full max-w-[140vh] pointer-events-none text-left">
+      <div className="relative z-10 w-full max-w-[140svh] pointer-events-none text-left">
         <h1
           className="text-white"
           style={{
-            fontSize: "clamp(3rem, min(9vh, 11vw), 6.5rem)",
+            fontSize: "clamp(3rem, min(9svh, 11vw), 6.5rem)",
             fontWeight: 800,
             lineHeight: 1.05,
-            marginBottom: "3vh",
+            marginBottom: "3svh",
           }}
         >
           Together, we shape the{" "}
@@ -74,11 +74,11 @@ export const HeroSection = () => {
         </h1>
         <p
           style={{
-            fontSize: "clamp(1.15rem, min(2.5vh, 4.4vw), 1.75rem)",
+            fontSize: "clamp(1.15rem, min(2.5svh, 4.4vw), 1.75rem)",
             fontWeight: 500,
             lineHeight: 1.4,
-            maxWidth: "70vh",
-            marginBottom: "4vh",
+            maxWidth: "70svh",
+            marginBottom: "4svh",
             color: "#ffffffcc",
           }}
         >
@@ -92,10 +92,10 @@ export const HeroSection = () => {
           rel="noopener noreferrer"
           className="btn-ghost pointer-events-auto"
           style={{
-            fontSize: "clamp(0.65rem, 1.5vh, 0.95rem)",
+            fontSize: "clamp(0.65rem, 1.5svh, 0.95rem)",
             fontWeight: 800,
             padding:
-              "clamp(0.5rem, 1.6vh, 1rem) clamp(1.1rem, 3.5vh, 2.25rem)",
+              "clamp(0.5rem, 1.6svh, 1rem) clamp(1.1rem, 3.5svh, 2.25rem)",
           }}
         >
           Apply Now

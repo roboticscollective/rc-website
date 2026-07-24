@@ -7,7 +7,7 @@ import { useConsent } from "@/contexts/ConsentContext";
 
 const XIcon = () => (
   <svg
-    style={{ width: "2.5vh", height: "2.5vh" }}
+    style={{ width: "2.5svh", height: "2.5svh" }}
     fill="currentColor"
     viewBox="0 0 50 50"
     aria-hidden="true"
@@ -18,7 +18,7 @@ const XIcon = () => (
 
 const LinkedInIcon = () => (
   <svg
-    style={{ width: "2.5vh", height: "2.5vh" }}
+    style={{ width: "2.5svh", height: "2.5svh" }}
     fill="currentColor"
     viewBox="0 0 50 50"
     aria-hidden="true"
@@ -33,21 +33,21 @@ export function Footer() {
   return (
     <footer
       className="bg-dark text-white overflow-hidden"
-      style={{ padding: "8vh 5vh 4vh" }}
+      style={{ padding: "8svh 5svh 4svh" }}
     >
-      <div className="max-w-[180vh] mx-auto">
-        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-[4vh] mb-[6vh]">
+      <div className="max-w-[180svh] mx-auto">
+        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-[4svh] mb-[6svh]">
           <Link href="/" className="flex items-center" aria-label="Robotics Collective Aachen home">
             <Image
               src="/logo.svg"
               alt="Robotics Collective Aachen"
               width={64}
               height={64}
-              style={{ height: "6vh", width: "auto", filter: "brightness(0) invert(1)" }}
+              style={{ height: "6svh", width: "auto", filter: "brightness(0) invert(1)" }}
             />
           </Link>
 
-          <nav className="flex flex-col lg:flex-row gap-[2vh] lg:gap-[3vh] text-left lg:text-right">
+          <nav className="flex flex-col lg:flex-row gap-[2svh] lg:gap-[3svh] text-left lg:text-right">
             <a href="#about" className="text-h5 hover:opacity-70 transition-opacity">
               About
             </a>
@@ -64,10 +64,10 @@ export function Footer() {
         </div>
 
         <div
-          className="border-t border-white-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-[2vh]"
-          style={{ paddingTop: "3vh" }}
+          className="border-t border-white-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-[2svh]"
+          style={{ paddingTop: "3svh" }}
         >
-          <div className="flex gap-[1.5vh]">
+          <div className="flex gap-[1.5svh]">
             <a
               href="https://x.com/robocollectiv"
               target="_blank"
@@ -84,7 +84,7 @@ export function Footer() {
               className="hover:opacity-70 transition-opacity"
               aria-label="Instagram"
             >
-              <Instagram style={{ width: "2.5vh", height: "2.5vh" }} />
+              <Instagram style={{ width: "2.5svh", height: "2.5svh" }} />
             </a>
             <a
               href="https://github.com/roboticscollective"
@@ -93,7 +93,7 @@ export function Footer() {
               className="hover:opacity-70 transition-opacity"
               aria-label="GitHub"
             >
-              <Github style={{ width: "2.5vh", height: "2.5vh" }} />
+              <Github style={{ width: "2.5svh", height: "2.5svh" }} />
             </a>
             <a
               href="https://www.linkedin.com/company/roboticscollective/"
@@ -110,7 +110,7 @@ export function Footer() {
             © {new Date().getFullYear()} Robotics Collective Aachen. All rights reserved.
           </p>
 
-          <div className="flex gap-[2vh] text-small" style={{ color: "#ffffff99" }}>
+          <div className="flex gap-[2svh] text-small" style={{ color: "#ffffff99" }}>
             <Link href="/privacy" className="hover:text-white transition-colors">
               Privacy
             </Link>

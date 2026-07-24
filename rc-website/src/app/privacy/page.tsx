@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-light text-dark" style={{ paddingTop: "12vh" }}>
-      <div style={{ padding: "5vh" }}>
-        <div className="max-w-[120vh] mx-auto">
+    <div className="min-h-svh bg-light text-dark" style={{ paddingTop: "12svh" }}>
+      <div style={{ padding: "5svh" }}>
+        <div className="max-w-[120svh] mx-auto">
           <h1 className="text-h2 mb-12">Privacy Policy</h1>
 
           <section className="mb-16">
