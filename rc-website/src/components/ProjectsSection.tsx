@@ -35,7 +35,7 @@ export const ProjectsSection = () => {
             fontWeight: 500,
           }}
         >
-          03 — Behind the Build
+          03 · Behind the Build
         </p>
         <h2
           className="mb-[6vh] max-w-[100vh]"

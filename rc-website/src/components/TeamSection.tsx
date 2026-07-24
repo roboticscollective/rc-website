@@ -41,7 +41,7 @@ export const TeamSection = () => {
             fontWeight: 500,
           }}
         >
-          05 — Team
+          05 · Team
         </p>
         <h2
           className="mb-[3vh] max-w-[110vh]"

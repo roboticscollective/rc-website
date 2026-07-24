@@ -31,13 +31,13 @@ const defaultItems: FAQItem[] = [
     id: "need-experience",
     question: "Do I need technical experience to join?",
     answer:
-      "Not at all. We welcome everyone from curious beginners to experienced roboticists. Beyond the technical side, skills in organization, marketing, and partnership management are essential to keeping things running and growing — so if that's your strength, we'd love to have you on board.",
+      "Not at all. We welcome everyone from curious beginners to experienced roboticists. Beyond the technical side, skills in organization, marketing, and partnership management are essential to keeping things running and growing, so if that's your strength, we'd love to have you on board.",
   },
   {
     id: "project-types",
     question: "What types of projects do you incubate?",
     answer:
-      "We work on all kinds of projects that push embodied AI forward — mobile robots, machine learning for perception, mechanical design, and human-robot interaction. From building something new to improving existing systems. We also encourage everyone to explore their own ideas, with the support and inspiration of the community.",
+      "We work on all kinds of projects that push embodied AI forward: mobile robots, machine learning for perception, mechanical design, and human-robot interaction. From building something new to improving existing systems. We also encourage everyone to explore their own ideas, with the support and inspiration of the community.",
   },
   {
     id: "events",
@@ -83,7 +83,7 @@ export const FAQSection = ({ items = defaultItems }: { items?: FAQItem[] }) => {
             fontWeight: 500,
           }}
         >
-          04 — FAQ
+          04 · FAQ
         </p>
         <h2
           className="mb-[6vh]"
