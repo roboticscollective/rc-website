@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 
 export default function ImprintPage() {
   return (
-    <div className="min-h-screen bg-light text-dark" style={{ paddingTop: "12vh" }}>
-      <div style={{ padding: "5vh" }}>
-        <div className="max-w-[120vh] mx-auto">
+    <div className="min-h-svh bg-light text-dark" style={{ paddingTop: "12svh" }}>
+      <div style={{ padding: "5svh" }}>
+        <div className="max-w-[120svh] mx-auto">
           <h1 className="text-h2 mb-12">Imprint / Legal Notice</h1>
 
           <section>

@@ -7,22 +7,22 @@ export const TeamSection = () => {
       id="team"
       className="relative bg-dark text-white overflow-hidden"
       style={{
-        padding: "14vh 5vh",
-        minHeight: "100vh",
-        borderTopLeftRadius: "7vh",
-        borderTopRightRadius: "7vh",
-        borderBottomLeftRadius: "7vh",
-        borderBottomRightRadius: "7vh",
-        marginTop: "-7vh",
-        marginBottom: "-7vh",
+        padding: "14svh 5svh",
+        minHeight: "100svh",
+        borderTopLeftRadius: "7svh",
+        borderTopRightRadius: "7svh",
+        borderBottomLeftRadius: "7svh",
+        borderBottomRightRadius: "7svh",
+        marginTop: "-7svh",
+        marginBottom: "-7svh",
         zIndex: 2,
       }}
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none select-none absolute top-0 right-[5vh]"
+        className="pointer-events-none select-none absolute top-0 right-[5svh]"
         style={{
-          fontSize: "40vh",
+          fontSize: "40svh",
           fontWeight: 500,
           lineHeight: 1,
           color: "#ffffff14",
@@ -31,27 +31,27 @@ export const TeamSection = () => {
         05
       </div>
 
-      <div className="relative max-w-[150vh] mx-auto">
+      <div className="relative max-w-[150svh] mx-auto">
         <p
           className="uppercase mb-4"
           style={{
-            letterSpacing: "0.3vh",
+            letterSpacing: "0.3svh",
             color: "#ffffff99",
-            fontSize: "1.8vh",
+            fontSize: "1.8svh",
             fontWeight: 500,
           }}
         >
           05 · Team
         </p>
         <h2
-          className="mb-[3vh] max-w-[110vh]"
-          style={{ fontSize: "8vh", fontWeight: 700, lineHeight: 1.05 }}
+          className="mb-[3svh] max-w-[110svh]"
+          style={{ fontSize: "8svh", fontWeight: 700, lineHeight: 1.05 }}
         >
           The People Behind the <span className="text-brand">Collective</span>.
         </h2>
         <p
-          className="mb-[8vh] max-w-[100vh]"
-          style={{ fontSize: "2.5vh", color: "#ffffff99", lineHeight: 1.4 }}
+          className="mb-[8svh] max-w-[100svh]"
+          style={{ fontSize: "2.5svh", color: "#ffffff99", lineHeight: 1.4 }}
         >
           Our mission is to accelerate robotics adoption and the development of
           intelligent systems that interact harmoniously with humans and their
@@ -59,9 +59,9 @@ export const TeamSection = () => {
         </p>
 
         <h3
-          className="mb-[4vh]"
+          className="mb-[4svh]"
           style={{
-            fontSize: "3vh",
+            fontSize: "3svh",
             fontWeight: 700,
             color: "#fff",
           }}
@@ -69,9 +69,9 @@ export const TeamSection = () => {
           Leadership
         </h3>
         <div
-          className="grid gap-[4vh] mb-[12vh]"
+          className="grid gap-[4svh] mb-[12svh]"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(24vh, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(24svh, 1fr))",
           }}
         >
           {leadership.map((m) => (
@@ -80,29 +80,29 @@ export const TeamSection = () => {
         </div>
 
         <h3
-          className="mb-[4vh]"
-          style={{ fontSize: "3vh", fontWeight: 700, color: "#fff" }}
+          className="mb-[4svh]"
+          style={{ fontSize: "3svh", fontWeight: 700, color: "#fff" }}
         >
           Partners
         </h3>
         <div
-          className="grid items-center gap-x-[6vh] gap-y-[4vh]"
+          className="grid items-center gap-x-[6svh] gap-y-[4svh]"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(16vh, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(16svh, 1fr))",
           }}
         >
           {partners.map((p) => (
             <div
               key={p.name}
               className="flex items-center justify-center"
-              style={{ height: "8vh" }}
+              style={{ height: "8svh" }}
             >
               {p.wordmark ? (
                 <span
                   className="group inline-flex items-baseline gap-[0.05em] font-medium leading-none text-white"
                   style={{
                     fontFamily: "'Afacad', 'Inter', ui-sans-serif, sans-serif",
-                    fontSize: "3.4vh",
+                    fontSize: "3.4svh",
                     letterSpacing: "-0.035em",
                   }}
                 >
@@ -140,23 +140,23 @@ function MemberCard({ member }: { member: TeamMember }) {
       <div
         className="relative overflow-hidden bg-white-10"
         style={{
-          width: "18vh",
-          height: "18vh",
+          width: "18svh",
+          height: "18svh",
           borderRadius: "50%",
-          marginBottom: "2vh",
+          marginBottom: "2svh",
         }}
       >
         <Image
           src={member.image}
           alt={member.name}
           fill
-          sizes="20vh"
+          sizes="20svh"
           className="object-cover"
         />
       </div>
-      <div style={{ fontSize: "2.4vh", fontWeight: 700 }}>{member.name}</div>
+      <div style={{ fontSize: "2.4svh", fontWeight: 700 }}>{member.name}</div>
       <div
-        style={{ fontSize: "1.7vh", color: "#ffffff99", marginTop: "0.4vh" }}
+        style={{ fontSize: "1.7svh", color: "#ffffff99", marginTop: "0.4svh" }}
       >
         {member.role}
       </div>

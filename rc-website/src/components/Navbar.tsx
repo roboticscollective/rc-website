@@ -59,22 +59,22 @@ export function Navbar() {
         className={`hidden lg:block fixed top-0 left-0 right-0 z-40 ${
           scrolled ? "" : ""
         }`}
-        style={{ padding: "2vh 5vh" }}
+        style={{ padding: "2svh 5svh" }}
       >
         <nav
           className={`transition-all duration-200 ${
             scrolled ? "bg-white/95 backdrop-blur-sm mx-auto" : "bg-transparent"
           }`}
           style={{
-            padding: scrolled ? "0.8vh 1.6vh" : "0",
-            borderRadius: scrolled ? "1.5vh" : "0",
+            padding: scrolled ? "0.8svh 1.6svh" : "0",
+            borderRadius: scrolled ? "1.5svh" : "0",
             boxShadow: scrolled ? "0 1px 2px rgba(0,0,0,0.06)" : "none",
             maxWidth: scrolled ? "fit-content" : "100%",
           }}
         >
           <div
             className="flex items-center justify-between"
-            style={{ gap: "3vh" }}
+            style={{ gap: "3svh" }}
           >
             <Link
               href="/"
@@ -86,15 +86,15 @@ export function Navbar() {
                 alt="Robotics Collective Aachen"
                 width={48}
                 height={48}
-                className="h-[4vh] w-auto transition-all duration-300"
+                className="h-[4svh] w-auto transition-all duration-300"
                 priority
               />
             </Link>
 
-            <div className="flex items-center" style={{ gap: "1.5vh" }}>
+            <div className="flex items-center" style={{ gap: "1.5svh" }}>
               {navLinks.map((link) => (
                 <a key={link.num} href={link.href} className={pillClass}>
-                  <span style={{ marginRight: "1.5vh", fontWeight: 500 }}>
+                  <span style={{ marginRight: "1.5svh", fontWeight: 500 }}>
                     {link.num}
                   </span>
                   {link.label}
@@ -105,7 +105,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={pillClass}
-                style={{ padding: "1vh 4vh" }}
+                style={{ padding: "1svh 4svh" }}
               >
                 Join us
               </a>
@@ -118,7 +118,7 @@ export function Navbar() {
       <div
         className="lg:hidden fixed top-0 left-0 right-0 z-40 flex justify-center pointer-events-none transition-all duration-300"
         style={{
-          padding: "1.8vh 1.5rem",
+          padding: "1.8svh 1.5rem",
           transform: mobileVisible ? "translateY(0)" : "translateY(-150%)",
           opacity: mobileVisible ? 1 : 0,
         }}
@@ -188,7 +188,7 @@ export function Navbar() {
       >
         <div
           className="flex flex-col h-full w-full"
-          style={{ padding: "1.8vh 1.5rem 3rem" }}
+          style={{ padding: "1.8svh 1.5rem 3rem" }}
         >
           <div className="flex items-center justify-between">
             <Link

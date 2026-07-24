@@ -10,11 +10,11 @@ export const CookieConsentBanner: React.FC = () => {
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-[70] bg-dark text-white border-t border-white-10"
-      style={{ padding: "2vh 5vh" }}
+      style={{ padding: "2svh 5svh" }}
       role="dialog"
       aria-live="polite"
     >
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 max-w-[150vh] mx-auto">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 max-w-[150svh] mx-auto">
         <p className="text-small text-white/70 flex-1">
           We use cookies to analyze website traffic and improve your experience.
           See our{" "}

@@ -71,17 +71,17 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        "vh-sm": "1vh",
-        "vh-md": "3vh",
-        "vh-lg": "4vh",
-        "vh-pill": "5vh",
+        "vh-sm": "1svh",
+        "vh-md": "3svh",
+        "vh-lg": "4svh",
+        "vh-pill": "5svh",
       },
       fontFamily: {
         satoshi: ["var(--font-satoshi)", ...fontFamily.sans],
         sans: ["var(--font-satoshi)", ...fontFamily.sans],
       },
       letterSpacing: {
-        btn: "0.5vh",
+        btn: "0.5svh",
       },
       keyframes: {
         "accordion-down": {
