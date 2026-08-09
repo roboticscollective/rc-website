@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Github, Instagram } from "lucide-react";
 import { useConsent } from "@/contexts/ConsentContext";
 
@@ -29,6 +30,11 @@ const LinkedInIcon = () => (
 
 export function Footer() {
   const { resetConsent } = useConsent();
+  const pathname = usePathname();
+
+  // Bare hashes only resolve on the landing page — see the same note in Navbar.
+  const sectionHref = (hash: string) =>
+    pathname === "/" ? hash : `/${hash}`;
 
   return (
     <footer
@@ -48,16 +54,31 @@ export function Footer() {
           </Link>
 
           <nav className="flex flex-col lg:flex-row gap-[2svh] lg:gap-[3svh] text-left lg:text-right">
-            <a href="#about" className="text-h5 hover:opacity-70 transition-opacity">
+            <a
+              href={sectionHref("#about")}
+              className="text-h5 hover:opacity-70 transition-opacity"
+            >
               About
             </a>
-            <a href="#network" className="text-h5 hover:opacity-70 transition-opacity">
+            <a
+              href={sectionHref("#network")}
+              className="text-h5 hover:opacity-70 transition-opacity"
+            >
               Network
             </a>
-            <a href="#projects" className="text-h5 hover:opacity-70 transition-opacity">
+            <a
+              href={sectionHref("#projects")}
+              className="text-h5 hover:opacity-70 transition-opacity"
+            >
               Projects
             </a>
-            <a href="#team" className="text-h5 hover:opacity-70 transition-opacity">
+            <Link href="/events" className="text-h5 hover:opacity-70 transition-opacity">
+              Events
+            </Link>
+            <a
+              href={sectionHref("#team")}
+              className="text-h5 hover:opacity-70 transition-opacity"
+            >
               Team
             </a>
           </nav>

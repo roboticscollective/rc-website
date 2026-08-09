@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-09T00:00:00.000Z",
+  "title": "Design System: Robotics Collective Aachen",
+  "extensions": {
+    "colorMeta": {
+      "brand-teal": {
+        "role": "primary",
+        "displayName": "Signal Teal",
+        "canonical": "#47A8BD",
+        "tonalRamp": [
+          "#0b1a1f",
+          "#12303a",
+          "#1a4855",
+          "#236171",
+          "#2d7b8e",
+          "#47A8BD",
+          "#7cc4d3",
+          "#c2e4eb"
+        ]
+      },
+      "dark": {
+        "role": "neutral",
+        "displayName": "Ink Black",
+        "canonical": "#0d0d0d",
+        "tonalRamp": [
+          "#000000",
+          "#0d0d0d",
+          "#1f1f1f",
+          "#333333",
+          "#5c5c5c",
+          "#8a8a8a",
+          "#bdbdbd",
+          "#ebebeb"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Raised Black",
+        "canonical": "#161616",
+        "tonalRamp": [
+          "#000000",
+          "#0d0d0d",
+          "#161616",
+          "#2b2b2b",
+          "#4d4d4d",
+          "#7a7a7a",
+          "#b0b0b0",
+          "#e0e0e0"
+        ]
+      },
+      "light": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#ebebeb",
+        "tonalRamp": [
+          "#1a1a1a",
+          "#333333",
+          "#4d4d4d",
+          "#787878",
+          "#a3a3a3",
+          "#d8d8d8",
+          "#ebebeb",
+          "#f7f7f7"
+        ]
+      },
+      "gray-mid": {
+        "role": "neutral",
+        "displayName": "Rule Grey",
+        "canonical": "#d8d8d8",
+        "tonalRamp": [
+          "#212121",
+          "#3d3d3d",
+          "#5c5c5c",
+          "#828282",
+          "#a8a8a8",
+          "#c4c4c4",
+          "#d8d8d8",
+          "#f0f0f0"
+        ]
+      },
+      "gray-text": {
+        "role": "neutral",
+        "displayName": "Body Grey",
+        "canonical": "#333333",
+        "tonalRamp": [
+          "#0a0a0a",
+          "#1a1a1a",
+          "#333333",
+          "#4f4f4f",
+          "#737373",
+          "#9e9e9e",
+          "#c7c7c7",
+          "#ededed"
+        ]
+      },
+      "gray-quiet": {
+        "role": "neutral",
+        "displayName": "Quiet Grey",
+        "canonical": "#666666",
+        "tonalRamp": [
+          "#141414",
+          "#292929",
+          "#3d3d3d",
+          "#525252",
+          "#666666",
+          "#949494",
+          "#c2c2c2",
+          "#ebebeb"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only. One per page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings, sentence case, never title case."
+      },
+      "numeral": {
+        "displayName": "Giant Numeral",
+        "purpose": "Decorative section figure, top-right, aria-hidden, allowed to clip."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card headings and plate captions."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running copy, 65-75ch measure."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Section eyebrows in the form 'XX · Section Name', captions, metadata."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "All button faces. Uppercase with wide tracking."
+      }
+    },
+    "shadows": [
+      {
+        "name": "nav-lift",
+        "value": "0 1px 2px rgba(0,0,0,0.06)",
+        "purpose": "Separates the scrolled desktop navbar from content beneath it. Barely perceptible by design."
+      },
+      {
+        "name": "floating-pill-light",
+        "value": "0 2px 12px rgba(0,0,0,0.08)",
+        "purpose": "Mobile nav pill over light content."
+      },
+      {
+        "name": "floating-pill-dark",
+        "value": "0 2px 14px rgba(0,0,0,0.25)",
+        "purpose": "Mobile nav pill over the dark hero."
+      },
+      {
+        "name": "hero-plate-glow",
+        "value": "inset 0 0 0 1px #ffffff14, 0 0 80px -20px #47A8BD33",
+        "purpose": "The only decorative shadow in the system, and the only place brand glow appears."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hover-scale",
+        "value": "transform 0.2s; scale(1.03) on pills and cards, scale(1.05) on solid buttons",
+        "purpose": "The system's single repeated interaction idiom."
+      },
+      {
+        "name": "ease-editorial",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "In-view entrance for staggered list items, 0.3s duration."
+      },
+      {
+        "name": "stagger-list",
+        "value": "0.04s between children, once, viewport margin -80px",
+        "purpose": "Founding-member and credit lists entering on scroll."
+      },
+      {
+        "name": "accordion",
+        "value": "0.3s ease-out",
+        "purpose": "FAQ accordion open/close."
+      }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Primary action on dark grounds. Used for the hero CTA.",
+      "html": "<button class=\"ds-btn-ghost\">Apply Now</button>",
+      "css": ".ds-btn-ghost { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; color: #fff; background-color: rgba(255,255,255,0.1); border: none; border-radius: 1svh; padding: 2svh 5svh; font-size: 1.6svh; font-weight: 700; letter-spacing: 0.5svh; text-transform: uppercase; cursor: pointer; transition: background-color 0.2s, transform 0.2s; } .ds-btn-ghost:hover { background-color: rgba(255,255,255,0.15); transform: scale(1.05); } .ds-btn-ghost:focus-visible { outline: 2px solid #47A8BD; outline-offset: 3px; }"
+    },
+    {
+      "name": "Solid Dark Button",
+      "kind": "button",
+      "refersTo": "button-solid-dark",
+      "description": "Primary action on light grounds.",
+      "html": "<button class=\"ds-btn-solid-dark\">Join Us</button>",
+      "css": ".ds-btn-solid-dark { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; color: #fff; background-color: #0d0d0d; border: none; border-radius: 1svh; padding: 2svh 5svh; font-size: 1.6svh; font-weight: 700; letter-spacing: 0.5svh; text-transform: uppercase; cursor: pointer; transition: transform 0.2s; } .ds-btn-solid-dark:hover { transform: scale(1.05); } .ds-btn-solid-dark:focus-visible { outline: 2px solid #47A8BD; outline-offset: 3px; }"
+    },
+    {
+      "name": "Outline Pill",
+      "kind": "nav",
+      "refersTo": "button-outline-pill",
+      "description": "Navigation link on dark grounds. Inverts completely on hover.",
+      "html": "<a class=\"ds-pill\" href=\"#about\"><span class=\"ds-pill-num\">01</span>About</a>",
+      "css": ".ds-pill { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; color: #fff; background-color: transparent; border: 2px solid #fff; border-radius: 2.5svh; padding: 0.6svh 2svh; font-size: 2svh; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; transition: color 0.2s, background-color 0.2s, transform 0.2s; } .ds-pill-num { margin-right: 1.5svh; font-weight: 500; } .ds-pill:hover { color: #0d0d0d; background-color: #fff; transform: scale(1.03); } .ds-pill:focus-visible { outline: 2px solid #47A8BD; outline-offset: 3px; }"
+    },
+    {
+      "name": "Outline Pill (Light Ground)",
+      "kind": "nav",
+      "refersTo": "button-outline-pill-dark",
+      "description": "Same pill inverted for the scrolled navbar and light sections.",
+      "html": "<a class=\"ds-pill-dark\" href=\"/events\">Events</a>",
+      "css": ".ds-pill-dark { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; color: #0d0d0d; background-color: transparent; border: 2px solid #0d0d0d; border-radius: 2.5svh; padding: 0.6svh 2svh; font-size: 2svh; font-weight: 500; display: inline-flex; align-items: center; text-decoration: none; transition: color 0.2s, background-color 0.2s, transform 0.2s; } .ds-pill-dark:hover { color: #fff; background-color: #0d0d0d; transform: scale(1.03); } .ds-pill-dark:focus-visible { outline: 2px solid #47A8BD; outline-offset: 3px; }"
+    },
+    {
+      "name": "Dark Plate Card",
+      "kind": "card",
+      "refersTo": "card-dark",
+      "description": "The system's core container: a dark rounded plate on a light ground, with any photograph held behind a gradient.",
+      "html": "<div class=\"ds-plate\"><p class=\"ds-plate-caption\">Since 2023, uniting passionate minds to shape the <span class=\"ds-accent\">future of robotics</span>.</p></div>",
+      "css": ".ds-plate { position: relative; overflow: hidden; background-color: #0d0d0d; background-image: linear-gradient(transparent 40%, #0d0d0de6 100%); color: #fff; border-radius: 3svh; padding: 5svh; min-height: 55svh; display: flex; flex-direction: column; justify-content: flex-end; transition: transform 0.2s; } .ds-plate:hover { transform: scale(1.02); } .ds-plate-caption { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; font-size: 3svh; font-weight: 500; line-height: 1.3; max-width: 40svh; margin: 0; } .ds-accent { color: #47A8BD; }"
+    },
+    {
+      "name": "Section Eyebrow",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Uppercase index label opening every landing section, paired with the giant corner numeral.",
+      "html": "<p class=\"ds-eyebrow\">01 &middot; About the Collective</p>",
+      "css": ".ds-eyebrow { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.3svh; color: #666666; font-size: 1.8svh; font-weight: 500; margin: 0; }"
+    },
+    {
+      "name": "Giant Section Numeral",
+      "kind": "custom",
+      "refersTo": "numeral",
+      "description": "Decorative index figure, absolutely positioned top-right at 5svh inset, allowed to clip at the section edge.",
+      "html": "<div class=\"ds-giant-numeral\" aria-hidden=\"true\">03</div>",
+      "css": ".ds-giant-numeral { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; position: absolute; top: 0; right: 5svh; pointer-events: none; user-select: none; font-size: 40svh; font-weight: 500; line-height: 1; color: #d8d8d8; }"
+    },
+    {
+      "name": "Events Timetable Row",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Editorial listing pattern beneath the hero: hairline rule, eyebrow opposite an action, large tabular date against a two-line title. No container.",
+      "html": "<a class=\"ds-timetable\" href=\"/events\"><div class=\"ds-timetable-head\"><span class=\"ds-timetable-eyebrow\">Upcoming</span><span class=\"ds-timetable-action\">All events &rarr;</span></div><div class=\"ds-timetable-row\"><span class=\"ds-timetable-date\">13.08</span><span><span class=\"ds-timetable-title\">Robotics Happy Hour</span><span class=\"ds-timetable-sub\">Brunch &amp; Bring Your Own Robots</span><span class=\"ds-timetable-meta\">11:00 - 14:00 (open end) &middot; Campus-Boulevard 55, Aachen</span></span></div></a>",
+      "css": ".ds-timetable { font-family: Satoshi, ui-sans-serif, system-ui, sans-serif; display: block; color: #0d0d0d; text-decoration: none; padding: 5svh 0; border-bottom: 1px solid #0d0d0d1f; } .ds-timetable-head { display: flex; align-items: baseline; justify-content: space-between; gap: 2svh; margin-bottom: 3svh; } .ds-timetable-eyebrow, .ds-timetable-action { text-transform: uppercase; letter-spacing: 0.3svh; font-size: 1.8svh; font-weight: 500; } .ds-timetable-eyebrow { color: #666666; } .ds-timetable-row { display: flex; align-items: baseline; gap: 4svh; } .ds-timetable-date { font-size: 8svh; font-weight: 700; line-height: 0.95; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; transition: color 0.2s; } .ds-timetable:hover .ds-timetable-date { color: #47A8BD; } .ds-timetable-title, .ds-timetable-sub { display: block; font-size: 3svh; font-weight: 500; line-height: 1.25; } .ds-timetable-sub { color: #8a8a8a; } .ds-timetable-meta { display: block; font-size: 1.8svh; color: #666666; margin-top: 1.5svh; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Robotics Broadsheet",
+    "overview": "This is a Swiss editorial system, and the lineage is literal rather than aspirational: the vocabulary descends from the ETH Robotics Club style guide. It behaves like a printed broadsheet that happens to scroll. Sections are numbered like an index. Type carries the structure. Photography is always subordinated to a dark plate. There is exactly one chromatic value in the entire palette, and everything else is greyscale.\n\nThe defining move is that scale is bound to the viewport, not to the page. Type, radii, padding and the container itself are expressed in svh, so the composition holds its proportions on a laptop and a projector alike. The consequence is that this system has almost no breakpoints; it re-proportions continuously instead of stepping. Where mobile would otherwise collapse the hierarchy, clamp() supplies a rem floor rather than a media query.\n\nThe density is generous and confident. Sections are full-viewport with heavy vertical padding, headings are enormous, and the giant decorative numeral in each section's top-right corner is set at 40svh and allowed to bleed. Nothing apologizes for its size. The register is plain and slightly scrappy - the organization it represents describes its own robots as held together by duct tape and optimism, and the design should never be more polished than that.",
+    "keyCharacteristics": [
+      "Two tones (#0d0d0d, #ebebeb) alternating section to section, with one teal accent",
+      "Viewport-relative sizing throughout; svh, not px, not vh",
+      "Numerals as structure: numbered nav, numbered eyebrows, giant corner figures",
+      "Dark rounded plates that overlap their neighbors via negative margins",
+      "Flat by default; depth comes from tone, not shadow",
+      "scale(1.03-1.05) on hover as the only repeated interaction"
+    ],
+    "rules": [
+      {
+        "name": "The One Accent Rule",
+        "body": "Teal is the system's only color; treat it as a scarce resource. Current practice is roughly one accented element per section - a single emphasized word in the heading, or one status marker. A section with two teal moments is already over budget. (Derived from the incumbent implementation; not yet ratified as intent.)",
+        "section": "colors"
+      },
+      {
+        "name": "The Plate Rule",
+        "body": "Photography never touches the page directly. Every image sits inside a dark plate under a gradient (linear-gradient(transparent 40%, #0d0d0de6 100%) or equivalent), so text over it is always white on near-black. A light image used as a backdrop for white text is a defect, not a variation.",
+        "section": "colors"
+      },
+      {
+        "name": "The svh Rule",
+        "body": "Type is sized in svh, never px and never vh. svh is load-bearing: plain vh re-resolves when mobile browser chrome collapses, which caused a real layout-jump bug on iOS. Where mobile would shrink type past legibility, wrap in clamp() with a rem floor - clamp(1rem, 2svh, 1.4rem) - rather than introducing a breakpoint.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Face Rule",
+        "body": "Satoshi does every job. A second family is not a stylistic choice available to this system, and monospace in particular is banned as a signifier of 'technical.'",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Ground Rule",
+        "body": "Surfaces are flat at rest. If a new element needs to feel raised, change its tone (#0d0d0d to #161616) or give it a radius, not a shadow. A shadow is only justified when the element physically floats over scrolling content.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do size type, radii and spacing in svh, with clamp() and a rem floor where mobile legibility demands it.",
+      "Do keep teal to roughly one moment per section.",
+      "Do put every photograph inside a dark plate under a gradient overlay.",
+      "Do convey elevation with tone (#0d0d0d to #161616) and radius rather than shadow.",
+      "Do use scale(1.03-1.05) at 200ms as the hover response; it is the system's single interaction idiom.",
+      "Do stagger in-view list entries at 40ms with cubic-bezier(0.23, 1, 0.32, 1).",
+      "Do set section headings in sentence case at 8svh/700.",
+      "Do treat the landing section IDs as a fixed contract."
+    ],
+    "donts": [
+      "Don't reach for the generic startup-SaaS register: gradient text, floating glass cards, three-up icon-and-heading feature grids, or hero-metric stat rows. This is the system's primary anti-reference.",
+      "Don't go neon-cyberpunk - electric glow, circuit motifs, HUD framing, monospace as a 'technical' costume. The subject is robotics; the design must not illustrate it literally.",
+      "Don't go consumer-app-playful: pastel blobs, emoji as icons, illustration, or bouncy spring motion.",
+      "Don't introduce a second typeface, or any monospace.",
+      "Don't introduce a second accent color. Green appears in exactly one place (a #22c55e 'you are here' dot in the network list) and should not be generalized into a semantic palette.",
+      "Don't use plain vh - it re-resolves when mobile browser chrome moves and causes visible layout jumps. svh only.",
+      "Don't add box-shadow to a surface that does not physically float over scrolling content.",
+      "Don't add breakpoints where clamp() or svh re-proportioning would do the job.",
+      "Don't number anything outside the landing page's 01-05 sequence; the numbers carry index meaning, not decoration."
+    ]
+  }
+}
