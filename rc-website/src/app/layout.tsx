@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Providers } from "./providers";
 import { ConsentProvider } from "@/contexts/ConsentContext";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
-import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
 const satoshi = localFont({
   src: [
@@ -50,14 +48,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={satoshi.variable}>
-      <head>
-        {GA_MEASUREMENT_ID && (
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
-          />
-        )}
-      </head>
       <body className="font-satoshi">
         <ConsentProvider>
           <Providers>
