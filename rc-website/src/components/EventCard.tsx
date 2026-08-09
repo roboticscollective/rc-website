@@ -120,12 +120,18 @@ export function EventCard({ event }: { event: CommunityEvent }) {
         )}
       </div>
 
-      {/* Mobile: square poster — title anchored top, calendar date anchored bottom */}
+      {/* Mobile: square poster — title centered below the series badge, date bottom-left */}
       <div
-        className="absolute inset-0 z-10 flex flex-col justify-between lg:hidden"
-        style={{ padding: "2.5svh" }}
+        className="absolute inset-0 z-10 flex flex-col lg:hidden"
+        style={{
+          paddingTop: "6svh",
+          paddingRight: "2.5svh",
+          paddingBottom: "3.5svh",
+          paddingLeft: "3svh",
+        }}
       >
         <h3
+          className="flex-1 flex items-center"
           style={{
             fontSize: "clamp(1.05rem, 2.6svh, 1.5rem)",
             fontWeight: 600,
