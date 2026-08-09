@@ -120,10 +120,10 @@ export function EventCard({ event }: { event: CommunityEvent }) {
         )}
       </div>
 
-      {/* Mobile: square poster, title then the calendar date over the plate */}
+      {/* Mobile: square poster — title anchored top, calendar date anchored bottom */}
       <div
-        className="relative z-10 mt-auto flex flex-col lg:hidden"
-        style={{ padding: "2.5svh", gap: "1.5svh" }}
+        className="absolute inset-0 z-10 flex flex-col justify-between lg:hidden"
+        style={{ padding: "2.5svh" }}
       >
         <h3
           style={{
