@@ -3,14 +3,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { MenuIcon, X } from "lucide-react";
 
 const navLinks = [
-  { num: "01", label: "About", href: "#about" },
-  { num: "02", label: "Network", href: "#network" },
-  { num: "03", label: "Build", href: "#projects" },
-  { num: "04", label: "FAQ", href: "#faq" },
-  { num: "05", label: "Team", href: "#team" },
+  { num: "01", label: "About", hash: "#about" },
+  { num: "02", label: "Network", hash: "#network" },
+  { num: "03", label: "Build", hash: "#projects" },
+  { num: "04", label: "FAQ", hash: "#faq" },
+  { num: "05", label: "Team", hash: "#team" },
 ];
 
 const JOIN_HREF =
@@ -20,6 +21,12 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileVisible, setMobileVisible] = useState(true);
+  const pathname = usePathname();
+
+  // Bare "#about" only resolves on the landing page; anywhere else it has to
+  // navigate home first.
+  const onLanding = pathname === "/";
+  const sectionHref = (hash: string) => (onLanding ? hash : `/${hash}`);
 
   useEffect(() => {
     let lastY = typeof window !== "undefined" ? window.scrollY : 0;
@@ -93,13 +100,20 @@ export function Navbar() {
 
             <div className="flex items-center" style={{ gap: "1.5svh" }}>
               {navLinks.map((link) => (
-                <a key={link.num} href={link.href} className={pillClass}>
+                <a
+                  key={link.num}
+                  href={sectionHref(link.hash)}
+                  className={pillClass}
+                >
                   <span style={{ marginRight: "1.5svh", fontWeight: 500 }}>
                     {link.num}
                   </span>
                   {link.label}
                 </a>
               ))}
+              <Link href="/events" className={pillClass}>
+                Events
+              </Link>
               <a
                 href={JOIN_HREF}
                 target="_blank"
@@ -227,7 +241,7 @@ export function Navbar() {
             {navLinks.map((link) => (
               <a
                 key={link.num}
-                href={link.href}
+                href={sectionHref(link.hash)}
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-baseline gap-4 text-white active:opacity-70 transition-opacity"
                 style={{ fontSize: "2.25rem", fontWeight: 600, lineHeight: 1.1 }}
@@ -245,6 +259,24 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
+            <Link
+              href="/events"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-baseline gap-4 text-white active:opacity-70 transition-opacity"
+              style={{ fontSize: "2.25rem", fontWeight: 600, lineHeight: 1.1 }}
+            >
+              <span
+                style={{
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                  color: "#47A8BD",
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                &rarr;
+              </span>
+              Events
+            </Link>
           </nav>
 
           <a
