@@ -117,6 +117,79 @@ export const events: CommunityEvent[] = [
       "Institut für Unternehmenskybernetik e.V.",
     ],
   },
+  {
+    slug: "fokusgruppe-robotics-automation-september-2026",
+    title: "Kick-off: Fokusgruppe Robotics & Automation",
+    tagline:
+      "Launching the digitalHUB Aachen focus group for robotics and automation.",
+    start: "2026-09-16T17:00:00+02:00",
+    end: "2026-09-16T19:00:00+02:00",
+    openEnd: true,
+    location: {
+      venue: "digitalHUB Aachen (Great Conference)",
+      street: "Jülicher Straße 72a",
+      postalCode: "52070",
+      city: "Aachen",
+      country: "Germany",
+    },
+    tags: ["Community", "Kick-off"],
+    intro: [
+      "We're taking off! Together with you, we want to launch the new focus group Robotics & Automation at the digitalHUB Aachen. Meet the ecosystem of startups, researchers and industry.",
+      "The first meeting is about getting to know each other, exchanging ideas and the common question: what topics, ideas and projects do we want to advance around robotics and automation?",
+      "Come by, bring your perspectives and help shape the focus group. We look forward to seeing you!",
+    ],
+    supporters: ["Digitalhub Aachen"],
+  },
+  {
+    slug: "robotics-happy-hour-igmr-september-2026",
+    title: "Robotics Happy Hour x IGMR",
+    series: "Robotics Happy Hour",
+    tagline:
+      "Robotics, research & real-world applications: lab tours and networking at RWTH's IGMR.",
+    start: "2026-09-29T17:00:00+02:00",
+    end: "2026-09-29T20:00:00+02:00",
+    location: {
+      venue: "IGMR, RWTH Aachen University",
+      street: "Eilfschornsteinstraße 18",
+      postalCode: "52062",
+      city: "Aachen",
+      country: "Germany",
+    },
+    tags: ["Community", "Lab Tour"],
+    intro: [
+      "Join the Robotics Happy Hour with the Institute of Mechanism Theory, Machine Dynamics and Robotics (IGMR) at RWTH Aachen University. Explore academic robotics research, meet the team and connect with Aachen's robotics community.",
+      "Only 30 spots are available. Participants will be selected based on best fit and the value we believe they can bring to the community. Please make sure you really attend if you register.",
+      "Sip, snack and connect over robotics in a relaxed atmosphere.",
+    ],
+    sections: [
+      {
+        heading: "Program",
+        items: [
+          { title: "Welcome from the Robotics Collective" },
+          { title: "IGMR spotlight", body: "Stefan Bezrucav" },
+          {
+            title: "Lab tours",
+            body: "Two groups of 20 people, 20-30 minutes each.",
+          },
+          { title: "Networking" },
+        ],
+      },
+      {
+        heading: "Good to know",
+        items: [
+          {
+            title: "Check-in at the foyer",
+            body: "Registration requires approval by the host.",
+          },
+          {
+            title: "No photos or videos inside the lab",
+            body: "Experimental areas are off limits for cameras. Photos and videos taken elsewhere during the event may be used for Robotics Collective communication.",
+          },
+        ],
+      },
+    ],
+    sponsors: ["Vectioneer", "INFORM", "Gateway Factory", "IGMR RWTH Aachen"],
+  },
 ];
 
 /* ------------------------------------------------------------------ */
