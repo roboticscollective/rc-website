@@ -155,6 +155,7 @@ export const events: CommunityEvent[] = [
       city: "Aachen",
       country: "Germany",
     },
+    registrationUrl: "https://luma.com/lp2uxs49",
     tags: ["Community", "Lab Tour"],
     intro: [
       "Join the Robotics Happy Hour with the Institute of Mechanism Theory, Machine Dynamics and Robotics (IGMR) at RWTH Aachen University. Explore academic robotics research, meet the team and connect with Aachen's robotics community.",
