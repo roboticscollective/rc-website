@@ -52,7 +52,7 @@ export const HeroSection = () => {
               We are the Robotics Collective Aachen<span className="text-brand">.</span>
             </h1>
             <p className="mt-5 max-w-md text-lg leading-snug text-white/70 sm:text-xl">
-              A student robotics club. We build robots and run open-source models on them.
+              A student robotics club. Open to anyone who wants to work on robots.
             </p>
 
             <a
