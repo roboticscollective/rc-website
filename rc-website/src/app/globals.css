@@ -150,7 +150,8 @@
   }
   .btn-outline-pill:hover {
     color: #0d0d0d;
-    background-color: #fff;
+    background-color: #47a8bd;
+    border-color: #47a8bd;
     transform: scale(1.03);
   }
 
@@ -169,8 +170,27 @@
     text-decoration: none;
   }
   .btn-outline-pill-dark:hover {
-    color: #fff;
-    background-color: #0d0d0d;
+    color: #0d0d0d;
+    background-color: #47a8bd;
+    border-color: #47a8bd;
     transform: scale(1.03);
   }
+}
+
+/* Partner logo strip: the list is rendered twice, so sliding by -50% loops seamlessly. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee {
+  animation: marquee 35s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee { animation: none; }
 }

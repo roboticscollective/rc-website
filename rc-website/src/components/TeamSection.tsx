@@ -1,167 +1,60 @@
 import Image from "next/image";
-import { leadership, partners, type TeamMember } from "@/lib/team";
+import { leadership } from "@/lib/team";
+import { JOIN_FORM_URL } from "@/lib/links";
 
+
+/**
+ * Compact contact-sheet grid. Scales from a handful of people to the whole
+ * club: add members to `leadership` (or a fuller list) in `lib/team.ts`.
+ */
 export const TeamSection = () => {
   return (
-    <section
-      id="team"
-      className="relative bg-dark text-white overflow-hidden"
-      style={{
-        padding: "14svh 5svh",
-        minHeight: "100svh",
-        borderTopLeftRadius: "7svh",
-        borderTopRightRadius: "7svh",
-        borderBottomLeftRadius: "7svh",
-        borderBottomRightRadius: "7svh",
-        marginTop: "-7svh",
-        marginBottom: "-7svh",
-        zIndex: 2,
-      }}
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute top-0 right-[5svh]"
-        style={{
-          fontSize: "40svh",
-          fontWeight: 500,
-          lineHeight: 1,
-          color: "#ffffff14",
-        }}
-      >
-        05
-      </div>
-
-      <div className="relative max-w-[150svh] mx-auto">
-        <p
-          className="uppercase mb-4"
-          style={{
-            letterSpacing: "0.3svh",
-            color: "#ffffff99",
-            fontSize: "1.8svh",
-            fontWeight: 500,
-          }}
-        >
-          05 · Team
-        </p>
-        <h2
-          className="mb-[3svh] max-w-[110svh]"
-          style={{ fontSize: "8svh", fontWeight: 700, lineHeight: 1.05 }}
-        >
-          The People Behind the <span className="text-brand">Collective</span>.
-        </h2>
-        <p
-          className="mb-[8svh] max-w-[100svh]"
-          style={{ fontSize: "2.5svh", color: "#ffffff99", lineHeight: 1.4 }}
-        >
-          Our mission is to accelerate robotics adoption and the development of
-          intelligent systems that interact harmoniously with humans and their
-          environment.
+    <section id="team" className="bg-light text-dark">
+      <div className="mx-auto w-full max-w-[1400px] px-5 pb-16 sm:px-8 lg:px-12 lg:pb-28">
+        <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#666] sm:text-xs">
+          0.4/ Founders &amp; leads
         </p>
 
-        <h3
-          className="mb-[4svh]"
-          style={{
-            fontSize: "3svh",
-            fontWeight: 700,
-            color: "#fff",
-          }}
-        >
-          Leadership
-        </h3>
-        <div
-          className="grid gap-[4svh] mb-[12svh]"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(24svh, 1fr))",
-          }}
-        >
+        <ul className="grid grid-cols-3 gap-x-2 gap-y-6 sm:gap-x-3 lg:grid-cols-6">
           {leadership.map((m) => (
-            <MemberCard key={m.name} member={m} />
-          ))}
-        </div>
-
-        <h3
-          className="mb-[4svh]"
-          style={{ fontSize: "3svh", fontWeight: 700, color: "#fff" }}
-        >
-          Partners
-        </h3>
-        <div
-          className="grid items-center gap-x-[6svh] gap-y-[4svh]"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(16svh, 1fr))",
-          }}
-        >
-          {partners.map((p) => (
-            <div
-              key={p.name}
-              className="flex items-center justify-center"
-              style={{ height: "8svh" }}
-            >
-              {p.wordmark ? (
-                <span
-                  className="group inline-flex items-baseline gap-[0.05em] font-medium leading-none text-white"
-                  style={{
-                    fontFamily: "'Afacad', 'Inter', ui-sans-serif, sans-serif",
-                    fontSize: "3.4svh",
-                    letterSpacing: "-0.035em",
-                  }}
-                >
-                  <span>{p.name}</span>
-                  <span className="text-[#e9b872] transition-transform duration-300 group-hover:translate-y-[2px]">
-                    .
-                  </span>
-                </span>
-              ) : (
+            <li key={m.name} className="group">
+              <div className="relative aspect-square overflow-hidden rounded-2xl bg-gray-mid">
                 <Image
-                  src={p.logo!}
-                  alt={p.name}
-                  width={200}
-                  height={100}
-                  style={{
-                    maxHeight: "100%",
-                    maxWidth: "100%",
-                    width: "auto",
-                    height: "auto",
-                    objectFit: "contain",
-                  }}
+                  src={m.image}
+                  alt={m.name}
+                  fill
+                  sizes="(min-width: 1024px) 16vw, 33vw"
+                  className="object-cover grayscale transition duration-300 group-hover:grayscale-0"
                 />
-              )}
-            </div>
+              </div>
+              <p className="mt-3 text-sm font-semibold leading-tight sm:text-base">{m.name}</p>
+              <p className="mt-1 font-mono text-[10px] uppercase leading-tight tracking-[0.12em] text-[#666] sm:text-[11px]">
+                {m.role}
+              </p>
+            </li>
           ))}
-        </div>
+
+          {/* These are only the leads — the collective is much bigger. */}
+          <li>
+            <a
+              href={JOIN_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block"
+            >
+              <div className="flex aspect-square items-center justify-center rounded-2xl border-2 border-dashed border-dark/20 text-4xl font-light text-dark/40 transition-colors group-hover:border-brand group-hover:text-brand sm:text-5xl">
+                +
+              </div>
+              <p className="mt-3 text-sm font-semibold leading-tight sm:text-base">And many more</p>
+              <p className="mt-1 font-mono text-[10px] uppercase leading-tight tracking-[0.12em] text-[#666] transition-colors group-hover:text-brand sm:text-[11px]">
+                Join the team →
+              </p>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
   );
 };
-
-function MemberCard({ member }: { member: TeamMember }) {
-  return (
-    <div className="flex flex-col items-center text-center">
-      <div
-        className="relative overflow-hidden bg-white-10"
-        style={{
-          width: "18svh",
-          height: "18svh",
-          borderRadius: "50%",
-          marginBottom: "2svh",
-        }}
-      >
-        <Image
-          src={member.image}
-          alt={member.name}
-          fill
-          sizes="20svh"
-          className="object-cover"
-        />
-      </div>
-      <div style={{ fontSize: "2.4svh", fontWeight: 700 }}>{member.name}</div>
-      <div
-        style={{ fontSize: "1.7svh", color: "#ffffff99", marginTop: "0.4svh" }}
-      >
-        {member.role}
-      </div>
-    </div>
-  );
-}
 
 export default TeamSection;

@@ -1,27 +1,31 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { MenuIcon, X } from "lucide-react";
+import { JOIN_FORM_URL } from "@/lib/links";
 
 const navLinks = [
-  { num: "01", label: "About", hash: "#about" },
-  { num: "02", label: "Network", hash: "#network" },
-  { num: "03", label: "Build", hash: "#projects" },
-  { num: "04", label: "FAQ", hash: "#faq" },
-  { num: "05", label: "Team", hash: "#team" },
+  { num: "01", label: "Community", hash: "#community" },
+  { num: "02", label: "Build", hash: "#projects" },
+  { num: "03", label: "Team", hash: "#team" },
 ];
 
-const JOIN_HREF =
-  "https://docs.google.com/forms/d/e/1FAIpQLSd366e4bzN3yZAiWgNSJgT9FlJfaVEv0H0nMyTe3JKrQVj00Q/viewform";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileVisible, setMobileVisible] = useState(true);
   const pathname = usePathname();
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  // `inert` keeps the hidden menu's links out of the keyboard tab order.
+  // React 18 doesn't support the attribute as a prop, so set it directly.
+  useEffect(() => {
+    overlayRef.current?.toggleAttribute("inert", !mobileMenuOpen);
+  }, [mobileMenuOpen]);
 
   // Bare "#about" only resolves on the landing page; anywhere else it has to
   // navigate home first.
@@ -89,7 +93,7 @@ export function Navbar() {
               aria-label="Robotics Collective Aachen home"
             >
               <Image
-                src={scrolled ? "/RC_Logo_Dark.svg" : "/logo.svg"}
+                src={scrolled ? "/brand/rc-logo-black.svg" : "/brand/rc-logo-white.svg"}
                 alt="Robotics Collective Aachen"
                 width={48}
                 height={48}
@@ -115,11 +119,10 @@ export function Navbar() {
                 Events
               </Link>
               <a
-                href={JOIN_HREF}
+                href={JOIN_FORM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={pillClass}
-                style={{ padding: "1svh 4svh" }}
               >
                 Join us
               </a>
@@ -161,7 +164,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
           >
             <Image
-              src={scrolled ? "/RC_Logo_Dark.svg" : "/logo.svg"}
+              src={scrolled ? "/brand/rc-logo-black.svg" : "/brand/rc-logo-white.svg"}
               alt="Robotics Collective Aachen"
               width={48}
               height={48}
@@ -199,6 +202,7 @@ export function Navbar() {
           background: "#0d0d0d",
         }}
         aria-hidden={!mobileMenuOpen}
+        ref={overlayRef}
       >
         <div
           className="flex flex-col h-full w-full"
@@ -212,7 +216,7 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <Image
-                src="/logo.svg"
+                src="/brand/rc-logo-white.svg"
                 alt="Robotics Collective Aachen"
                 width={48}
                 height={48}
@@ -243,7 +247,7 @@ export function Navbar() {
                 key={link.num}
                 href={sectionHref(link.hash)}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-baseline gap-4 text-white active:opacity-70 transition-opacity"
+                className="flex items-baseline gap-4 text-white hover:text-brand active:text-brand transition-colors"
                 style={{ fontSize: "2.25rem", fontWeight: 600, lineHeight: 1.1 }}
               >
                 <span
@@ -262,7 +266,7 @@ export function Navbar() {
             <Link
               href="/events"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-baseline gap-4 text-white active:opacity-70 transition-opacity"
+              className="flex items-baseline gap-4 text-white hover:text-brand active:text-brand transition-colors"
               style={{ fontSize: "2.25rem", fontWeight: 600, lineHeight: 1.1 }}
             >
               <span
@@ -280,7 +284,7 @@ export function Navbar() {
           </nav>
 
           <a
-            href={JOIN_HREF}
+            href={JOIN_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}

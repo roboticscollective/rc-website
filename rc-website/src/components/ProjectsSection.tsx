@@ -1,78 +1,40 @@
-const projects = [
-  { id: "1", image: "/build-1.webp" },
-  { id: "2", image: "/build-2.webp" },
-  { id: "3", image: "/build-3.webp" },
-  { id: "4", image: "/build-4.webp" },
+import Image from "next/image";
+
+const photos = [
+  { src: "/photos/build/build-01.webp", width: 2000, height: 1500 },
+  { src: "/photos/build/build-02.webp", width: 2000, height: 1333 },
+  { src: "/photos/build/build-03.webp", width: 2000, height: 1339 },
+  { src: "/photos/build/build-04.webp", width: 1086, height: 724 },
 ];
 
 export const ProjectsSection = () => {
   return (
-    <section
-      id="projects"
-      className="relative bg-light text-dark"
-      style={{ padding: "12svh 5svh", minHeight: "100svh" }}
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none select-none absolute top-0 right-[5svh]"
-        style={{
-          fontSize: "40svh",
-          fontWeight: 500,
-          lineHeight: 1,
-          color: "#d8d8d8",
-        }}
-      >
-        03
-      </div>
-
-      <div className="relative max-w-[150svh] mx-auto">
-        <p
-          className="uppercase mb-4"
-          style={{
-            letterSpacing: "0.3svh",
-            color: "#666",
-            fontSize: "1.8svh",
-            fontWeight: 500,
-          }}
-        >
-          03 · Behind the Build
+    <section id="projects" className="bg-light text-dark">
+      <div className="mx-auto w-full max-w-[1400px] px-5 pb-14 sm:px-8 lg:px-12 lg:pb-24">
+        <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#666] sm:text-xs">
+          0.3/ Behind the Build
         </p>
-        <h2
-          className="mb-[6svh] max-w-[100svh]"
-          style={{ fontSize: "8svh", fontWeight: 700, lineHeight: 1.05 }}
-        >
-          Behind the <span className="text-brand">Build</span>.
-        </h2>
 
-        <div className="flex flex-col gap-[1svh]">
-          <div className="flex flex-col md:flex-row gap-[1svh] md:h-[40svh]">
-            {[projects[0], projects[1]].map((p) => (
-              <ProjectCard key={p.id} image={p.image} />
-            ))}
-          </div>
-          <div className="flex flex-col md:flex-row gap-[1svh] md:h-[40svh]">
-            {[projects[2], projects[3]].map((p) => (
-              <ProjectCard key={p.id} image={p.image} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
+          {photos.map((p) => (
+            <div
+              key={p.src}
+              className="relative overflow-hidden rounded-2xl bg-dark lg:rounded-[3svh]"
+            >
+              <Image
+                src={p.src}
+                alt="Robotics Collective Aachen members building and presenting robots"
+                width={p.width}
+                height={p.height}
+                sizes="(min-width: 640px) 50vw, 100vw"
+                className="aspect-[3/2] h-full w-full object-cover"
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
-
-function ProjectCard({ image }: { image: string }) {
-  return (
-    <div
-      className="md:flex-1 overflow-hidden bg-dark aspect-video md:aspect-auto"
-      style={{
-        borderRadius: "3svh",
-        backgroundImage: `linear-gradient(#00000040, #00000040), url('${image}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    />
-  );
-}
 
 export default ProjectsSection;
