@@ -47,7 +47,7 @@ export async function generateMetadata({
       description,
       url: `/events/${event.slug}`,
       type: "article",
-      ...(event.coverImage ? { images: [{ url: event.coverImage }] } : {}),
+      images: [{ url: event.coverImage ?? "/social/og-default.jpg" }],
     },
     twitter: {
       card: "summary_large_image",

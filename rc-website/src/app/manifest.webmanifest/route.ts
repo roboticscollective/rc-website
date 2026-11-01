@@ -6,7 +6,7 @@ export async function GET() {
     scope: "/",
     name: "Robotics Collective Aachen",
     short_name: "rc",
-    description: "Together, we shape the future of robotics",
+    description: "Robotics Collective Aachen is a robotics club for students from RWTH Aachen and FH Aachen.",
     start_url: "/",
     display: "standalone",
     display_override: ["window-controls-overlay", "standalone"],

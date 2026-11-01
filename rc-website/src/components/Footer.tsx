@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Github, Instagram } from "lucide-react";
-import { useConsent } from "@/contexts/ConsentContext";
 
 const XIcon = () => (
   <svg
@@ -29,7 +28,6 @@ const LinkedInIcon = () => (
 );
 
 export function Footer() {
-  const { resetConsent } = useConsent();
   const pathname = usePathname();
 
   // Bare hashes only resolve on the landing page — see the same note in Navbar.
@@ -45,7 +43,7 @@ export function Footer() {
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-[4svh] mb-[6svh]">
           <Link href="/" className="flex items-center" aria-label="Robotics Collective Aachen home">
             <Image
-              src="/logo.svg"
+              src="/brand/rc-logo-white.svg"
               alt="Robotics Collective Aachen"
               width={64}
               height={64}
@@ -55,29 +53,23 @@ export function Footer() {
 
           <nav className="flex flex-col lg:flex-row gap-[2svh] lg:gap-[3svh] text-left lg:text-right">
             <a
-              href={sectionHref("#about")}
-              className="text-h5 hover:opacity-70 transition-opacity"
+              href={sectionHref("#community")}
+              className="text-h5 hover:text-brand transition-colors"
             >
-              About
-            </a>
-            <a
-              href={sectionHref("#network")}
-              className="text-h5 hover:opacity-70 transition-opacity"
-            >
-              Network
+              Community
             </a>
             <a
               href={sectionHref("#projects")}
-              className="text-h5 hover:opacity-70 transition-opacity"
+              className="text-h5 hover:text-brand transition-colors"
             >
-              Projects
+              Build
             </a>
-            <Link href="/events" className="text-h5 hover:opacity-70 transition-opacity">
+            <Link href="/events" className="text-h5 hover:text-brand transition-colors">
               Events
             </Link>
             <a
               href={sectionHref("#team")}
-              className="text-h5 hover:opacity-70 transition-opacity"
+              className="text-h5 hover:text-brand transition-colors"
             >
               Team
             </a>
@@ -93,7 +85,7 @@ export function Footer() {
               href="https://x.com/robocollectiv"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-70 transition-opacity"
+              className="hover:text-brand transition-colors"
               aria-label="X (Twitter)"
             >
               <XIcon />
@@ -102,7 +94,7 @@ export function Footer() {
               href="https://www.instagram.com/roboticscollective/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-70 transition-opacity"
+              className="hover:text-brand transition-colors"
               aria-label="Instagram"
             >
               <Instagram style={{ width: "2.5svh", height: "2.5svh" }} />
@@ -111,7 +103,7 @@ export function Footer() {
               href="https://github.com/roboticscollective"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-70 transition-opacity"
+              className="hover:text-brand transition-colors"
               aria-label="GitHub"
             >
               <Github style={{ width: "2.5svh", height: "2.5svh" }} />
@@ -120,7 +112,7 @@ export function Footer() {
               href="https://www.linkedin.com/company/roboticscollective/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:opacity-70 transition-opacity"
+              className="hover:text-brand transition-colors"
               aria-label="LinkedIn"
             >
               <LinkedInIcon />
@@ -132,18 +124,12 @@ export function Footer() {
           </p>
 
           <div className="flex gap-[2svh] text-small" style={{ color: "#ffffff99" }}>
-            <Link href="/privacy" className="hover:text-white transition-colors">
+            <Link href="/privacy" className="hover:text-brand transition-colors">
               Privacy
             </Link>
-            <Link href="/imprint" className="hover:text-white transition-colors">
+            <Link href="/imprint" className="hover:text-brand transition-colors">
               Imprint
             </Link>
-            <button
-              onClick={resetConsent}
-              className="hover:text-white transition-colors"
-            >
-              Cookies
-            </button>
           </div>
         </div>
       </div>

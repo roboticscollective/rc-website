@@ -28,7 +28,7 @@ function CardPlate() {
       }}
     >
       <Image
-        src="/logo.svg"
+        src="/brand/rc-logo-white.svg"
         alt=""
         width={120}
         height={120}
