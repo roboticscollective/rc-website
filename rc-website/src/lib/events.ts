@@ -55,6 +55,213 @@ export interface CommunityEvent {
 
 export const events: CommunityEvent[] = [
   {
+    slug: "robotics-community-meetup-june-2024",
+    title: "Robotics Community Meetup",
+    series: "Robotics Community Meetup",
+    tagline:
+      "The first Robotics Community Meetup: networking, project booths and drinks.",
+    start: "2024-06-19T18:30:00+02:00",
+    end: "2024-06-19T20:30:00+02:00",
+    location: {
+      venue: "Digital Church",
+      street: "Jülicher Straße 72a",
+      postalCode: "52070",
+      city: "Aachen",
+      country: "Germany",
+    },
+    registrationUrl: "https://luma.com/grc1acuv",
+    tags: ["Community", "Meetup"],
+    intro: [
+      "The first ever Robotics Community Meetup in Aachen: an evening of networking with like-minded students and professionals, booths presenting the latest robotics projects, and free drinks.",
+      "Through this series of events, we aim to foster a local robotics community in Aachen, connecting experts, enthusiasts and students.",
+    ],
+  },
+  {
+    slug: "robotics-community-meetup-october-2024",
+    title: "Robotics Community Meetup #2",
+    series: "Robotics Community Meetup",
+    tagline:
+      "Back at the Digital Church: short pitches, project booths, drinks and pizza.",
+    start: "2024-10-23T18:30:00+02:00",
+    end: "2024-10-23T21:00:00+02:00",
+    location: {
+      venue: "Digital Church",
+      street: "Jülicher Straße 72a",
+      postalCode: "52070",
+      city: "Aachen",
+      country: "Germany",
+    },
+    coverImage: "/events/robotics-community-meetup-october-2024.webp",
+    registrationUrl: "https://luma.com/b0hq4agb",
+    tags: ["Community", "Meetup"],
+    intro: [
+      "After the turnout and positive feedback at the first meetup, the Robotics Community Meetup returned to the same location.",
+      "An evening of networking with like-minded students and professionals: short pitches, followed by an interactive session with booths presenting the latest robotics projects, plus free drinks and pizza.",
+    ],
+    supporters: [
+      "WZL RWTH Aachen",
+      "#DWNRW",
+      "Digitalhub Aachen",
+      "Vectioneer",
+    ],
+  },
+  {
+    slug: "lerobot-hackathon-aachen-june-2025",
+    title: "AI+Robotics Hackathon: LeRobot Aachen Edition",
+    tagline:
+      "The Aachen edition of the Hugging Face LeRobot Hackathon: two days of AI on real robots.",
+    start: "2025-06-14T08:30:00+02:00",
+    end: "2025-06-15T19:00:00+02:00",
+    location: {
+      street: "Reumontstraße",
+      postalCode: "52064",
+      city: "Aachen",
+      country: "Germany",
+    },
+    coverImage: "/events/lerobot-hackathon-aachen-june-2025.webp",
+    registrationUrl: "https://lu.ma/m85dzu3j",
+    tags: ["Hackathon", "AI"],
+    intro: [
+      "A local edition of the Hugging Face LeRobot Hackathon, right here in Aachen.",
+      "Over two days, teams worked hands-on with robotic platforms including Franka Emika, Hanwha, UFactory, PiPER and SO-101, integrating state-of-the-art AI models to tackle real-world automation challenges selected together with our partners.",
+    ],
+    supporters: [
+      "Institut für Unternehmenskybernetik e.V.",
+      "Vectioneer",
+      "MyBotShop",
+      "foundabot",
+      "AgileX",
+    ],
+  },
+  {
+    slug: "robotics-community-meetup-october-2025",
+    title: "Robotics Community Meetup 2025",
+    series: "Robotics Community Meetup",
+    tagline:
+      "Pitches, project booths and networking with Aachen's robotics ecosystem.",
+    start: "2025-10-16T18:30:00+02:00",
+    end: "2025-10-16T22:00:00+02:00",
+    location: {
+      venue: "Digital Church",
+      street: "Jülicher Straße 72a",
+      postalCode: "52070",
+      city: "Aachen",
+      country: "Germany",
+    },
+    coverImage: "/events/robotics-community-meetup-october-2025.webp",
+    registrationUrl: "https://luma.com/dh0z4i3g",
+    tags: ["Community", "Meetup"],
+    intro: [
+      "Following the participation and positive feedback from our previous events, the Robotics Community Meetup returned to the Digital Church.",
+      "Our meetups bridge research and industry, strengthening Aachen's robotics ecosystem. Whether you're an expert, an enthusiast or just curious about robotics, this is where you meet the community.",
+    ],
+    sections: [
+      {
+        heading: "What to expect",
+        items: [
+          { title: "Short pitches from innovators" },
+          {
+            title: "Interactive booths",
+            body: "Showcasing the latest robotics projects.",
+          },
+          {
+            title: "Networking",
+            body: "With students, researchers and industry experts.",
+          },
+          { title: "Free food & drinks" },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ai-robotics-hackathon-november-2025",
+    title: "AI + Robotics Hackathon",
+    tagline:
+      "Two days of real robots on real problems in the WZL robotics labs.",
+    start: "2025-11-20T09:00:00+01:00",
+    end: "2025-11-21T18:00:00+01:00",
+    location: {
+      venue: "Robotics Labs at WZL, RWTH Aachen",
+      street: "Steinbachstraße",
+      postalCode: "52074",
+      city: "Aachen",
+      country: "Germany",
+    },
+    coverImage: "/events/ai-robotics-hackathon-november-2025.webp",
+    registrationUrl: "https://luma.com/wfw8i9r5",
+    tags: ["Hackathon", "AI"],
+    intro: [
+      "The next edition of our AI + Robotics Hackathon, built by and for our community. Real robots on real problems, helpful mentors, and teams that learn fast together.",
+      "Hands-on projects on Franka Emika, Hanwha, UR, LeRobot, AgileX and more, with partner use cases that reflect real needs in automation and a demo hour at the end to share what was built.",
+    ],
+    sections: [
+      {
+        heading: "Focus areas",
+        items: [
+          {
+            title: "Data collection & AI model training",
+            body: "For specific tasks, mixing simulation and real data.",
+          },
+          { title: "Multi-task model training" },
+          {
+            title: "Hardware integration",
+            body: "New manipulation and teleoperation hardware for data collection.",
+          },
+        ],
+      },
+    ],
+    supporters: [
+      "WZL RWTH Aachen",
+      "Vorwerk",
+      "Institut für Unternehmenskybernetik e.V.",
+      "Vectioneer",
+      "foundabot",
+    ],
+  },
+  {
+    slug: "robotics-happy-hour-ctrl-june-2026",
+    title: "Robotics Happy Hour × CTRL Open Doors",
+    series: "Robotics Happy Hour",
+    tagline:
+      "Construction Robotics Edition: live demos and lab access at CTRL with ICoM.",
+    start: "2026-06-17T17:00:00+02:00",
+    end: "2026-06-17T21:00:00+02:00",
+    location: {
+      venue: "ICoM Robotics Hall",
+      street: "Süsterfeldstraße 200",
+      postalCode: "52072",
+      city: "Aachen",
+      country: "Germany",
+    },
+    coverImage: "/events/robotics-happy-hour-ctrl-june-2026.webp",
+    registrationUrl: "https://luma.com/um5tbdfu",
+    tags: ["Community", "Lab Tour"],
+    intro: [
+      "Robotics Happy Hour meets construction robotics, together with ICoM and CTRL Open Doors. An evening exploring how robotics, automation and applied AI are transforming construction.",
+      "This edition was hosted at the Construction Technology and Robotics Laboratory (CTRL) together with the Chair and Institute for Construction Management, Digital Engineering and Robotics in Construction (ICoM).",
+    ],
+    sections: [
+      {
+        heading: "What to expect",
+        items: [
+          { title: "Live construction robotics demonstrations" },
+          { title: "Behind-the-scenes access to the CTRL laboratory" },
+          { title: "Insights into current research and real-world projects" },
+          { title: "Drinks, networking and open conversations" },
+        ],
+      },
+    ],
+    supporters: [
+      "Gateway Factory",
+      "#DWNRW",
+      "Digitalhub Aachen",
+      "Institut für Unternehmenskybernetik e.V.",
+      "ITA RWTH Aachen",
+      "IGMR RWTH Aachen",
+      "WZL RWTH Aachen",
+    ],
+  },
+  {
     slug: "robotics-happy-hour-august-2026",
     title: "Robotics Happy Hour: Brunch & Bring Your Own Robots",
     series: "Robotics Happy Hour",
