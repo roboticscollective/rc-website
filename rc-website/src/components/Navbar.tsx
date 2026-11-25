@@ -6,19 +6,28 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { MenuIcon, X } from "lucide-react";
 import { JOIN_FORM_URL } from "@/lib/links";
+import { localePath, switchLocalePath, visiblePath, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-const navLinks = [
-  { num: "01", label: "Community", hash: "#community" },
-  { num: "02", label: "Build", hash: "#projects" },
-  { num: "03", label: "Team", hash: "#team" },
-];
-
-
-export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+export function Navbar({ locale, t }: { locale: Locale; t: Dictionary["nav"] }) {
+  const navLinks = [
+    { num: "01", label: t.community, hash: "#community" },
+    { num: "02", label: t.build, hash: "#projects" },
+    { num: "03", label: t.team, hash: "#team" },
+  ];
+  const otherLocale: Locale = locale === "de" ? "en" : "de";
+  const [scrolledPast, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileVisible, setMobileVisible] = useState(true);
-  const pathname = usePathname();
+  const pathname = visiblePath(usePathname());
+  const home = localePath(locale, "/");
+  const eventsHref = localePath(locale, "/events");
+  const switchHref = switchLocalePath(pathname, otherLocale);
+
+  // Imprint and privacy start on a light background, where the transparent
+  // white navbar is invisible — show the solid (scrolled) style right away.
+  const lightTop = /^(\/en)?\/(imprint|privacy)$/.test(pathname);
+  const scrolled = scrolledPast || lightTop;
   const overlayRef = useRef<HTMLDivElement>(null);
 
   // `inert` keeps the hidden menu's links out of the keyboard tab order.
@@ -29,8 +38,8 @@ export function Navbar() {
 
   // Bare "#about" only resolves on the landing page; anywhere else it has to
   // navigate home first.
-  const onLanding = pathname === "/";
-  const sectionHref = (hash: string) => (onLanding ? hash : `/${hash}`);
+  const onLanding = pathname === home;
+  const sectionHref = (hash: string) => (onLanding ? hash : `${home}${hash}`);
 
   useEffect(() => {
     let lastY = typeof window !== "undefined" ? window.scrollY : 0;
@@ -88,9 +97,9 @@ export function Navbar() {
             style={{ gap: "3svh" }}
           >
             <Link
-              href="/"
+              href={home}
               className="flex items-center"
-              aria-label="Robotics Collective Aachen home"
+              aria-label={t.homeAria}
             >
               <Image
                 src={scrolled ? "/brand/rc-logo-black.svg" : "/brand/rc-logo-white.svg"}
@@ -115,8 +124,8 @@ export function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <Link href="/events" className={pillClass}>
-                Events
+              <Link href={eventsHref} className={pillClass}>
+                {t.events}
               </Link>
               <a
                 href={JOIN_FORM_URL}
@@ -124,7 +133,17 @@ export function Navbar() {
                 rel="noopener noreferrer"
                 className={pillClass}
               >
-                Join us
+                {t.join}
+              </a>
+              {/* Plain <a>: switching language reloads the page with the other <html lang>. */}
+              <a
+                href={switchHref}
+                hrefLang={otherLocale}
+                lang={otherLocale}
+                aria-label={t.switchAria}
+                className={pillClass}
+              >
+                {t.switchLabel}
               </a>
             </div>
           </div>
@@ -158,9 +177,9 @@ export function Navbar() {
           }}
         >
           <Link
-            href="/"
+            href={home}
             className="flex items-center"
-            aria-label="Robotics Collective Aachen home"
+            aria-label={t.homeAria}
             onClick={() => setMobileMenuOpen(false)}
           >
             <Image
@@ -175,7 +194,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
+            aria-label={t.openMenu}
             className="flex items-center justify-center transition-transform active:scale-95"
             style={{
               width: "2.25rem",
@@ -210,9 +229,9 @@ export function Navbar() {
         >
           <div className="flex items-center justify-between">
             <Link
-              href="/"
+              href={home}
               className="flex items-center"
-              aria-label="Robotics Collective Aachen home"
+              aria-label={t.homeAria}
               onClick={() => setMobileMenuOpen(false)}
             >
               <Image
@@ -226,7 +245,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              aria-label="Close menu"
+              aria-label={t.closeMenu}
               className="flex items-center justify-center active:scale-95 transition-transform"
               style={{
                 width: "2.25rem",
@@ -264,7 +283,7 @@ export function Navbar() {
               </a>
             ))}
             <Link
-              href="/events"
+              href={eventsHref}
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-baseline gap-4 text-white hover:text-brand active:text-brand transition-colors"
               style={{ fontSize: "2.25rem", fontWeight: 600, lineHeight: 1.1 }}
@@ -279,8 +298,18 @@ export function Navbar() {
               >
                 &rarr;
               </span>
-              Events
+              {t.events}
             </Link>
+            <a
+              href={switchHref}
+              hrefLang={otherLocale}
+              lang={otherLocale}
+              aria-label={t.switchAria}
+              className="flex items-baseline gap-4 text-white/70 hover:text-brand active:text-brand transition-colors"
+              style={{ fontSize: "1.25rem", fontWeight: 600, lineHeight: 1.1, marginTop: "1rem" }}
+            >
+              {otherLocale === "en" ? "English" : "Deutsch"}
+            </a>
           </nav>
 
           <a
@@ -300,7 +329,7 @@ export function Navbar() {
               textTransform: "uppercase",
             }}
           >
-            Join us
+            {t.join}
           </a>
         </div>
       </div>

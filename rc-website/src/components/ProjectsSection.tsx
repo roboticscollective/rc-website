@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 const photos = [
   { src: "/photos/build/build-01.webp", width: 2000, height: 1500 },
@@ -7,12 +8,12 @@ const photos = [
   { src: "/photos/build/build-04.webp", width: 1086, height: 724 },
 ];
 
-export const ProjectsSection = () => {
+export const ProjectsSection = ({ t }: { t: Dictionary["projects"] }) => {
   return (
     <section id="projects" className="bg-light text-dark">
       <div className="mx-auto w-full max-w-[1400px] px-5 pb-14 sm:px-8 lg:px-12 lg:pb-24">
         <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#666] sm:text-xs">
-          0.3/ Behind the Build
+          {t.eyebrow}
         </p>
 
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
@@ -23,7 +24,7 @@ export const ProjectsSection = () => {
             >
               <Image
                 src={p.src}
-                alt="Robotics Collective Aachen members building and presenting robots"
+                alt={t.photoAlt}
                 width={p.width}
                 height={p.height}
                 sizes="(min-width: 640px) 50vw, 100vw"

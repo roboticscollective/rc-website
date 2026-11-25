@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Github, Instagram } from "lucide-react";
+import { localePath, visiblePath, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 const XIcon = () => (
   <svg
@@ -27,12 +29,21 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-export function Footer() {
-  const pathname = usePathname();
+export function Footer({
+  locale,
+  t,
+  f,
+}: {
+  locale: Locale;
+  t: Dictionary["nav"];
+  f: Dictionary["footer"];
+}) {
+  const pathname = visiblePath(usePathname());
+  const home = localePath(locale, "/");
 
   // Bare hashes only resolve on the landing page — see the same note in Navbar.
   const sectionHref = (hash: string) =>
-    pathname === "/" ? hash : `/${hash}`;
+    pathname === home ? hash : `${home}${hash}`;
 
   return (
     <footer
@@ -41,7 +52,7 @@ export function Footer() {
     >
       <div className="max-w-[180svh] mx-auto">
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-[4svh] mb-[6svh]">
-          <Link href="/" className="flex items-center" aria-label="Robotics Collective Aachen home">
+          <Link href={home} className="flex items-center" aria-label={t.homeAria}>
             <Image
               src="/brand/rc-logo-white.svg"
               alt="Robotics Collective Aachen"
@@ -56,22 +67,22 @@ export function Footer() {
               href={sectionHref("#community")}
               className="text-h5 hover:text-brand transition-colors"
             >
-              Community
+              {t.community}
             </a>
             <a
               href={sectionHref("#projects")}
               className="text-h5 hover:text-brand transition-colors"
             >
-              Build
+              {t.build}
             </a>
-            <Link href="/events" className="text-h5 hover:text-brand transition-colors">
-              Events
+            <Link href={localePath(locale, "/events")} className="text-h5 hover:text-brand transition-colors">
+              {t.events}
             </Link>
             <a
               href={sectionHref("#team")}
               className="text-h5 hover:text-brand transition-colors"
             >
-              Team
+              {t.team}
             </a>
           </nav>
         </div>
@@ -120,15 +131,15 @@ export function Footer() {
           </div>
 
           <p className="text-small" style={{ color: "#ffffff99" }}>
-            © {new Date().getFullYear()} Robotics Collective Aachen. All rights reserved.
+            © {new Date().getFullYear()} Robotics Collective Aachen. {f.rights}
           </p>
 
           <div className="flex gap-[2svh] text-small" style={{ color: "#ffffff99" }}>
-            <Link href="/privacy" className="hover:text-brand transition-colors">
-              Privacy
+            <Link href={localePath(locale, "/privacy")} className="hover:text-brand transition-colors">
+              {f.privacy}
             </Link>
-            <Link href="/imprint" className="hover:text-brand transition-colors">
-              Imprint
+            <Link href={localePath(locale, "/imprint")} className="hover:text-brand transition-colors">
+              {f.imprint}
             </Link>
           </div>
         </div>

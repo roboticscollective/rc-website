@@ -2,6 +2,7 @@ import Image from "next/image";
 import { LabVideo } from "@/components/LabVideo";
 import { partners } from "@/lib/team";
 import { JOIN_FORM_URL } from "@/lib/links";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 
 /** Renders any logo as a white silhouette so mixed brand colors read as one row. */
@@ -14,7 +15,13 @@ const WHITE = { filter: "brightness(0) invert(1)" } as const;
 const logoHeight = (aspect: number, scale = 1) =>
   `calc(var(--logo-k) * ${(Math.pow(aspect, -0.45) * scale).toFixed(3)})`;
 
-export const HeroSection = () => {
+export const HeroSection = ({
+  t,
+  video,
+}: {
+  t: Dictionary["hero"];
+  video: Dictionary["video"];
+}) => {
   return (
     <section
       id="hero"
@@ -24,7 +31,7 @@ export const HeroSection = () => {
         {/* Universities — first thing under the nav */}
         <div className="flex items-center gap-4 py-3 sm:gap-8">
           <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-white/50 sm:text-xs">
-            Students from
+            {t.studentsFrom}
           </span>
           <Image
             src="/universities/rwth-aachen.png"
@@ -37,7 +44,7 @@ export const HeroSection = () => {
           />
           <Image
             src="/universities/fh-aachen.png"
-            alt="FH Aachen University of Applied Sciences"
+            alt={t.fhAlt}
             width={123}
             height={36}
             priority
@@ -49,10 +56,10 @@ export const HeroSection = () => {
           {/* Who we are — as few words as possible */}
           <div>
             <h1 className="text-[clamp(2.6rem,11.5vw,6.25rem)] font-extrabold leading-[0.95] tracking-tight">
-              We are the Robotics Collective Aachen<span className="text-brand">.</span>
+              {t.headline}<span className="text-brand">.</span>
             </h1>
             <p className="mt-5 max-w-md text-lg leading-snug text-white/70 sm:text-xl">
-              A student robotics club. Open to anyone who wants to work on robots.
+              {t.tagline}
             </p>
 
             <a
@@ -61,7 +68,7 @@ export const HeroSection = () => {
               rel="noopener noreferrer"
               className="group mt-8 inline-flex items-center gap-2 border-b border-white/40 pb-1 text-lg font-medium text-white transition-colors hover:border-brand hover:text-brand"
             >
-              Join us
+              {t.join}
               <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
             </a>
           </div>
@@ -69,11 +76,13 @@ export const HeroSection = () => {
           {/* Lab cameras — real footage, full color */}
           <div className="grid min-w-0 grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-2 sm:gap-3">
             <LabVideo
+              labels={video}
               clips={[{ src: "/videos/so100-stacking-nuts.mp4", poster: "/videos/posters/so100-stacking-nuts.jpg" }]}
               priority
               className="aspect-[4/3]"
             />
             <LabVideo
+              labels={video}
               clips={[
                 { src: "/videos/voice-ai-arm-control-sound.mp4", poster: "/videos/posters/voice-ai-arm-control-sound.jpg", sound: true },
                 { src: "/videos/vr-teleoperation.mp4", poster: "/videos/posters/vr-teleoperation.jpg" },
@@ -82,6 +91,7 @@ export const HeroSection = () => {
               className="row-span-2"
             />
             <LabVideo
+              labels={video}
               clips={[{ src: "/videos/piper-vla-pick-place.mp4", poster: "/videos/posters/piper-vla-pick-place.jpg" }]}
               className="aspect-[4/3]"
             />
@@ -91,7 +101,7 @@ export const HeroSection = () => {
         {/* Partners — endless logo strip */}
         <div className="flex items-center gap-5 pt-5 sm:gap-8">
           <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-white/50 sm:text-xs">
-            Partners
+            {t.partners}
           </span>
           <div className="marquee-mask relative min-w-0 flex-1 overflow-hidden">
             <ul className="marquee flex w-max items-center [--logo-k:2.4rem] sm:[--logo-k:2.9rem]">

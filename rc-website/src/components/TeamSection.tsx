@@ -1,18 +1,19 @@
 import Image from "next/image";
 import { leadership } from "@/lib/team";
 import { JOIN_FORM_URL } from "@/lib/links";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 
 /**
  * Compact contact-sheet grid. Scales from a handful of people to the whole
  * club: add members to `leadership` (or a fuller list) in `lib/team.ts`.
  */
-export const TeamSection = () => {
+export const TeamSection = ({ t }: { t: Dictionary["team"] }) => {
   return (
     <section id="team" className="bg-light text-dark">
       <div className="mx-auto w-full max-w-[1400px] px-5 pb-16 sm:px-8 lg:px-12 lg:pb-28">
         <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#666] sm:text-xs">
-          0.4/ Founders &amp; leads
+          {t.eyebrow}
         </p>
 
         <ul className="grid grid-cols-3 gap-x-2 gap-y-6 sm:gap-x-3 lg:grid-cols-6">
@@ -29,7 +30,7 @@ export const TeamSection = () => {
               </div>
               <p className="mt-3 text-sm font-semibold leading-tight sm:text-base">{m.name}</p>
               <p className="mt-1 font-mono text-[10px] uppercase leading-tight tracking-[0.12em] text-[#666] sm:text-[11px]">
-                {m.role}
+                {t.roles[m.role] ?? m.role}
               </p>
             </li>
           ))}
@@ -45,9 +46,9 @@ export const TeamSection = () => {
               <div className="flex aspect-square items-center justify-center rounded-2xl border-2 border-dashed border-dark/20 text-4xl font-light text-dark/40 transition-colors group-hover:border-brand group-hover:text-brand sm:text-5xl">
                 +
               </div>
-              <p className="mt-3 text-sm font-semibold leading-tight sm:text-base">And many more</p>
+              <p className="mt-3 text-sm font-semibold leading-tight sm:text-base">{t.manyMore}</p>
               <p className="mt-1 font-mono text-[10px] uppercase leading-tight tracking-[0.12em] text-[#666] transition-colors group-hover:text-brand sm:text-[11px]">
-                Join the team →
+                {t.joinTeam}
               </p>
             </a>
           </li>

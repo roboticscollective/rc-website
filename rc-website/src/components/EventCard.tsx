@@ -8,6 +8,8 @@ import {
   formatEventMonth,
   formatEventTimeRange,
 } from "@/lib/events";
+import { localePath, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 /**
  * Card artwork.
@@ -45,7 +47,7 @@ function CardPlate() {
 }
 
 /** Stacked month/day block, mirrors the date badge on the Luma listing. */
-function DateBlock({ event }: { event: CommunityEvent }) {
+function DateBlock({ event, locale }: { event: CommunityEvent; locale: Locale }) {
   return (
     <div
       className="flex flex-col items-center justify-center shrink-0 text-white"
@@ -66,7 +68,7 @@ function DateBlock({ event }: { event: CommunityEvent }) {
           color: "#47A8BD",
         }}
       >
-        {formatEventMonth(event)}
+        {formatEventMonth(event, locale)}
       </span>
       <span
         style={{
@@ -76,16 +78,18 @@ function DateBlock({ event }: { event: CommunityEvent }) {
           fontVariantNumeric: "tabular-nums",
         }}
       >
-        {formatEventDay(event)}
+        {formatEventDay(event, locale)}
       </span>
     </div>
   );
 }
 
-export function EventCard({ event }: { event: CommunityEvent }) {
+/** Expects an already localized event (see `localizeEvent`). */
+export function EventCard({ event, locale }: { event: CommunityEvent; locale: Locale }) {
+  const t = getDictionary(locale).event;
   return (
     <Link
-      href={`/events/${event.slug}`}
+      href={localePath(locale, `/events/${event.slug}`)}
       className="group relative flex flex-col overflow-hidden bg-dark text-white transition-transform duration-200 hover:scale-[1.02] aspect-square lg:aspect-auto"
       style={{ borderRadius: "3svh" }}
     >
@@ -140,7 +144,7 @@ export function EventCard({ event }: { event: CommunityEvent }) {
         >
           {event.title}
         </h3>
-        <DateBlock event={event} />
+        <DateBlock event={event} locale={locale} />
       </div>
 
       {/* Desktop/tablet: full detail row below the image */}
@@ -148,7 +152,7 @@ export function EventCard({ event }: { event: CommunityEvent }) {
         className="relative z-10 hidden lg:flex flex-1 items-start"
         style={{ gap: "2svh", padding: "3svh" }}
       >
-        <DateBlock event={event} />
+        <DateBlock event={event} locale={locale} />
 
         <div className="min-w-0 flex-1">
           <h3
@@ -180,13 +184,13 @@ export function EventCard({ event }: { event: CommunityEvent }) {
             }}
           >
             <div className="flex gap-2">
-              <dt className="sr-only">Date</dt>
+              <dt className="sr-only">{t.dateLabel}</dt>
               <dd>
-                {formatEventDate(event)} &middot; {formatEventTimeRange(event)}
+                {formatEventDate(event, locale)} &middot; {formatEventTimeRange(event, locale)}
               </dd>
             </div>
             <div className="flex gap-2">
-              <dt className="sr-only">Location</dt>
+              <dt className="sr-only">{t.locationLabel}</dt>
               <dd style={{ color: "#ffffff99" }}>
                 {formatEventLocationShort(event)}
               </dd>
