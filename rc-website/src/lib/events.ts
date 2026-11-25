@@ -1,7 +1,8 @@
 /**
  * Community events — hardcoded content, same convention as `team.ts`.
  *
- * To add an event: append an entry to `events` below, drop a cover image in
+ * To add an event: append an entry to `events` below, add its German texts
+ * to `events.de.ts` under the same slug, drop a cover image in
  * `/public/events/`, and redeploy. Registration stays on Luma; this site only
  * markets the event and links out.
  *
@@ -10,8 +11,11 @@
  * server and client always agree.
  */
 
+import { intlLocale, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { eventsDe } from "./events.de";
+
 export const EVENT_TIME_ZONE = "Europe/Berlin";
-const EVENT_LOCALE = "en-GB";
 
 export interface EventLocation {
   /** Optional venue name shown above the street, e.g. "Gateway Factory". */
@@ -29,6 +33,10 @@ export interface EventSection {
   items?: { title: string; body?: string }[];
 }
 
+/** The parts of an event that get translated (see `events.de.ts`). */
+export type EventTranslation = Pick<CommunityEvent, "title" | "tagline" | "intro"> &
+  Partial<Pick<CommunityEvent, "sections">>;
+
 export interface CommunityEvent {
   slug: string;
   title: string;
@@ -45,6 +53,8 @@ export interface CommunityEvent {
   /** Path under /public. Falls back to a branded gradient when omitted. */
   coverImage?: string;
   registrationUrl?: string;
+  /** Ticket price in EUR. Omit for free events. */
+  priceEur?: number;
   /** Lead paragraphs on the detail page. */
   intro: string[];
   sections?: EventSection[];
@@ -120,6 +130,7 @@ export const events: CommunityEvent[] = [
     },
     coverImage: "/events/lerobot-hackathon-aachen-june-2025.webp",
     registrationUrl: "https://lu.ma/m85dzu3j",
+    priceEur: 16,
     tags: ["Hackathon", "AI"],
     intro: [
       "A local edition of the Hugging Face LeRobot Hackathon, right here in Aachen.",
@@ -189,6 +200,7 @@ export const events: CommunityEvent[] = [
     },
     coverImage: "/events/ai-robotics-hackathon-november-2025.webp",
     registrationUrl: "https://luma.com/wfw8i9r5",
+    priceEur: 16,
     tags: ["Hackathon", "AI"],
     intro: [
       "The next edition of our AI + Robotics Hackathon, built by and for our community. Real robots on real problems, helpful mentors, and teams that learn fast together.",
@@ -438,19 +450,38 @@ export function getEventBySlug(slug: string): CommunityEvent | undefined {
 }
 
 /* ------------------------------------------------------------------ */
+/* Translation                                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The event in the given language. German texts come from `events.de.ts`;
+ * anything not translated there falls back to the English original.
+ */
+export function localizeEvent(event: CommunityEvent, locale: Locale): CommunityEvent {
+  if (locale === "en") return event;
+  const dict = getDictionary(locale);
+  const t = eventsDe[event.slug];
+  return {
+    ...event,
+    ...t,
+    tags: event.tags?.map((tag) => dict.event.tags[tag] ?? tag),
+  };
+}
+
+/* ------------------------------------------------------------------ */
 /* Formatting — all pinned to Europe/Berlin                            */
 /* ------------------------------------------------------------------ */
 
-function fmt(value: string, options: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat(EVENT_LOCALE, {
+function fmt(locale: Locale, value: string, options: Intl.DateTimeFormatOptions) {
+  return new Intl.DateTimeFormat(intlLocale[locale], {
     timeZone: EVENT_TIME_ZONE,
     ...options,
   }).format(new Date(value));
 }
 
-/** "Thursday, 13 August 2026" */
-export function formatEventDate(event: CommunityEvent) {
-  return fmt(event.start, {
+/** "Thursday, 13 August 2026" / "Donnerstag, 13. August 2026" */
+export function formatEventDate(event: CommunityEvent, locale: Locale) {
+  return fmt(locale, event.start, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -459,25 +490,27 @@ export function formatEventDate(event: CommunityEvent) {
 }
 
 /** "AUG" / "13" — for the date block on cards. */
-export function formatEventMonth(event: CommunityEvent) {
-  return fmt(event.start, { month: "short" }).toUpperCase();
+export function formatEventMonth(event: CommunityEvent, locale: Locale) {
+  // German short months end in a dot ("Aug."), which looks odd in caps.
+  return fmt(locale, event.start, { month: "short" }).replace(/\.$/, "").toUpperCase();
 }
 
-export function formatEventDay(event: CommunityEvent) {
-  return fmt(event.start, { day: "numeric" });
+export function formatEventDay(event: CommunityEvent, locale: Locale) {
+  return fmt(locale, event.start, { day: "numeric" });
 }
 
-/** "AUG 13" — compact badge form. */
-export function formatEventDateCompact(event: CommunityEvent) {
-  return `${formatEventMonth(event)} ${formatEventDay(event)}`;
+/** "AUG 13" / "13. AUG" — compact badge form. */
+export function formatEventDateCompact(event: CommunityEvent, locale: Locale) {
+  const month = formatEventMonth(event, locale);
+  const day = formatEventDay(event, locale);
+  return locale === "de" ? `${day}. ${month}` : `${month} ${day}`;
 }
 
 /** "13.08" — the numeric form the event artwork uses. */
-export function formatEventDateNumeric(event: CommunityEvent) {
-  return fmt(event.start, { day: "2-digit", month: "2-digit" }).replace(
-    /\//g,
-    ".",
-  );
+export function formatEventDateNumeric(event: CommunityEvent, locale: Locale) {
+  return fmt(locale, event.start, { day: "2-digit", month: "2-digit" })
+    .replace(/\//g, ".")
+    .replace(/\.$/, "");
 }
 
 /**
@@ -495,12 +528,15 @@ export function getEventTitleParts(event: CommunityEvent) {
   return { lead: event.title, sub: null };
 }
 
-/** "11:00 - 14:00", with " (open end)" when the end time is soft. */
-export function formatEventTimeRange(event: CommunityEvent) {
+/** "11:00 - 14:00" / "11:00–14:00 Uhr", plus "(open end)" when the end is soft. */
+export function formatEventTimeRange(event: CommunityEvent, locale: Locale) {
   const time = (value: string) =>
-    fmt(value, { hour: "2-digit", minute: "2-digit", hour12: false });
-  const range = `${time(event.start)} - ${time(event.end)}`;
-  return event.openEnd ? `${range} (open end)` : range;
+    fmt(locale, value, { hour: "2-digit", minute: "2-digit", hour12: false });
+  const range =
+    locale === "de"
+      ? `${time(event.start)}–${time(event.end)} Uhr`
+      : `${time(event.start)} - ${time(event.end)}`;
+  return event.openEnd ? `${range} (${getDictionary(locale).event.openEnd})` : range;
 }
 
 /** "Campus-Boulevard 55, Aachen" — the short form used on cards. */
@@ -511,8 +547,12 @@ export function formatEventLocationShort(event: CommunityEvent) {
 }
 
 /** Full postal address, one line. */
-export function formatEventAddress(event: CommunityEvent) {
-  const { venue, street, postalCode, city, country } = event.location;
+export function formatEventAddress(event: CommunityEvent, locale: Locale) {
+  const { venue, street, postalCode, city } = event.location;
+  const country =
+    locale === "de" && event.location.country === "Germany"
+      ? "Deutschland"
+      : event.location.country;
   return [venue, street, [postalCode, city].filter(Boolean).join(" "), country]
     .filter(Boolean)
     .join(", ");
@@ -520,6 +560,6 @@ export function formatEventAddress(event: CommunityEvent) {
 
 export function getEventMapsUrl(event: CommunityEvent) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    formatEventAddress(event),
+    formatEventAddress(event, "en"),
   )}`;
 }

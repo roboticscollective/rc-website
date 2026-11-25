@@ -2,8 +2,8 @@ import {
   type CommunityEvent,
   formatEventAddress,
 } from "@/lib/events";
-
-const SITE_URL = "https://roboticscollective.org";
+import { localePath, SITE_URL, type Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
 /** ICS wants UTC basic-format timestamps: 20260813T090000Z */
 function toIcsUtc(value: string) {
@@ -35,10 +35,11 @@ function foldLine(line: string) {
   return chunks.join("\r\n");
 }
 
-/** Builds a single-event .ics file for "Add to calendar". */
-export function buildEventIcs(event: CommunityEvent) {
-  const url = `${SITE_URL}/events/${event.slug}`;
-  const description = [...event.intro, "", `More information: ${url}`].join("\n");
+/** Builds a single-event .ics file for "Add to calendar" (event already localized). */
+export function buildEventIcs(event: CommunityEvent, locale: Locale) {
+  const url = `${SITE_URL}${localePath(locale, `/events/${event.slug}`)}`;
+  const moreInfo = getDictionary(locale).event.moreInfo;
+  const description = [...event.intro, "", `${moreInfo}: ${url}`].join("\n");
 
   const lines = [
     "BEGIN:VCALENDAR",
@@ -53,7 +54,7 @@ export function buildEventIcs(event: CommunityEvent) {
     `DTEND:${toIcsUtc(event.end)}`,
     `SUMMARY:${escapeText(event.title)}`,
     `DESCRIPTION:${escapeText(description)}`,
-    `LOCATION:${escapeText(formatEventAddress(event))}`,
+    `LOCATION:${escapeText(formatEventAddress(event, locale))}`,
     `URL:${url}`,
     "END:VEVENT",
     "END:VCALENDAR",

@@ -6,7 +6,10 @@ import {
   formatEventTimeRange,
   getEventTitleParts,
   getNextEvent,
+  localizeEvent,
 } from "@/lib/events";
+import { localePath, type Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 /**
  * "What's next" row directly under the hero, linking through to /events.
@@ -19,9 +22,16 @@ import {
  * Deliberately not a numbered section — the 01-05 IDs are a navbar contract,
  * and this has to disappear entirely when nothing is coming up.
  */
-export function NextEventStrip() {
-  const event = getNextEvent();
-  if (!event) return null;
+export function NextEventStrip({
+  locale,
+  t,
+}: {
+  locale: Locale;
+  t: Dictionary["nextEvent"];
+}) {
+  const next = getNextEvent();
+  if (!next) return null;
+  const event = localizeEvent(next, locale);
 
   const { lead, sub } = getEventTitleParts(event);
 
@@ -32,11 +42,11 @@ export function NextEventStrip() {
       style={{ padding: "0 5svh" }}
     >
       <h2 id="next-event-heading" className="sr-only">
-        Upcoming event
+        {t.srHeading}
       </h2>
 
       <Link
-        href="/events"
+        href={localePath(locale, "/events")}
         className="group block max-w-[150svh] mx-auto"
         style={{
           paddingTop: "5svh",
@@ -57,7 +67,7 @@ export function NextEventStrip() {
               fontWeight: 500,
             }}
           >
-            Upcoming
+            {t.upcoming}
           </p>
           <span
             className="flex items-center uppercase whitespace-nowrap"
@@ -68,7 +78,7 @@ export function NextEventStrip() {
               fontWeight: 500,
             }}
           >
-            All events
+            {t.allEvents}
             <ArrowRight
               size={16}
               className="transition-transform duration-200 group-hover:translate-x-1"
@@ -87,7 +97,7 @@ export function NextEventStrip() {
               fontVariantNumeric: "tabular-nums",
             }}
           >
-            {formatEventDateNumeric(event)}
+            {formatEventDateNumeric(event, locale)}
           </span>
 
           <span className="min-w-0">
@@ -122,7 +132,7 @@ export function NextEventStrip() {
                 marginTop: "1.5svh",
               }}
             >
-              {formatEventTimeRange(event)} &middot;{" "}
+              {formatEventTimeRange(event, locale)} &middot;{" "}
               {formatEventLocationShort(event)}
             </span>
           </span>

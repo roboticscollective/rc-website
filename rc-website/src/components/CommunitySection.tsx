@@ -1,26 +1,27 @@
 import Image from "next/image";
+import type { Dictionary } from "@/i18n/dictionaries";
 
 const tag =
   "absolute bottom-3 left-3 rounded-full bg-dark/70 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-white backdrop-blur-sm sm:bottom-5 sm:left-5 sm:text-xs";
 const INSTAGRAM = "https://www.instagram.com/roboticscollective/";
 
 /** Instagram posts shown as plain links — nothing loads from Meta on our page. */
-const instagramPosts = [
+const instagramPosts = (t: Dictionary["community"]) => [
   {
     href: "https://www.instagram.com/reel/Db_asYqOj2W/",
     cover: "/social/instagram/reel-Db_asYqOj2W.jpg",
-    label: "Instagram reel: Certified gentleman",
+    label: t.reelLabel,
   },
 ];
 
 const frame = "relative overflow-hidden rounded-2xl bg-dark lg:rounded-[3svh]";
 
-export const CommunitySection = () => {
+export const CommunitySection = ({ t }: { t: Dictionary["community"] }) => {
   return (
     <section id="community" className="bg-light text-dark">
       <div className="mx-auto w-full max-w-[1400px] px-5 py-14 sm:px-8 lg:px-12 lg:py-24">
         <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#666] sm:text-xs">
-          0.2/ Community
+          {t.eyebrow}
         </p>
 
         {/* Phone: big photo, then two side by side. Desktop: big left, two stacked right. */}
@@ -28,7 +29,7 @@ export const CommunitySection = () => {
           <figure className={`${frame} col-span-2 lg:col-span-1 lg:row-span-2`}>
             <Image
               src="/photos/community/aachen-digitalhub.webp"
-              alt="Robotics Collective Aachen community meetup in Aachen"
+              alt={t.aachenAlt}
               width={2400}
               height={1600}
               sizes="(min-width: 1024px) 66vw, 100vw"
@@ -40,7 +41,7 @@ export const CommunitySection = () => {
           <figure className={frame}>
             <Image
               src="/photos/community/berlin-esra-2026-10.jpg"
-              alt="Robotics Collective Aachen members in Berlin"
+              alt={t.berlinAlt}
               width={1600}
               height={1070}
               sizes="(min-width: 1024px) 33vw, 50vw"
@@ -52,7 +53,7 @@ export const CommunitySection = () => {
           <figure className={frame}>
             <Image
               src="/photos/community/juelich.jpg"
-              alt="Club members working on robot arms at a hands-on session in Jülich"
+              alt={t.juelichAlt}
               width={2000}
               height={1500}
               sizes="(min-width: 1024px) 33vw, 50vw"
@@ -65,7 +66,7 @@ export const CommunitySection = () => {
         {/* Instagram — links out, so sound plays where people expect it */}
         <div className="mt-6 flex items-center gap-4 border-t border-dark/15 pt-6 sm:gap-6">
           <ul className="flex shrink-0 gap-2">
-            {instagramPosts.map((post) => (
+            {instagramPosts(t).map((post) => (
               <li key={post.href}>
                 <a
                   href={post.href}

@@ -4,7 +4,6 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarPlus, ExternalLink } from "lucide-react";
 import {
-  EVENT_TIME_ZONE,
   events,
   formatEventAddress,
   formatEventDate,
@@ -12,41 +11,53 @@ import {
   getEventBySlug,
   getEventMapsUrl,
   isPastEvent,
+  localizeEvent,
 } from "@/lib/events";
+import {
+  languageAlternates,
+  localePath,
+  locales,
+  ogLocale,
+  SITE_URL,
+  type Locale,
+} from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
 
-const SITE_URL = "https://roboticscollective.org";
+type Props = { params: Promise<{ locale: Locale; slug: string }> };
 
 export const revalidate = 3600;
 
 export function generateStaticParams() {
-  return events.map((event) => ({ slug: event.slug }));
+  return locales.flatMap((locale) =>
+    events.map((event) => ({ locale, slug: event.slug })),
+  );
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const event = getEventBySlug(slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const found = getEventBySlug(slug);
 
-  if (!event) {
-    return { title: "Event not found | Robotics Collective Aachen" };
+  if (!found) {
+    return { title: getDictionary(locale).event.notFoundTitle };
   }
 
-  const description = `${formatEventDate(event)} · ${formatEventTimeRange(
+  const event = localizeEvent(found, locale);
+  const description = `${formatEventDate(event, locale)} · ${formatEventTimeRange(
     event,
-  )} · ${formatEventAddress(event)}. ${event.tagline}`;
+    locale,
+  )} · ${formatEventAddress(event, locale)}. ${event.tagline}`;
+  const alternates = languageAlternates(locale, `/events/${event.slug}`);
 
   return {
     title: `${event.title} | Robotics Collective Aachen`,
     description,
-    alternates: { canonical: `/events/${event.slug}` },
+    alternates,
     openGraph: {
       title: event.title,
       description,
-      url: `/events/${event.slug}`,
+      url: alternates.canonical,
       type: "article",
+      locale: ogLocale[locale],
       images: [{ url: event.coverImage ?? "/social/og-default.jpg" }],
     },
     twitter: {
@@ -58,16 +69,15 @@ export async function generateMetadata({
   };
 }
 
-export default async function EventDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const event = getEventBySlug(slug);
-  if (!event) notFound();
+export default async function EventDetailPage({ params }: Props) {
+  const { locale, slug } = await params;
+  const found = getEventBySlug(slug);
+  if (!found) notFound();
 
+  const event = localizeEvent(found, locale);
+  const t = getDictionary(locale).event;
   const past = isPastEvent(event);
+  const eventPath = localePath(locale, `/events/${event.slug}`);
 
   /** schema.org Event — gets us Google's event rich results. */
   const jsonLd = {
@@ -79,7 +89,8 @@ export default async function EventDetailPage({
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     description: event.tagline,
-    url: `${SITE_URL}/events/${event.slug}`,
+    url: `${SITE_URL}${eventPath}`,
+    inLanguage: locale,
     ...(event.coverImage ? { image: [`${SITE_URL}${event.coverImage}`] } : {}),
     location: {
       "@type": "Place",
@@ -101,7 +112,7 @@ export default async function EventDetailPage({
       ? {
           offers: {
             "@type": "Offer",
-            price: "0",
+            price: String(event.priceEur ?? 0),
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             url: event.registrationUrl,
@@ -145,7 +156,7 @@ export default async function EventDetailPage({
           style={{ maxWidth: "160svh", margin: "0 auto" }}
         >
           <Link
-            href="/events"
+            href={localePath(locale, "/events")}
             className="inline-flex items-center text-white hover:opacity-70 transition-opacity"
             style={{
               gap: "0.5rem",
@@ -155,14 +166,14 @@ export default async function EventDetailPage({
             }}
           >
             <ArrowLeft size={16} />
-            All events
+            {t.allEvents}
           </Link>
 
           <div
             className="flex flex-wrap items-center"
             style={{ gap: "1svh", marginBottom: "2svh" }}
           >
-            {past && <Pill tone="muted">Past event</Pill>}
+            {past && <Pill tone="muted">{t.pastEvent}</Pill>}
             {event.series && <Pill tone="brand">{event.series}</Pill>}
             {event.tags?.map((tag) => <Pill key={tag}>{tag}</Pill>)}
           </div>
@@ -184,12 +195,12 @@ export default async function EventDetailPage({
             className="flex flex-col sm:flex-row sm:flex-wrap text-white"
             style={{ gap: "1.5svh 4svh" }}
           >
-            <MetaItem label="When">
-              {formatEventDate(event)}
+            <MetaItem label={t.when}>
+              {formatEventDate(event, locale)}
               <br />
-              {formatEventTimeRange(event)}
+              {formatEventTimeRange(event, locale)}
             </MetaItem>
-            <MetaItem label="Where">
+            <MetaItem label={t.where}>
               <a
                 href={getEventMapsUrl(event)}
                 target="_blank"
@@ -209,7 +220,7 @@ export default async function EventDetailPage({
                   .join(" ")}
               </a>
             </MetaItem>
-            <MetaItem label="Hosted by">Robotics Collective</MetaItem>
+            <MetaItem label={t.hostedBy}>Robotics Collective</MetaItem>
           </dl>
         </div>
       </header>
@@ -233,7 +244,7 @@ export default async function EventDetailPage({
                 marginBottom: "3svh",
               }}
             >
-              About the event
+              {t.about}
             </h2>
 
             {event.intro.map((paragraph) => (
@@ -319,10 +330,10 @@ export default async function EventDetailPage({
             {(event.sponsors?.length || event.supporters?.length) && (
               <section style={{ marginTop: "8svh" }}>
                 {event.sponsors?.length ? (
-                  <CreditList label="Sponsored by" names={event.sponsors} />
+                  <CreditList label={t.sponsoredBy} names={event.sponsors} />
                 ) : null}
                 {event.supporters?.length ? (
-                  <CreditList label="Supported by" names={event.supporters} />
+                  <CreditList label={t.supportedBy} names={event.supporters} />
                 ) : null}
               </section>
             )}
@@ -337,13 +348,10 @@ export default async function EventDetailPage({
                 color: "#666",
               }}
             >
-              <strong style={{ fontWeight: 600 }}>Data &amp; media notice.</strong>{" "}
-              By registering, you agree that your data may be used for event
-              organization and communication. Photos and videos may be taken
-              during the event and used for Robotics Collective communication.
-              See our{" "}
-              <Link href="/privacy" className="underline hover:no-underline">
-                privacy policy
+              <strong style={{ fontWeight: 600 }}>{t.noticeTitle}</strong>{" "}
+              {t.noticeText}{" "}
+              <Link href={localePath(locale, "/privacy")} className="underline hover:no-underline">
+                {t.privacyLink}
               </Link>
               .
             </p>
@@ -355,7 +363,7 @@ export default async function EventDetailPage({
               {event.coverImage && (
                 <Image
                   src={event.coverImage}
-                  alt={`Poster for ${event.title}`}
+                  alt={`${t.posterAlt} ${event.title}`}
                   width={1200}
                   height={1200}
                   className="w-full h-auto"
@@ -381,7 +389,7 @@ export default async function EventDetailPage({
                   marginBottom: "1.5svh",
                 }}
               >
-                {past ? "This one is over" : "Registration"}
+                {past ? t.overTitle : t.registrationTitle}
               </p>
 
               <p
@@ -392,18 +400,16 @@ export default async function EventDetailPage({
                   marginBottom: "3svh",
                 }}
               >
-                {past
-                  ? "Thanks to everyone who came by. Check what is coming up next."
-                  : "Free to attend. Sign up so we know how much brunch to get."}
+                {past ? t.overText : t.registrationText}
               </p>
 
               {past ? (
                 <Link
-                  href="/events"
+                  href={localePath(locale, "/events")}
                   className="flex items-center justify-center w-full text-dark bg-white transition-transform hover:scale-[1.02]"
                   style={ctaStyle}
                 >
-                  See upcoming events
+                  {t.seeUpcoming}
                 </Link>
               ) : (
                 <div className="flex flex-col" style={{ gap: "1.5svh" }}>
@@ -415,12 +421,12 @@ export default async function EventDetailPage({
                       className="flex items-center justify-center w-full text-dark bg-white transition-transform hover:scale-[1.02]"
                       style={{ ...ctaStyle, gap: "0.5rem" }}
                     >
-                      Register
+                      {t.register}
                       <ExternalLink size={16} />
                     </a>
                   )}
                   <a
-                    href={`/events/${event.slug}/calendar.ics`}
+                    href={`${eventPath}/calendar.ics`}
                     className="flex items-center justify-center w-full text-white transition-transform hover:scale-[1.02]"
                     style={{
                       ...ctaStyle,
@@ -430,7 +436,7 @@ export default async function EventDetailPage({
                     }}
                   >
                     <CalendarPlus size={16} />
-                    Add to calendar
+                    {t.addToCalendar}
                   </a>
                 </div>
               )}
@@ -445,7 +451,7 @@ export default async function EventDetailPage({
                   color: "#ffffff80",
                 }}
               >
-                All times {EVENT_TIME_ZONE.replace("_", " ")} (CET/CEST).
+                {t.timeZoneNote}
               </p>
               </div>
             </div>

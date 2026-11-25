@@ -18,6 +18,8 @@ interface LabVideoProps {
   /** Hero tiles: preload the first still frame so it paints immediately. */
   priority?: boolean;
   className?: string;
+  /** Screen-reader labels for the sound button. */
+  labels: { playWithSound: string; mute: string };
 }
 
 const FADE_MS = 400;
@@ -27,7 +29,7 @@ const FADE_MS = 400;
  * (saves mobile data/battery) and stays on its still frame for users who
  * prefer reduced motion.
  */
-export function LabVideo({ clips, priority = false, className = "" }: LabVideoProps) {
+export function LabVideo({ clips, priority = false, className = "", labels }: LabVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const visible = useRef(false);
   const reducedMotion = useRef(false);
@@ -132,7 +134,7 @@ export function LabVideo({ clips, priority = false, className = "" }: LabVideoPr
         <button
           type="button"
           onClick={toggleSound}
-          aria-label={unmuted ? "Mute video" : "Play video with sound"}
+          aria-label={unmuted ? labels.mute : labels.playWithSound}
           aria-pressed={unmuted}
           className="absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/80"
         >
