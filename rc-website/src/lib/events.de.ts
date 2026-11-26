@@ -187,4 +187,81 @@ export const eventsDe: Record<string, EventTranslation> = {
       },
     ],
   },
+  "construction-robotics-hackathon-november-2026": {
+    title: "Construction Robotics Hackathon",
+    tagline:
+      "Ein Wochenende, an dem Industrieroboter, Sensoren und Software zu Lösungen für echte Aufgaben vom Bau werden.",
+    intro: [
+      "Der erste Construction Robotics Hackathon. Interdisziplinäre Teams aus Robotik, Bauingenieurwesen, Architektur und Informatik machen an einem Wochenende aus echten Industrierobotern, Sensoren und Software funktionierende Lösungen für echte Anwendungsfälle vom Bau.",
+      "Die Bewerbungsphase für Teams ist vorbei. Gäste sind beim Kickoff am Freitag und beim Demo Day am Sonntag willkommen; anmelden kannst du dich für beides auf der Event-Seite des CTRL.",
+    ],
+    sections: [
+      {
+        heading: "Für Gäste",
+        items: [
+          {
+            title: "Kickoff · Freitag, 17:00 Uhr",
+            body: "Keynotes, Vorstellung der Challenges, Abendessen und Partnermesse.",
+          },
+          {
+            title: "Demo Day · Sonntag, 13:00 Uhr",
+            body: "Finale Pitches, Jury und Preisverleihung, Ende um 17:00 Uhr.",
+          },
+        ],
+      },
+    ],
+  },
+  "rhine-robotics-paper-club-december-2026": {
+    title: "Rhine Robotics Paper Club: Meeting #1",
+    tagline:
+      "Treffen im Rheinland, bei denen wir gemeinsam aktuelle Robotikforschung auseinandernehmen.",
+    intro: [
+      "Das erste Treffen des Rhine Robotics Paper Club, eines Journal Clubs für Leute, die Roboter bauen. Komm vorbei, lerne andere kennen und erfahre, woran in der Robotik gerade geforscht wird.",
+      "Die Teilnahme ist kostenlos.",
+    ],
+    sections: [
+      {
+        heading: "Paper in dieser Ausgabe",
+        items: [
+          { title: "Flash ALOHA: Learning Fast and Precise Manipulation" },
+          {
+            title:
+              "GR00T 2: Scaling Robot Foundation Models for Generalization, Dexterity, and Adaptation",
+          },
+        ],
+      },
+    ],
+  },
+  "fokusgruppe-robotics-automation-december-2026": {
+    title: "Fokusgruppe Robotics & Automation",
+    tagline:
+      "Start-ups, Forschung und Industrie entscheiden, welche Themen und Projekte die Fokusgruppe als Nächstes angeht.",
+    intro: [
+      "Start-ups, Forschung und Industrie vernetzen sich und entscheiden, welche Themen und Projekte die Fokusgruppe als Nächstes angeht. Komm vorbei und gestalte mit, wie sich das Robotik-Ökosystem in Aachen entwickelt.",
+      "Bring eine Herausforderung mit, an der du gerade arbeitest, oder eine Idee für einen Firmenbesuch. Um 17:00 Uhr beginnt im selben Gebäude die Robotics Happy Hour, du kannst also zu beidem kommen. Für beide Events brauchst du eine eigene Anmeldung.",
+    ],
+  },
+  "robotics-happy-hour-maskor-december-2026": {
+    title: "Robotics Happy Hour × MASKOR Institut × Gründungszentrum",
+    tagline:
+      "Führung durch das MASKOR-Robotiklabor, die Aachener Robotik-Community kennenlernen und bei Essen und Getränken netzwerken.",
+    intro: [
+      "Verbring einen Abend mit der Aachener Robotik-Community, zusammen mit dem Robotics Collective Aachen, dem MASKOR Institut und dem Gründungszentrum der FH Aachen. Du bekommst eine Führung durch das MASKOR-Robotiklabor, triffst Leute, die in ganz Aachen an Robotik arbeiten, und kannst danach bei Essen und Getränken netzwerken.",
+      "Die RoboCup-Teams des MASKOR arbeiten an Rettungsrobotik und Fabrikautomatisierung. ALeRT hat bei den RoboCup German Open 2026 die Rescue Robot League gewonnen, und Carologistics, ein gemeinsames Team mit der RWTH Aachen, wurde 2022 und 2025 Weltmeister in der RoboCup Logistics League.",
+    ],
+    sections: [
+      {
+        heading: "Programm",
+        items: [
+          { title: "Begrüßung durch das Robotics Collective Aachen und das Team der FH Aachen" },
+          { title: "Führung durch das MASKOR-Robotiklabor" },
+          { title: "Networking bei Essen und Getränken" },
+        ],
+      },
+      {
+        heading: "Vor der Happy Hour",
+        body: "Um 16:00 Uhr trifft sich im selben Gebäude die Fokusgruppe Robotics & Automation. Dafür brauchst du eine eigene Anmeldung.",
+      },
+    ],
+  },
 };
