@@ -53,6 +53,8 @@ export interface CommunityEvent {
   /** Path under /public. Falls back to a branded gradient when omitted. */
   coverImage?: string;
   registrationUrl?: string;
+  /** Organisers shown as "Hosted by". Defaults to the Robotics Collective alone. */
+  hosts?: string[];
   /** Ticket price in EUR. Omit for free events. */
   priceEur?: number;
   /** Lead paragraphs on the detail page. */
@@ -410,6 +412,141 @@ export const events: CommunityEvent[] = [
     ],
     sponsors: ["Vectioneer", "INFORM", "Gateway Factory", "IGMR RWTH Aachen"],
   },
+  {
+    slug: "construction-robotics-hackathon-november-2026",
+    title: "Construction Robotics Hackathon",
+    tagline:
+      "A weekend turning industrial robots, sensors and software into working solutions for real construction tasks.",
+    start: "2026-11-27T17:00:00+01:00",
+    end: "2026-11-29T17:00:00+01:00",
+    location: {
+      venue: "CTRL Lab",
+      street: "Süsterfeldstraße 200",
+      postalCode: "52072",
+      city: "Aachen",
+      country: "Germany",
+    },
+    registrationUrl: "https://www.ctrl-rwth.de/events/ctrl-hackathon-2026",
+    hosts: ["CTRL e.V.", "Gateway Factory", "Robotics Collective"],
+    tags: ["Hackathon"],
+    intro: [
+      "The first Construction Robotics Hackathon. Interdisciplinary teams from robotics, civil engineering, architecture and computer science spend a weekend turning real industrial robots, sensors and software into working solutions for real construction use cases.",
+      "Applications for teams have closed. Guests are welcome at the kickoff on Friday and at Demo Day on Sunday; you can sign up for both on the CTRL event page.",
+    ],
+    sections: [
+      {
+        heading: "For guests",
+        items: [
+          {
+            title: "Kickoff · Friday, 17:00",
+            body: "Keynotes, challenge presentations, dinner and a partner fair.",
+          },
+          {
+            title: "Demo Day · Sunday, 13:00",
+            body: "Final pitches, jury and award ceremony, ending at 17:00.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "rhine-robotics-paper-club-december-2026",
+    title: "Rhine Robotics Paper Club: Meeting #1",
+    series: "Rhine Robotics Paper Club",
+    tagline:
+      "In-person meetups across the Rhine region where we pick apart recent robotics research together.",
+    start: "2026-12-02T18:00:00+01:00",
+    end: "2026-12-02T20:00:00+01:00",
+    location: {
+      venue: "ICoM – Versuchshalle Robotik",
+      street: "Süsterfeldstraße 200",
+      postalCode: "52072",
+      city: "Aachen",
+      country: "Germany",
+    },
+    coverImage: "/events/rhine-robotics-paper-club-december-2026.webp",
+    registrationUrl: "https://luma.com/unpllqmu",
+    hosts: ["Guilherme Miotto", "Robotics Collective"],
+    tags: ["Research"],
+    intro: [
+      "The first meeting of the Rhine Robotics Paper Club, a journal club for people who build robots. Come to connect with people and learn about the latest research in robotics.",
+      "Participation is free.",
+    ],
+    sections: [
+      {
+        heading: "Papers in this edition",
+        items: [
+          { title: "Flash ALOHA: Learning Fast and Precise Manipulation" },
+          {
+            title:
+              "GR00T 2: Scaling Robot Foundation Models for Generalization, Dexterity, and Adaptation",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "fokusgruppe-robotics-automation-december-2026",
+    title: "Focus Group Robotics & Automation",
+    tagline:
+      "Startups, researchers and industry decide which topics and projects the focus group tackles next.",
+    start: "2026-12-08T16:00:00+01:00",
+    end: "2026-12-08T17:00:00+01:00",
+    location: {
+      venue: "FH Aachen",
+      street: "Eupener Straße 70",
+      postalCode: "52066",
+      city: "Aachen",
+      country: "Germany",
+    },
+    registrationUrl:
+      "https://platform.aachen.digital/groups/fokusgruppe-robotics-automation/RJ2KzLaxmo/events/default/treffen-der-fokusgruppe-robotics-automatisation/7yxQoRLPd5",
+    hosts: ["digitalHUB Aachen", "Robotics Collective"],
+    tags: ["Community"],
+    intro: [
+      "Startups, researchers and industry meet to network and decide which topics and projects the focus group tackles next. Come and shape how the robotics ecosystem in Aachen develops.",
+      "Bring a challenge you're working on or an idea for a factory visit. The Robotics Happy Hour starts at 17:00 in the same building, so you can do both. Each needs its own registration.",
+    ],
+  },
+  {
+    slug: "robotics-happy-hour-maskor-december-2026",
+    title: "Robotics Happy Hour × MASKOR Institut × Gründungszentrum",
+    series: "Robotics Happy Hour",
+    tagline:
+      "Tour the MASKOR robotics lab, meet Aachen's robotics community and network over food and drinks.",
+    start: "2026-12-08T17:00:00+01:00",
+    end: "2026-12-08T20:00:00+01:00",
+    location: {
+      venue: "FH Aachen, Raum A103 (Gebäude A)",
+      street: "Eupener Straße 70",
+      postalCode: "52066",
+      city: "Aachen",
+      country: "Germany",
+    },
+    coverImage: "/events/robotics-happy-hour-maskor-december-2026.webp",
+    registrationUrl: "https://luma.com/56v3tj9h",
+    hosts: ["Robotics Collective", "MASKOR Institut", "Gründungszentrum FH Aachen"],
+    tags: ["Community", "Lab Tour"],
+    intro: [
+      "Join Robotics Collective Aachen, the MASKOR Institute and the Gründungszentrum at FH Aachen for an evening with Aachen's robotics community. Tour the MASKOR robotics lab, meet people working on robotics across Aachen, and stick around for food, drinks and networking.",
+      "MASKOR's RoboCup teams work on rescue robotics and factory automation. ALeRT won the Rescue Robot League at the 2026 RoboCup German Open, and Carologistics, a joint team with RWTH Aachen, won the RoboCup Logistics League world title in 2022 and 2025.",
+    ],
+    sections: [
+      {
+        heading: "Program",
+        items: [
+          { title: "Welcome from Robotics Collective Aachen and the team from FH Aachen" },
+          { title: "Tour of the MASKOR robotics lab" },
+          { title: "Networking over food and drinks" },
+        ],
+      },
+      {
+        heading: "Before the Happy Hour",
+        body: "At 16:00, the Robotics & Automation focus group meets in the same building. It needs a separate registration.",
+      },
+    ],
+    sponsors: ["INFORM", "Vectioneer", "Gateway Factory"],
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -479,8 +616,25 @@ function fmt(locale: Locale, value: string, options: Intl.DateTimeFormatOptions)
   }).format(new Date(value));
 }
 
-/** "Thursday, 13 August 2026" / "Donnerstag, 13. August 2026" */
+/** True when the event ends on a later calendar day (Berlin time) than it starts. */
+function isMultiDay(event: CommunityEvent) {
+  const day = (value: string) => fmt("en", value, { year: "numeric", month: "2-digit", day: "2-digit" });
+  return day(event.start) !== day(event.end);
+}
+
+/**
+ * "Thursday, 13 August 2026" / "Donnerstag, 13. August 2026".
+ * Multi-day events get a range: "27–29 November 2026" / "27.–29. November 2026".
+ */
 export function formatEventDate(event: CommunityEvent, locale: Locale) {
+  if (isMultiDay(event)) {
+    return new Intl.DateTimeFormat(intlLocale[locale], {
+      timeZone: EVENT_TIME_ZONE,
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).formatRange(new Date(event.start), new Date(event.end));
+  }
   return fmt(locale, event.start, {
     weekday: "long",
     day: "numeric",
@@ -532,6 +686,13 @@ export function getEventTitleParts(event: CommunityEvent) {
 export function formatEventTimeRange(event: CommunityEvent, locale: Locale) {
   const time = (value: string) =>
     fmt(locale, value, { hour: "2-digit", minute: "2-digit", hour12: false });
+  if (isMultiDay(event)) {
+    // "Fri 17:00 - Sun 17:00" / "Fr. 17:00 – So. 17:00 Uhr"
+    const at = (value: string) => `${fmt(locale, value, { weekday: "short" })} ${time(value)}`;
+    return locale === "de"
+      ? `${at(event.start)} – ${at(event.end)} Uhr`
+      : `${at(event.start)} - ${at(event.end)}`;
+  }
   const range =
     locale === "de"
       ? `${time(event.start)}–${time(event.end)} Uhr`

@@ -220,7 +220,9 @@ export default async function EventDetailPage({ params }: Props) {
                   .join(" ")}
               </a>
             </MetaItem>
-            <MetaItem label={t.hostedBy}>Robotics Collective</MetaItem>
+            <MetaItem label={t.hostedBy}>
+              {(event.hosts ?? ["Robotics Collective"]).join(", ")}
+            </MetaItem>
           </dl>
         </div>
       </header>

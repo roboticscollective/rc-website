@@ -116,8 +116,7 @@ const de = {
     overTitle: "Dieses Event ist vorbei",
     overText: "Danke an alle, die da waren! Schau dir an, was als Nächstes ansteht.",
     registrationTitle: "Anmeldung",
-    registrationText:
-      "Die Teilnahme ist kostenlos. Melde dich an, damit wir wissen, wie viel Brunch wir besorgen müssen.",
+    registrationText: "Bitte melde dich vorher an, damit wir planen können.",
     seeUpcoming: "Kommende Events ansehen",
     register: "Anmelden",
     addToCalendar: "Zum Kalender hinzufügen",
@@ -129,6 +128,7 @@ const de = {
     tags: {
       "Lab Tour": "Laborführung",
       AI: "KI",
+      Research: "Forschung",
     } as Record<string, string>,
   },
   notFound: {
@@ -230,7 +230,7 @@ const en: Dictionary = {
     overTitle: "This one is over",
     overText: "Thanks to everyone who came by. Check what is coming up next.",
     registrationTitle: "Registration",
-    registrationText: "Free to attend. Sign up so we know how much brunch to get.",
+    registrationText: "Please sign up in advance so we can plan.",
     seeUpcoming: "See upcoming events",
     register: "Register",
     addToCalendar: "Add to calendar",
